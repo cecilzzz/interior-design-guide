@@ -9,38 +9,41 @@ type SubItem = {
 
 type NavItem = {
   title: string;
-  subItems: (string | SubItem)[];
+  subItems?: (string | SubItem)[];
 };
 
 const navItems: NavItem[] = [
   {
-    title: "STYLE",
+    title: "LIVING SPACES",
     subItems: [
-      {
-        title: "Modern",
-        items: ["Contemporary", "Minimalist", "Industrial"],
-      },
-      {
-        title: "Classic",
-        items: ["Traditional", "Victorian", "Art Deco"],
-      },
+      "Living Room",
+      "Bedroom",
+      "Kitchen & Dining",
+      "Bathroom",
+      "Work From Home",
+      "Rentals"
     ],
   },
   {
-    title: "SPACE",
-    subItems: ["Living Room", "Bedroom", "Kitchen", "Bathroom"],
-  },
-  {
-    title: "COLOR",
-    subItems: ["Neutral", "Bold", "Pastel", "Monochrome"],
-  },
-  {
-    title: "LIGHT",
-    subItems: ["Natural", "Artificial", "Ambient", "Task"],
+    title: "DESIGN ELEMENTS",
+    subItems: [
+      "Space Planning",
+      "Colors & Palettes",
+      "Lighting",
+      "Materials & Textures"
+    ],
   },
   {
     title: "INSPIRATION",
-    subItems: ["Projects", "Gallery", "Blog", "Resources"],
+    subItems: [
+      "Cozy Home",
+      "Modern Living",
+      "Trending",
+      "Makeovers"
+    ],
+  },
+  {
+    title: "ABOUT",
   },
 ];
 
@@ -77,7 +80,7 @@ export default function Navigation() {
                     {item.title}
                   </a>
                   
-                  {activeMenu === item.title && (
+                  {activeMenu === item.title && item.subItems && (
                     <div className="absolute left-1/2 -translate-x-1/2 mt-4 bg-white shadow-lg rounded-sm py-2 min-w-[200px] z-50">
                       {item.subItems.map((subItem) => (
                         <div key={typeof subItem === 'string' ? subItem : subItem.title} className="relative group">
