@@ -48,7 +48,7 @@ export default function Navigation() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   return (
-    <header className="w-full bg-white">
+    <header className="w-full bg-white relative z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center py-8">
           <Image
@@ -78,7 +78,7 @@ export default function Navigation() {
                   </a>
                   
                   {activeMenu === item.title && (
-                    <div className="absolute left-1/2 -translate-x-1/2 mt-4 bg-white shadow-lg rounded-sm py-2 min-w-[200px]">
+                    <div className="absolute left-1/2 -translate-x-1/2 mt-4 bg-white shadow-lg rounded-sm py-2 min-w-[200px] z-50">
                       {item.subItems.map((subItem) => (
                         <div key={typeof subItem === 'string' ? subItem : subItem.title} className="relative group">
                           {typeof subItem === 'string' ? (
