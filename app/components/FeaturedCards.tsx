@@ -27,31 +27,29 @@ const cards: Card[] = [
 
 export default function FeaturedCards() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {cards.map((card) => (
-          <Link 
-            key={card.title} 
-            href={card.link}
-            className="group relative aspect-[4/3] overflow-hidden bg-gray-100"
-          >
-            <Image
-              src={card.image}
-              alt={card.title}
-              fill
-              sizes="(min-width: 768px) 33vw, 100vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              quality={75}
-            />
-            <div className="absolute inset-0 bg-black/20" />
-            <div className="absolute inset-0 flex items-center justify-center p-6">
-              <h2 className="text-center text-white font-playfair text-xl">
-                {card.title}
-              </h2>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {cards.map((card) => (
+        <Link 
+          key={card.title} 
+          href={card.link}
+          className="group relative aspect-[4/3] overflow-hidden bg-gray-100"
+        >
+          <Image
+            src={card.image}
+            alt={card.title}
+            fill
+            sizes="(min-width: 768px) 33vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            quality={75}
+          />
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 flex items-center justify-center p-6">
+            <h2 className="text-center text-white font-playfair text-xl">
+              {card.title}
+            </h2>
+          </div>
+        </Link>
+      ))}
+    </div>
   );
 } 

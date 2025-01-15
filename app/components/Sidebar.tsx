@@ -17,10 +17,12 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
     <aside className="space-y-16">
       {/* 作者簡介 */}
       <div className="text-center">
-        <h2 className="text-2xl mb-8 font-playfair">HI I'M OLIVIA</h2>
+        <h2 className="section-title text-2xl font-playfair mb-8">
+          <span>HI I'M OLIVIA</span>
+        </h2>
         <div className="relative w-48 h-48 mx-auto mb-6">
           <Image
-            src="/profile.jpg"
+            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400"
             alt="Olivia"
             fill
             className="object-cover rounded-full"
@@ -60,7 +62,9 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
 
       {/* 訂閱表單 */}
       <div className="bg-gray-50 p-8">
-        <h3 className="text-lg mb-2 text-center font-playfair">NEWSLETTER</h3>
+        <h3 className="section-title text-lg font-playfair mb-6">
+          <span>NEWSLETTER</span>
+        </h3>
         <p className="text-gray-600 text-sm text-center mb-6">
           Join our design community and get weekly inspiration delivered to your inbox
         </p>
@@ -72,7 +76,7 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
           />
           <button
             type="submit"
-            className="w-full bg-gray-900 text-white py-3 rounded hover:bg-gray-800 transition-colors"
+            className="w-full bg-coral-400 text-white py-3 rounded hover:bg-coral-500 transition-colors"
           >
             SUBSCRIBE
           </button>
@@ -81,26 +85,28 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
 
       {/* 推薦文章 */}
       <div>
-        <h3 className="text-lg mb-8 text-center font-playfair">MUST READ ARTICLES</h3>
+        <h3 className="section-title text-lg font-playfair mb-8">
+          <span>MUST READ ARTICLES</span>
+        </h3>
         <div className="space-y-6">
           {recommendedPosts.map((post, index) => (
             <Link 
               key={post.title}
               href={post.link}
-              className="flex items-center gap-4 group"
+              className="flex items-center gap-4 group transition-all duration-300 hover:bg-gray-50 p-2 rounded-lg"
             >
-              <span className="text-2xl font-playfair text-gray-300 group-hover:text-gray-400">
+              <span className="text-2xl font-playfair text-gray-300 transition-colors duration-300 group-hover:text-coral-500">
                 {index + 1}
               </span>
-              <div className="relative w-20 h-20 flex-shrink-0">
+              <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-md">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-all duration-500 group-hover:scale-105"
                 />
               </div>
-              <h4 className="text-sm font-medium group-hover:text-gray-600">
+              <h4 className="text-sm font-medium transition-colors duration-300 group-hover:text-coral-500">
                 {post.title}
               </h4>
             </Link>

@@ -18,21 +18,22 @@ export default function BlogPost({
   return (
     <article>
       <div className="text-center mb-12">
-        <div className="text-coral-500 uppercase tracking-widest text-sm mb-4">
-          {category}
+        <div className="text-coral-400 uppercase tracking-[0.2em] text-sm mb-6 font-light">
+          {category} / <span className="text-gray-500">DESIGN</span>
         </div>
-        <h1 className="font-playfair text-4xl mb-4">{title}</h1>
-        <div className="text-gray-500 text-sm">{date}</div>
+        <h1 className="font-playfair text-4xl md:text-5xl mb-6">{title}</h1>
+        <div className="text-gray-400 text-sm tracking-wider">{date}</div>
       </div>
       
-      <div className="mb-8 relative aspect-[16/9]">
+      <div className="mb-8 relative aspect-[16/9] overflow-hidden rounded-lg group">
         <Image
           src={image}
           alt={title}
           fill
-          className="object-cover"
+          className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"
           sizes="(min-width: 1024px) 700px, 100vw"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
       
       <div className="prose max-w-none">
