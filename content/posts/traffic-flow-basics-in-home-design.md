@@ -2,7 +2,7 @@
 title: "Traffic Flow Basics in Home Design"
 categories: ["Space Planning"]
 date: "2024-03-22"
-image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb3?auto=format&fit=crop&q=80&w=1920"
+image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1920"
 excerpt: "Learn the essential principles of creating smooth, natural traffic flow in your home for a more comfortable and functional living space."
 ---
 
