@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-markdown
 
 type BlogPostProps = {
   category: string;
@@ -37,7 +38,7 @@ export default function BlogPost({
       </div>
       
       <div className="prose max-w-none">
-        {content}
+        <ReactMarkdown>{content}</ReactMarkdown>
       </div>
       
       <div className="flex justify-center space-x-4 mt-8">

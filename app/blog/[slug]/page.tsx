@@ -1,0 +1,48 @@
+import { getAllPosts } from '@/app/lib/posts';
+import BlogContent from '@/app/components/BlogContent';
+import Sidebar from '@/app/components/Sidebar';
+
+// 這些是示例數據，實際應該從數據庫或其他地方獲取
+const relatedPosts = [
+  {
+    category: "INTERIOR DESIGN",
+    title: "How to Choose the Perfect Color Palette",
+    image: "https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?auto=format&fit=crop&q=80&w=800",
+    link: "/blog/color-palette",
+  },
+  // ... 其他相關文章
+];
+
+const recommendedPosts = [
+  {
+    title: "Essential Steps to Design Your Perfect Living Room",
+    image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=200",
+    link: "/blog/perfect-living-room",
+  },
+  // ... 其他推薦文章
+];
+
+export async function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({
+    slug: post.id,
+  }));
+}
+
+export default function BlogPost({ params }: { params: { slug: string } }) {
+  const posts = getAllPosts();
+  const post = posts.find((p) => p.id === params.slug);
+  
+  if (!post) {
+    return <div>Post not found</div>;
+  }
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12">
+        <BlogContent post={post} relatedPosts={relatedPosts} />
+        <Sidebar recommendedPosts={recommendedPosts} />
+      </div>
+    </div>
+  );
+} 
