@@ -1,6 +1,12 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+// 為將來的移動端功能保留：
+// 1. 漢堡菜單開關狀態
+// 2. 點擊切換下拉菜單
+// 3. 記住用戶最後訪問的菜單項
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useState } from 'react';
 
 type NavItem = {
   title: string;
@@ -28,7 +34,7 @@ const navItems: NavItem[] = [
       { title: "Space Planning", link: "/blog/category/space-planning" },
       { title: "Colors & Palettes", link: "/blog/category/colors-and-palettes" },
       { title: "Lighting", link: "/blog/category/lighting" },
-      { title: "Materials & Textures", link: "/blog/category/materials-textures" }
+      { title: "Materials & Textures", link: "/blog/category/materials-and-textures" }
     ],
   },
   {
@@ -50,14 +56,16 @@ export default function Navigation() {
     <header className="w-full bg-white relative z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center py-8">
-          <Image
-            src="/logo-main-light.png"
-            alt="Olivia Wilson"
-            width={100}
-            height={100}
-            priority
-            className="h-auto w-auto"
-          />
+          <Link href="/">
+            <Image
+              src="/logo-main-light.png"
+              alt="Olivia Wilson"
+              width={100}
+              height={100}
+              priority
+              className="h-auto w-auto"
+            />
+          </Link>
         </div>
       </div>
 
