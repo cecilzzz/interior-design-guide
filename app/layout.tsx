@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { Metadata } from 'next/types';
 import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/Navigation";
