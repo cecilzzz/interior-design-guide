@@ -30,7 +30,7 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
         </div>
         <h3 className="font-playfair text-lg mb-4">OLIVIA</h3>
         <p className="text-gray-600 italic mb-4">
-          Interior Design Enthusiast & Style Curator
+          Interior Design Enthusiast &amp; Style Curator
         </p>
         <p className="text-gray-600 text-sm px-4">
           Sharing my passion for timeless design and creating beautiful living spaces
@@ -63,7 +63,7 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
       {/* 訂閱表單 */}
       <div className="bg-gray-50 p-8">
         <h3 className="section-title text-lg font-playfair mb-6">
-          <span>NEWSLETTER</span>
+          <span>TODAY&apos;S PICKS</span>
         </h3>
         <p className="text-gray-600 text-sm text-center mb-6">
           Join our design community and get weekly inspiration delivered to your inbox
