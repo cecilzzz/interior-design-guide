@@ -1,6 +1,6 @@
 ---
 title: "10 Essential Living Room Layout Rules for Any Space"
-category: "LIVING SPACES"
+categories: ["Living Room", "Space Planning"]
 date: "2024-03-21"
 image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=1920"
 excerpt: "Discover the essential rules for creating a perfectly balanced and functional living room layout, regardless of your space's size or shape."

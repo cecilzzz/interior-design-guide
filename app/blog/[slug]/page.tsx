@@ -5,7 +5,7 @@ import Sidebar from '@/app/components/Sidebar';
 // 這些是示例數據，實際應該從數據庫或其他地方獲取
 const relatedPosts = [
   {
-    category: "INTERIOR DESIGN",
+    category: "Interior Design",
     title: "How to Choose the Perfect Color Palette",
     image: "https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?auto=format&fit=crop&q=80&w=800",
     link: "/blog/color-palette",
@@ -37,10 +37,16 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     return <div>Post not found</div>;
   }
 
+  // 將 post 數據轉換為 BlogContent 需要的格式
+  const blogPost = {
+    ...post,
+    category: post.categories[0],  // 暫時使用第一個分類作為主分類
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12">
-        <BlogContent post={post} relatedPosts={relatedPosts} />
+        <BlogContent post={blogPost} relatedPosts={relatedPosts} />
         <Sidebar recommendedPosts={recommendedPosts} />
       </div>
     </div>

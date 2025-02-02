@@ -7,7 +7,7 @@ type Post = {
   id: string;
   content: string;
   title: string;
-  category: string;
+  categories: string[];  // 改為數組
   date: string;
   image: string;
   excerpt: string;

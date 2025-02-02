@@ -2,44 +2,42 @@
 import { useState } from "react";
 import Image from "next/image";
 
-type SubItem = {
-  title: string;
-  items?: string[];
-};
-
 type NavItem = {
   title: string;
-  subItems?: (string | SubItem)[];
+  subItems?: {
+    title: string;
+    link: string;
+  }[];
 };
 
 const navItems: NavItem[] = [
   {
     title: "LIVING SPACES",
     subItems: [
-      "Living Room",
-      "Bedroom",
-      "Kitchen & Dining",
-      "Bathroom",
-      "Work From Home",
-      "Rentals"
+      { title: "Living Room", link: "/blog/category/living-room" },
+      { title: "Bedroom", link: "/blog/category/bedroom" },
+      { title: "Kitchen & Dining", link: "/blog/category/kitchen-dining" },
+      { title: "Bathroom", link: "/blog/category/bathroom" },
+      { title: "Work From Home", link: "/blog/category/work-from-home" },
+      { title: "Rentals", link: "/blog/category/rentals" }
     ],
   },
   {
     title: "DESIGN ELEMENTS",
     subItems: [
-      "Space Planning",
-      "Colors & Palettes",
-      "Lighting",
-      "Materials & Textures"
+      { title: "Space Planning", link: "/blog/category/space-planning" },
+      { title: "Colors & Palettes", link: "/blog/category/colors-palettes" },
+      { title: "Lighting", link: "/blog/category/lighting" },
+      { title: "Materials & Textures", link: "/blog/category/materials-textures" }
     ],
   },
   {
     title: "INSPIRATION",
     subItems: [
-      "Cozy Home",
-      "Modern Living",
-      "Trending",
-      "Makeovers"
+      { title: "Cozy Home", link: "/blog/category/cozy-home" },
+      { title: "Modern Living", link: "/blog/category/modern-living" },
+      { title: "Trending", link: "/blog/category/trending" },
+      { title: "Makeovers", link: "/blog/category/makeovers" }
     ],
   },
   {
@@ -48,8 +46,6 @@ const navItems: NavItem[] = [
 ];
 
 export default function Navigation() {
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
   return (
     <header className="w-full bg-white relative z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,57 +63,33 @@ export default function Navigation() {
 
       <div className="border-y border-gray-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center py-4">
+          <div className="flex justify-center py-2">
             <div className="flex space-x-16 font-montserrat text-sm tracking-widest">
               {navItems.map((item) => (
-                <div
+                <div 
                   key={item.title}
-                  className="relative"
-                  onMouseEnter={() => setActiveMenu(item.title)}
-                  onMouseLeave={() => setActiveMenu(null)}
+                  className="relative group"
                 >
-                  <a href="#" className="text-gray-900 hover:text-gray-500">
+                  <a
+                    href="#"
+                    className="block px-4 py-1 text-gray-900 hover:text-gray-500"
+                  >
                     {item.title}
                   </a>
                   
-                  {activeMenu === item.title && item.subItems && (
-                    <div className="absolute left-1/2 -translate-x-1/2 mt-4 bg-white shadow-lg rounded-sm py-2 min-w-[200px] z-50">
-                      {item.subItems.map((subItem) => (
-                        <div key={typeof subItem === 'string' ? subItem : subItem.title} className="relative group">
-                          {typeof subItem === 'string' ? (
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                            >
-                              {subItem}
-                            </a>
-                          ) : (
-                            <>
-                              <a
-                                href="#"
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                              >
-                                {subItem.title}
-                              </a>
-                              {subItem.items && (
-                                <div className="absolute left-full top-0 hidden group-hover:block">
-                                  <div className="bg-white shadow-lg rounded-sm py-2 min-w-[160px] ml-2">
-                                    {subItem.items.map((item) => (
-                                      <a
-                                        key={item}
-                                        href="#"
-                                        className="block px-4 py-2 text-sm hover:bg-gray-50"
-                                      >
-                                        {item}
-                                      </a>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </>
-                          )}
-                        </div>
-                      ))}
+                  {item.subItems && (
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <div className="bg-white shadow-lg rounded-sm py-2 min-w-[200px]">
+                        {item.subItems.map((subItem) => (
+                          <a
+                            key={subItem.title}
+                            href={subItem.link}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                          >
+                            {subItem.title}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
