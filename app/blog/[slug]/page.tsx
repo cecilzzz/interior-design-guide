@@ -1,6 +1,7 @@
 import { getAllPosts } from '@/app/lib/posts';
 import BlogContent from '@/app/components/BlogContent';
 import Sidebar from '@/app/components/Sidebar';
+import type { Metadata } from 'next/types';
 
 // 這些是示例數據，實際應該從數據庫或其他地方獲取
 const relatedPosts = [
@@ -22,15 +23,10 @@ const recommendedPosts = [
   // ... 其他推薦文章
 ];
 
-export async function generateStaticParams() {
-  const posts = getAllPosts();
-  return posts.map((post) => ({
-    slug: post.id,
-  }));
-}
-
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const posts = getAllPosts();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function Page(props: any) {
+  const { params } = props;
+  const posts = await getAllPosts();
   const post = posts.find((p) => p.id === params.slug);
   
   if (!post) {
@@ -51,4 +47,24 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </div>
     </div>
   );
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateMetadata(props: any): Promise<Metadata> {
+  const { params } = props;
+  const posts = await getAllPosts();
+  const post = posts.find((p) => p.id === params.slug);
+
+  return {
+    title: post?.title || 'Post not found',
+    description: post?.excerpt || '',
+  };
+}
+
+// 靜態參數生成
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    slug: post.id,
+  }));
 } 
