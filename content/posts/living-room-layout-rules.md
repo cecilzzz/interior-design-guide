@@ -6,7 +6,6 @@ image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format
 excerpt: "Discover the essential rules for creating a perfectly balanced and functional living room layout, regardless of your space's size or shape."
 ---
 
-
 # 10 Essential Living Room Layout Rules for Any Space
 
 Living room design doesn't have to be complicated. These timeless rules will help you create a comfortable and functional living space, regardless of your room's size or shape.
