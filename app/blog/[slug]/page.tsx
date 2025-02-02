@@ -1,6 +1,7 @@
 import { getAllPosts } from '@/app/lib/posts';
 import BlogContent from '@/app/components/BlogContent';
 import Sidebar from '@/app/components/Sidebar';
+import { Metadata } from 'next';
 
 // 這些是示例數據，實際應該從數據庫或其他地方獲取
 const relatedPosts = [
@@ -22,6 +23,22 @@ const recommendedPosts = [
   // ... 其他推薦文章
 ];
 
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const posts = getAllPosts();
+  const post = posts.find((p) => p.id === params.slug);
+
+  return {
+    title: post?.title || 'Post not found',
+    description: post?.excerpt || '',
+  };
+}
+
 export async function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({
@@ -29,7 +46,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
+export default async function BlogPost({ params }: PageProps) {
   const posts = getAllPosts();
   const post = posts.find((p) => p.id === params.slug);
   
