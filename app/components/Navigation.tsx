@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 type NavItem = {
   title: string;
@@ -16,7 +16,7 @@ const navItems: NavItem[] = [
     subItems: [
       { title: "Living Room", link: "/blog/category/living-room" },
       { title: "Bedroom", link: "/blog/category/bedroom" },
-      { title: "Kitchen & Dining", link: "/blog/category/kitchen-and-dining" },
+      { title: "Kitchen &amp; Dining", link: "/blog/category/kitchen-and-dining" },
       { title: "Bathroom", link: "/blog/category/bathroom" },
       { title: "Work From Home", link: "/blog/category/work-from-home" },
       { title: "Rentals", link: "/blog/category/rentals" }
@@ -26,9 +26,9 @@ const navItems: NavItem[] = [
     title: "DESIGN ELEMENTS",
     subItems: [
       { title: "Space Planning", link: "/blog/category/space-planning" },
-      { title: "Colors & Palettes", link: "/blog/category/colors-and-palettes" },
+      { title: "Colors &amp; Palettes", link: "/blog/category/colors-and-palettes" },
       { title: "Lighting", link: "/blog/category/lighting" },
-      { title: "Materials & Textures", link: "/blog/category/materials-textures" }
+      { title: "Materials &amp; Textures", link: "/blog/category/materials-textures" }
     ],
   },
   {
@@ -50,14 +50,16 @@ export default function Navigation() {
     <header className="w-full bg-white relative z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center py-8">
-          <Image
-            src="/logo-main-light.png"
-            alt="Olivia Wilson"
-            width={100}
-            height={100}
-            priority
-            className="h-auto w-auto"
-          />
+          <Link href="/">
+            <Image
+              src="/logo-main-light.png"
+              alt="Olivia Wilson"
+              width={100}
+              height={100}
+              priority
+              className="h-auto w-auto"
+            />
+          </Link>
         </div>
       </div>
 

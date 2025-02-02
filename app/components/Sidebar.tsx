@@ -18,7 +18,7 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
       {/* 作者簡介 */}
       <div className="text-center">
         <h2 className="section-title text-2xl font-playfair mb-8">
-          <span>HI I'M OLIVIA</span>
+          <span>HI I&apos;M OLIVIA</span>
         </h2>
         <div className="relative w-48 h-48 mx-auto mb-6">
           <Image
