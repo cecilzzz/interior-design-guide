@@ -2,7 +2,7 @@
 title: "Kitchen Counter Heights: A Practical Guide to Standard Measurements"
 categories: ["Kitchen & Dining", "Space Planning"]
 date: "2024-03-22"
-image: "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&q=80&w=1920"
+image: "https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?auto=format&fit=crop&q=80&w=1920"
 excerpt: "An essential guide to understanding standard kitchen counter heights, ergonomic considerations, and practical measurements for optimal kitchen functionality."
 ---
 

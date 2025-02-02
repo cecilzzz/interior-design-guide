@@ -6,6 +6,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
   
   // 用於顯示的格式：'Living Room'
   const displayCategory = params.category
+    .replace('-and-', ' & ')  // URL 中的 and 轉換回 &
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
