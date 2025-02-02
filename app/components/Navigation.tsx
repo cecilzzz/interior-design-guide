@@ -16,7 +16,7 @@ const navItems: NavItem[] = [
     subItems: [
       { title: "Living Room", link: "/blog/category/living-room" },
       { title: "Bedroom", link: "/blog/category/bedroom" },
-      { title: "Kitchen &amp; Dining", link: "/blog/category/kitchen-and-dining" },
+      { title: "Kitchen & Dining", link: "/blog/category/kitchen-and-dining" },
       { title: "Bathroom", link: "/blog/category/bathroom" },
       { title: "Work From Home", link: "/blog/category/work-from-home" },
       { title: "Rentals", link: "/blog/category/rentals" }
@@ -26,9 +26,9 @@ const navItems: NavItem[] = [
     title: "DESIGN ELEMENTS",
     subItems: [
       { title: "Space Planning", link: "/blog/category/space-planning" },
-      { title: "Colors &amp; Palettes", link: "/blog/category/colors-and-palettes" },
+      { title: "Colors & Palettes", link: "/blog/category/colors-and-palettes" },
       { title: "Lighting", link: "/blog/category/lighting" },
-      { title: "Materials &amp; Textures", link: "/blog/category/materials-textures" }
+      { title: "Materials & Textures", link: "/blog/category/materials-and-textures" }
     ],
   },
   {
