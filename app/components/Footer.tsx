@@ -7,10 +7,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About Section */}
           <div className="col-span-2">
-            <h3 className="font-playfair text-lg mb-4">About Olivia Wilson</h3>
+            <h3 className="font-playfair text-lg mb-4">About Us</h3>
             <p className="text-gray-600 text-sm">
-              Dedicated to sharing insights and inspiration for creating beautiful, functional living spaces. 
-              Join me in exploring the world of interior design.
+              Your comprehensive guide to interior design. Discover inspiration, tips, and practical solutions 
+              for creating beautiful and functional living spaces.
             </p>
           </div>
 
@@ -51,7 +51,7 @@ export default function Footer() {
 
         <div className="mt-8 pt-8 border-t border-gray-200">
           <div className="text-center text-sm text-gray-500">
-            <p>Copyright © {new Date().getFullYear()} Olivia Wilson Interior Design. All Rights Reserved.</p>
+            <p>Copyright © {new Date().getFullYear()} Interior Design Guide. All Rights Reserved.</p>
           </div>
         </div>
       </div>

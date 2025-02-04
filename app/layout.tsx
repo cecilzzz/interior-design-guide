@@ -19,8 +19,14 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Olivia Wilson",
-  description: "Interior Design Portfolio",
+  title: "Interior Design Guide | Your Complete Resource for Home Design",
+  description: "Discover expert tips, inspiration, and practical solutions for creating beautiful and functional living spaces. Your comprehensive guide to interior design.",
+  keywords: "interior design, home decor, living spaces, design tips, home improvement",
+  openGraph: {
+    title: "Interior Design Guide",
+    description: "Your comprehensive resource for interior design inspiration and guidance",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

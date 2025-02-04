@@ -51,10 +51,10 @@ export default function Navigation() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center py-8">
           <Image
-            src="/logo-main-light.png"
-            alt="Olivia Wilson"
-            width={100}
-            height={100}
+            src="/logo-interior-design-guide.png"
+            alt="Interior Design Guide"
+            width={200}
+            height={60}
             priority
             className="h-auto w-auto"
           />
