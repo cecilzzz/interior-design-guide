@@ -1,0 +1,26 @@
+# 項目類型和限制
+project_type: "static-next-js"
+static_export: true
+server_features: false
+
+# 技術棧
+framework: "Next.js 13.5.8"
+routing: "App Router"
+build_output: "export"
+
+# 開發限制
+restrictions:
+  - "No Server Actions"
+  - "No API Routes"
+  - "No Dynamic Server Features"
+  - "Build-time Data Fetching Only"
+
+# 項目說明
+description: "A static interior design inspiration website built with Next.js, using static export for deployment. All content is generated at build time."
+
+# 開發指南
+development_notes: "All features must be compatible with static site generation. No server-side functionality is available."
+
+# 內容類型
+content_type: "Interior Design Blog"
+content_format: "Static Markdown Files" 
