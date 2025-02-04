@@ -21,6 +21,8 @@ const nextConfig = {
     // 3. 使用 Cloudinary 的完整圖片優化功能
     unoptimized: true
   },
+  // 確保靜態生成時正確處理動態路由
+  trailingSlash: true
 };
 
 module.exports = nextConfig;

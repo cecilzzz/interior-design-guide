@@ -23,9 +23,20 @@ export default function CategoryPage({ params }: { params: { category: string } 
 }
 
 export function generateStaticParams() {
-  return [
-    { category: 'living-room' },
-    { category: 'bedroom' },
-    // ... 其他分類
-  ];
+  const posts = getAllPosts();
+  
+  // 獲取所有唯一的分類
+  const categories = new Set<string>();
+  posts.forEach(post => {
+    post.categories.forEach(category => {
+      categories.add(category.toLowerCase()
+        .replace(' & ', '-and-')
+        .replace(/\s+/g, '-'));
+    });
+  });
+  
+  // 返回所有分類的路徑參數
+  return Array.from(categories).map(category => ({
+    category: category
+  }));
 } 
