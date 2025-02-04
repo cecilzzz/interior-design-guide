@@ -22,7 +22,7 @@ const nextConfig = {
     unoptimized: true
   },
   // 確保靜態生成時正確處理動態路由
-  trailingSlash: true
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;

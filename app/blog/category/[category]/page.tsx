@@ -1,5 +1,33 @@
 import { getAllPosts } from '@/app/lib/posts';
 import PostGrid from '@/app/components/PostGrid';
+import type { Metadata } from 'next';
+
+type Props = {
+  params: { category: string }
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const displayCategory = params.category
+    .replace('-and-', ' & ')
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+  return {
+    title: `${displayCategory} - Interior Design Ideas and Inspiration`,
+    description: `Explore our collection of ${displayCategory.toLowerCase()} design ideas, tips, and inspiration for your home.`,
+    openGraph: {
+      title: `${displayCategory} - Interior Design Ideas`,
+      description: `Discover ${displayCategory.toLowerCase()} design inspiration and practical tips.`,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${displayCategory} - Interior Design Ideas`,
+      description: `Discover ${displayCategory.toLowerCase()} design inspiration and practical tips.`,
+    },
+  };
+}
 
 export default function CategoryPage({ params }: { params: { category: string } }) {
   const posts = getAllPosts();

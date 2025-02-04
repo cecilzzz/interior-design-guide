@@ -1,6 +1,7 @@
 import { getAllPosts } from '@/app/lib/posts';
 import BlogContent from '@/app/components/BlogContent';
 import Sidebar from '@/app/components/Sidebar';
+import type { Metadata } from 'next';
 
 // 這些是示例數據，實際應該從數據庫或其他地方獲取
 const relatedPosts = [
@@ -21,6 +22,47 @@ const recommendedPosts = [
   },
   // ... 其他推薦文章
 ];
+
+type Props = {
+  params: { slug: string }
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const posts = getAllPosts();
+  const post = posts.find((p) => p.id === params.slug);
+  
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+      description: 'The requested blog post could not be found.'
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.date,
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const posts = getAllPosts();

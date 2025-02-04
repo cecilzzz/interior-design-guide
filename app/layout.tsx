@@ -19,13 +19,54 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Interior Design Guide | Your Complete Resource for Home Design",
+  metadataBase: new URL('https://interior-design-guide.vercel.app'),
+  title: {
+    default: "Interior Design Guide | Your Complete Resource for Home Design",
+    template: "%s | Interior Design Guide"
+  },
   description: "Discover expert tips, inspiration, and practical solutions for creating beautiful and functional living spaces. Your comprehensive guide to interior design.",
   keywords: "interior design, home decor, living spaces, design tips, home improvement",
+  
+  // Basic OpenGraph
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Interior Design Guide",
     title: "Interior Design Guide",
     description: "Your comprehensive resource for interior design inspiration and guidance",
-    type: "website",
+    images: [
+      {
+        url: "og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Interior Design Guide"
+      }
+    ],
+  },
+  
+  // Twitter
+  twitter: {
+    card: "summary_large_image",
+    title: "Interior Design Guide",
+    description: "Your comprehensive resource for interior design inspiration and guidance",
+    images: ["og-default.jpg"],
+  },
+  
+  // Robots
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  
+  // Viewport
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
   },
 };
 
