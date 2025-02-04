@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 
 // 配置 Playfair Display 字體
 const playfair = Playfair_Display({
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className={`${playfair.variable} ${montserrat.variable}`}>
         <Navigation />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
