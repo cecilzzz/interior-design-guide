@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 type NavItem = {
   title: string;
@@ -50,14 +51,16 @@ export default function Navigation() {
     <header className="w-full bg-white relative z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center py-8">
-          <Image
-            src="/logo-interior-design-guide.png"
-            alt="Interior Design Guide"
-            width={200}
-            height={60}
-            priority
-            className="h-auto w-auto"
-          />
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <Image
+              src="/logo-interior-design-guide.png?v=2"
+              alt="Interior Design Guide"
+              width={200}
+              height={60}
+              priority
+              className="h-auto w-auto"
+            />
+          </Link>
         </div>
       </div>
 
