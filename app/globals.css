@@ -12,6 +12,7 @@ body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
   font-family: var(--font-montserrat);
+  padding-top: 100px; /* 與導航欄高度相同 */
 }
 
 .heading {

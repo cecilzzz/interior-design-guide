@@ -52,7 +52,7 @@ export default function Home() {
   };
 
   return (
-    <div className="mx-auto pt-12">
+    <div className="mx-auto pt-8">
       {/* Hero and Featured sections - full width */}
       <div className="max-w-[120rem] mx-auto px-12 lg:px-24">
         <HeroSection
