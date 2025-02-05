@@ -4,7 +4,8 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
+  --background-rgb: 250, 249, 246;
+  --nav-background: #3C3C3C;
 }
 
 body {
@@ -42,6 +43,6 @@ body {
   }
   
   .section-title span {
-    @apply bg-white px-8;
+    @apply bg-[rgb(var(--background-rgb))] px-8;
   }
 }
