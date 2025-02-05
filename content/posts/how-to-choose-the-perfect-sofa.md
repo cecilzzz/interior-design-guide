@@ -1,6 +1,6 @@
 ---
 title: "How to Choose the Perfect Sofa for Your Living Room"
-categories: ["Living Room", "Furniture"]
+categories: ["Living Room"]
 date: "2024-03-22"
 image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=1920"
 excerpt: "A comprehensive guide to selecting the ideal sofa that combines style, comfort, and durability for your living space."

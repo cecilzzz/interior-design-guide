@@ -52,19 +52,23 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
-      <HeroSection
-        category="INTERIOR DESIGN"
-        title="Transform Your Space with Timeless Design"
-        date="DECEMBER 2024"
-        image="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1920"
-      />
-      
-      <div className="py-16">
-        <FeaturedCards />
+    <div className="mx-auto pt-12">
+      {/* Hero and Featured sections - full width */}
+      <div className="max-w-[120rem] mx-auto px-12 lg:px-24">
+        <HeroSection
+          category="INTERIOR DESIGN"
+          title="Transform Your Space with Timeless Design"
+          date="DECEMBER 2024"
+          image="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1920"
+        />
+        
+        <div className="py-16">
+          <FeaturedCards />
+        </div>
       </div>
       
-      <div className="py-12">
+      {/* Blog content section - original width */}
+      <div className="max-w-6xl mx-auto px-12 lg:px-24 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12">
           <BlogContent post={blogPost} relatedPosts={relatedPosts} />
           <Sidebar recommendedPosts={recommendedPosts} />
