@@ -27,6 +27,11 @@ export const metadata: Metadata = {
   description: "Discover expert tips, inspiration, and practical solutions for creating beautiful and functional living spaces. Your comprehensive guide to interior design.",
   keywords: "interior design, home decor, living spaces, design tips, home improvement",
   
+  // Google Search Console Verification
+  verification: {
+    google: 'MIQAEqy4KvQJvS-DeDe1H-X9RYLznKd622lpC_sgydI',
+  },
+  
   // Basic OpenGraph
   openGraph: {
     type: "website",
