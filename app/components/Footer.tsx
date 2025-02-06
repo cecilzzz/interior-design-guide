@@ -3,10 +3,10 @@ import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-100">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {/* About Section */}
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <h3 className="font-playfair text-lg mb-4">About Us</h3>
             <p className="text-gray-600 text-sm">
               Your comprehensive guide to interior design. Discover inspiration, tips, and practical solutions 

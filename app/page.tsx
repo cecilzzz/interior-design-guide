@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <div className="mx-auto pt-8">
       {/* Hero and Featured sections - full width */}
-      <div className="max-w-[120rem] mx-auto px-12 lg:px-24">
+      <div className="max-w-[120rem] mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
         <HeroSection
           category="INTERIOR DESIGN"
           title="Transform Your Space with Timeless Design"
@@ -62,14 +62,14 @@ export default function Home() {
           image="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1920"
         />
         
-        <div className="py-16">
+        <div className="py-12 md:py-16">
           <FeaturedCards />
         </div>
       </div>
       
-      {/* Blog content section - original width */}
-      <div className="max-w-6xl mx-auto px-12 lg:px-24 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12">
+      {/* Blog content section */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-8 md:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-12">
           <BlogContent post={blogPost} relatedPosts={relatedPosts} />
           <Sidebar recommendedPosts={recommendedPosts} />
         </div>
