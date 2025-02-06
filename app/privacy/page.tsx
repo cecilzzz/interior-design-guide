@@ -8,12 +8,14 @@ export default function PrivacyPolicy() {
       <div className="prose max-w-none">
         <section className="mb-8">
           <h2 className="text-2xl font-playfair mb-4">1. Data Collection</h2>
-          <p>We use Google Analytics to collect and analyze website traffic. The information we collect includes:</p>
+          <p>We use Google Analytics 4 (GA4) to collect and analyze website traffic. The information we collect includes:</p>
           <ul>
             <li>Page visit information and browsing patterns</li>
             <li>Time spent on pages</li>
             <li>Device information (type, browser, operating system)</li>
             <li>Geographic location (country/region level only)</li>
+            <li>User engagement metrics</li>
+            <li>Conversion events and goals</li>
           </ul>
         </section>
 
@@ -21,10 +23,11 @@ export default function PrivacyPolicy() {
           <h2 className="text-2xl font-playfair mb-4">2. Cookie Usage</h2>
           <p>Our website uses cookies for:</p>
           <ul>
-            <li>Analytics purposes (Google Analytics)
+            <li>Google Analytics 4 (GA4)
               <ul>
+                <li>Cookie Name: _ga, _ga_[Measurement ID]</li>
                 <li>Duration: 2 years</li>
-                <li>Purpose: Traffic analysis</li>
+                <li>Purpose: Distinguish unique users and maintain session data</li>
               </ul>
             </li>
             <li>Technical cookies
