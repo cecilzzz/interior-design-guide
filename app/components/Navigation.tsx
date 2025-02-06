@@ -59,50 +59,54 @@ export default function Navigation() {
             href="/"
             className="flex-shrink-0 h-full hover:opacity-80 transition-opacity flex items-center"
           >
-            <Image
-              src="/logo-v2.png"
-              alt="Interior Design Guide"
-              width={500}
-              height={100}
-              priority
-              className="h-[60%] sm:h-[70%] md:h-[80%] w-auto"
-            />
+            <div className="relative w-[200px] sm:w-[300px] md:w-[400px] h-[48px] sm:h-[72px] md:h-[96px]">
+              <Image
+                src="/logo-no-padding.png"
+                alt="Interior Design Guide"
+                fill
+                priority
+                className="object-contain"
+                sizes="(min-width: 1024px) 400px, (min-width: 768px) 300px, 200px"
+              />
+            </div>
           </Link>
 
-          {/* Primary menu container - controls the overall navigation layout */}
-          <nav className="hidden md:flex space-x-6 lg:space-x-12 font-montserrat text-sm lg:text-base tracking-widest h-full items-center">
-            {navItems.map((item) => (
-              <div 
-                key={item.title}
-                className="relative group"
-              >
-                {/* Primary menu item */}
-                <a
-                  href="#"
-                  className="block px-3 lg:px-5 py-1 text-white hover:text-gray-300 whitespace-nowrap"
+          {/* Primary menu container */}
+          <nav className="hidden md:flex items-center h-full">
+            <ul className="flex space-x-6 lg:space-x-10 font-montserrat text-sm lg:text-base tracking-widest ml-8 lg:ml-12">
+              {navItems.map((item) => (
+                <li 
+                  key={item.title}
+                  className="relative group"
                 >
-                  {item.title}
-                </a>
-                
-                {item.subItems && (
-                  // Submenu positioning container
-                  <div className="absolute left-0 top-full invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    {/* Submenu content container */}
-                    <div className="bg-[#3C3C3C] shadow-lg rounded-sm py-2 w-[250px] lg:w-[300px]">
-                      {item.subItems.map((subItem) => (
-                        <a
-                          key={subItem.title}
-                          href={subItem.link}
-                          className="block pl-4 lg:pl-5 pr-8 lg:pr-12 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-montserrat"
-                        >
-                          {subItem.title}
-                        </a>
-                      ))}
+                  {/* Primary menu item */}
+                  <a
+                    href="#"
+                    className="block py-1 text-white hover:text-gray-300 whitespace-nowrap"
+                  >
+                    {item.title}
+                  </a>
+                  
+                  {item.subItems && (
+                    // Submenu positioning container
+                    <div className="absolute left-0 top-full invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      {/* Submenu content container */}
+                      <div className="bg-[#3C3C3C] shadow-lg rounded-sm py-2 w-[250px] lg:w-[300px]">
+                        {item.subItems.map((subItem) => (
+                          <a
+                            key={subItem.title}
+                            href={subItem.link}
+                            className="block px-5 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-montserrat"
+                          >
+                            {subItem.title}
+                          </a>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </li>
+              ))}
+            </ul>
           </nav>
 
           {/* Mobile menu button */}
