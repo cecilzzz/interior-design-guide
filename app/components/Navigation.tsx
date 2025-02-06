@@ -59,14 +59,14 @@ export default function Navigation() {
             href="/"
             className="flex-shrink-0 h-full hover:opacity-80 transition-opacity flex items-center"
           >
-            <div className="relative w-[200px] sm:w-[300px] md:w-[400px] h-[48px] sm:h-[72px] md:h-[96px]">
+            <div className="relative w-[320px] md:w-[360px] lg:w-[400px] h-[76.8px] md:h-[86.4px] lg:h-[96px]">
               <Image
                 src="/logo-no-padding.png"
                 alt="Interior Design Guide"
                 fill
                 priority
                 className="object-contain"
-                sizes="(min-width: 1024px) 400px, (min-width: 768px) 300px, 200px"
+                sizes="(min-width: 1024px) 400px, (min-width: 768px) 360px, 320px"
               />
             </div>
           </Link>
