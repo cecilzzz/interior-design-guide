@@ -1,0 +1,24 @@
+# *
+User-agent: *
+Allow: /
+Allow: /blog/
+Allow: /blog/category/
+Allow: /privacy/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /static/
+
+# *
+User-agent: *
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.png$
+Allow: /*.svg$
+Allow: /*.pdf$
+
+# Host
+Host: https://interior-design-guide.vercel.app
+
+# Sitemaps
+Sitemap: https://interior-design-guide.vercel.app/sitemap.xml
