@@ -87,13 +87,27 @@ export default function RootLayout({
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-PGBK5E7000"
           strategy="afterInteractive"
+          onLoad={() => {
+            console.log('GA4 腳本已載入');
+          }}
+          onError={(e) => {
+            console.error('GA4 腳本載入失敗:', e);
+          }}
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script 
+          id="google-analytics" 
+          strategy="afterInteractive"
+          onLoad={() => {
+            console.log('GA4 設定已完成');
+          }}
+        >
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-PGBK5E7000');
+            gtag('config', 'G-PGBK5E7000', {
+              debug_mode: true
+            });
           `}
         </Script>
       </head>
