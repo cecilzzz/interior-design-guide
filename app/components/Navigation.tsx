@@ -25,11 +25,12 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    title: "DESIGN ELEMENTS",
+    title: "DESIGN FRAMEWORK",
     subItems: [
+      { title: "Design Principles", link: "/blog/category/design-principles" },
       { title: "Space Planning", link: "/blog/category/space-planning" },
-      { title: "Colors & Palettes", link: "/blog/category/colors-and-palettes" },
       { title: "Lighting", link: "/blog/category/lighting" },
+      { title: "Colors & Palettes", link: "/blog/category/colors-and-palettes" },
       { title: "Materials & Textures", link: "/blog/category/materials-textures" }
     ],
   },
