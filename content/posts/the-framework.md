@@ -2,7 +2,7 @@
 title: "The Framework: A Systematic Approach to Interior Design"
 categories: ["Design Principles"]
 date: "2024-03-23"
-image: "https://images.unsplash.com/photo-1545136903-c15b6449ea3c?auto=format&fit=crop&q=80&w=1920"
+image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1920"
 excerpt: "Discover a clear, structured approach to interior design through four fundamental layers - space, light, color, and materials - that work together to create harmonious living spaces."
 ---
 
