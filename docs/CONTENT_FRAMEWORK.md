@@ -1,6 +1,62 @@
 # Interior Design Framework
 // 網站內容結構與規劃文檔
 
+## Target Audience
+// 目標用戶畫像定位
+
+### Primary Users
+// 核心用戶群體
+- First-time Renters & New Homeowners
+  // 首次租房者與新房業主
+  // - 已有基本設計意識
+  // - 需要系統化的提升方法
+  // - 追求可靠的決策依據
+  // - 重視成本效益
+
+- DIY Enthusiasts
+  // 熱衷自主設計者
+  // - 有IKEA等基礎經驗
+  // - 渴望突破基礎佈置
+  // - 追求可執行的進階方案
+  // - 注重學習效率
+
+- Practical Decision Makers
+  // 理性決策導向者
+  // - 具備基本審美認知
+  // - 重視投資回報比
+  // - 追求效率與實用性
+  // - 依賴可靠的參考標準
+
+### User Characteristics
+// 用戶共同特徵
+- Beyond basic IKEA solutions
+- Value systematic approaches
+- Prefer clear guidelines
+- Focus on practical solutions
+- Appreciate cost-effectiveness
+- Seek efficient learning paths
+
+### Decision-Making Profile
+// 決策特徵畫像
+- Strong self-directed learning tendency
+- Prefer autonomous decision-making
+- Value control over their space
+- Appreciate structured thinking
+- Comfortable with quantitative metrics
+- Embrace systematic problem-solving
+- Trust data-driven decisions
+- Value verification methods
+
+### Product Positioning
+// 產品定位
+- Bridge between basic and intermediate design
+- Systematic upgrade from IKEA-level solutions
+- Focus on design thinking and decision making
+- Provide actionable frameworks and standards
+- Enable confident design choices
+- Support autonomous decision-making
+- Offer engineering-minded design approach
+
 ## Navigation Structure
 // 完整導航框架，定義網站整體結構
 
