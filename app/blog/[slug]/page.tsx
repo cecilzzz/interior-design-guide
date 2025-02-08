@@ -1,11 +1,8 @@
-'use client';
-
 import { getAllPosts } from '@/app/lib/posts';
 import BlogContent from '@/app/components/BlogContent';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
-import { useEffect } from 'react';
-import { trackArticleRead, trackScrollDepth, trackTimeOnPage } from '@/app/utils/analytics';
+import BlogPostClient from './BlogPostClient';
 
 // 這些是示例數據，實際應該從數據庫或其他地方獲取
 const relatedPosts = [
@@ -78,22 +75,6 @@ export async function generateStaticParams() {
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const posts = getAllPosts();
   const post = posts.find((p) => p.id === params.slug);
-  
-  useEffect(() => {
-    if (post) {
-      // 開始所有追蹤
-      const cleanupArticleRead = trackArticleRead(post.title);
-      const cleanupScrollDepth = trackScrollDepth();
-      const cleanupTimeOnPage = trackTimeOnPage();
-
-      // 返回清理函數
-      return () => {
-        cleanupArticleRead();
-        cleanupScrollDepth();
-        cleanupTimeOnPage();
-      };
-    }
-  }, [post]);
 
   if (!post) {
     return <div>Post not found</div>;
@@ -108,7 +89,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
-        <BlogContent post={blogPost} relatedPosts={relatedPosts} />
+        <BlogPostClient post={blogPost} relatedPosts={relatedPosts} />
         <Sidebar recommendedPosts={recommendedPosts} />
       </div>
     </div>
