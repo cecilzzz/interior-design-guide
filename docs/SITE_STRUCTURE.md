@@ -94,10 +94,79 @@
   // - 空間節奏營造
 
 #### Lighting
-// 光線設計的技術原理
-- "Lighting Calculations: Essential Formulas"
-- "Light Distribution: Technical Principles"
-- "Color Temperature: Scientific Guide"
+// 光線設計的技術原理與應用方法
+
+- "The Power of Light: Transform Your Space"
+  // 光線的力量
+  // - Why lighting is your first renovation step
+  // - How light shapes perception
+  // - Quick wins in lighting design
+  // - Understanding light's impact
+
+- "The Framework: A Systematic Approach to Interior Design"
+  // 照明設計的系統思維
+  // - Reading Light: Understanding Your Space
+  //   * Light mapping exercise
+  //   * Activity analysis
+  //   * Problem identification
+  // - Making Decisions: The Lighting Design Process
+  //   * Setting priorities
+  //   * Choosing solutions
+  //   * Budget allocation
+  // - Building Your Lighting Plan
+  //   * Layer planning
+  //   * Source selection
+  //   * Control considerations
+
+- "Lighting Layers: Building Atmosphere"
+  // 光層次設計
+  // - Ambient: Setting the Base
+  //   * Coverage principles
+  //   * Light distribution
+  //   * Common mistakes
+  // - Task: Supporting Activities
+  //   * Work area standards
+  //   * Reading light setup
+  //   * Kitchen task lighting
+  // - Accent: Creating Focus
+  //   * Wall washing techniques
+  //   * Feature highlighting
+  //   * Art lighting
+  // - Decorative: Adding Character
+  //   * Fixture selection
+  //   * Placement strategy
+  //   * Balance principles
+
+- "Light Planning: Room by Room"
+  // 空間照明規劃
+  // - Living Spaces
+  // - Kitchen & Dining
+  // - Bedrooms
+  // - Bathrooms
+  // - Home Office
+  // Each section includes:
+  //   * Activity analysis
+  //   * Layer planning
+  //   * Common challenges
+  //   * Solution examples
+
+- "Natural & Artificial: Working with Light Sources"
+  // 光源運用
+  // - Natural Light
+  //   * Window optimization
+  //   * Seasonal changes
+  //   * Control methods
+  // - Artificial Light
+  //   * Source selection
+  //   * Technical basics
+  //   * Practical applications
+
+- "Lighting Control: Creating Scenes"
+  // 照明控制
+  // - Basic Controls
+  // - Scene Setting
+  // - Smart Integration
+  // - Energy Efficiency
 
 #### Colors & Palettes
 // 顏色應用的系統方法
