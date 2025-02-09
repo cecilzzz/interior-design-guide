@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next-sitemap",
-    "start": "npx serve out -p $PORT",
-    "preview": "npx serve out",
+    "start": "serve out",
+    "preview": "serve out",
     "lint": "next lint"
   },
   "dependencies": {

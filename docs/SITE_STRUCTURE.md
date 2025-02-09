@@ -36,20 +36,62 @@
 
 #### Design Principles
 // 設計基礎理論，提供決策框架
-- "The 7 Elements of Interior Design: A Complete Guide"
-- "Balance and Symmetry: Foundation of Good Design"
-- "Scale and Proportion: The Mathematical Approach"
-- "Visual Weight: Understanding Space Distribution"
-- "Unity in Design: Systematic Approach"
-- "Contrast & Harmony: Technical Analysis"
+- "The Framework: A Systematic Approach to Interior Design"
+- "Visual Weight: Understanding Balance in Design"
+- "Rhythm & Movement: Guiding the Eye"
+- "Contrast & Unity: The Dynamic Balance"
 
 #### Space Planning
 // 空間規劃的技術方法論
-- "Room Layout Mathematics: Essential Formulas"
-- "Traffic Flow Analysis: A Technical Guide"
-- "Space Zoning: Professional Planning Method"
-- "Spatial Hierarchy: Design Decision Framework"
-- "Measurement Standards: Universal Guide"
+
+- "Space Planning Fundamentals: A Technical Framework"
+  // 整體框架介紹
+  // - 空間規劃的核心原則
+  // - 決策流程與方法論
+  // - 評估標準與指標
+  // - 規劃步驟與工具
+
+- "Space Zoning: Activity-Based Planning"
+  // 功能分區
+  // - 需求分析方法
+  // - 區域關係矩陣
+  // - 彈性空間設計
+  // - 公私領域劃分
+
+- "Traffic Flow: Movement & Circulation"
+  // 動線規劃
+  // - 動線類型與層級
+  // - 流量分析方法
+  // - 交通節點設計
+  // - 無障礙考量
+
+- "Spatial Hierarchy: Creating Order"
+  // 空間層級
+  // - 主次關係設計
+  // - 視覺焦點規劃
+  // - 空間序列設計
+  // - 層級轉換方法
+
+- "Scale & Proportion: Spatial Relationships"
+  // 空間比例
+  // - 房間比例原則
+  // - 家具配置關係
+  // - 視覺平衡法則
+  // - 空間密度控制
+
+- "Measurement Standards: The Human Factor"
+  // 人體工學與空間標準
+  // - 人體尺度基準
+  // - 活動空間需求
+  // - 通用設計標準
+  // - 舒適區間定義
+
+- "The Power of Negative Space"
+  // 留白的藝術與科學
+  // - 功能性留白
+  // - 視覺呼吸空間
+  // - 緩衝區設計
+  // - 空間節奏營造
 
 #### Lighting
 // 光線設計的技術原理

@@ -2,7 +2,7 @@
 title: "Rhythm & Movement: Guiding the Eye"
 categories: ["Design Principles"]
 date: "2024-03-25"
-image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb3?auto=format&fit=crop&q=80&w=1920"
+image: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&q=80&w=1920"
 excerpt: "Discover how to create spaces that naturally guide movement and attention, using the principles of rhythm and flow to make your interior design more dynamic and engaging."
 ---
 
