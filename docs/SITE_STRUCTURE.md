@@ -33,6 +33,10 @@
 
 ### Design Framework
 // 核心知識體系，建立思維框架和技術基礎
+// 注意：這部分內容需要特別注意理論與實踐的結合
+// - 從具體場景引入抽象概念
+// - 運用決策框架幫助理解
+// - 通過實例展示應用方法
 
 #### Design Principles
 // 設計基礎理論，提供決策框架
@@ -97,45 +101,32 @@
 // 光線設計的技術原理與應用方法
 
 - "The Power of Light: Transform Your Space"
-  // 光線的力量
-  // - Why lighting is your first renovation step
-  // - How light shapes perception
-  // - Quick wins in lighting design
-  // - Understanding light's impact
-
-- "The Framework: A Systematic Approach to Interior Design"
-  // 照明設計的系統思維
-  // - Reading Light: Understanding Your Space
-  //   * Light mapping exercise
-  //   * Activity analysis
-  //   * Problem identification
-  // - Making Decisions: The Lighting Design Process
-  //   * Setting priorities
-  //   * Choosing solutions
-  //   * Budget allocation
-  // - Building Your Lighting Plan
-  //   * Layer planning
-  //   * Source selection
-  //   * Control considerations
-
-- "Lighting Layers: Building Atmosphere"
-  // 光層次設計
-  // - Ambient: Setting the Base
-  //   * Coverage principles
-  //   * Light distribution
-  //   * Common mistakes
-  // - Task: Supporting Activities
-  //   * Work area standards
-  //   * Reading light setup
-  //   * Kitchen task lighting
-  // - Accent: Creating Focus
-  //   * Wall washing techniques
-  //   * Feature highlighting
-  //   * Art lighting
-  // - Decorative: Adding Character
-  //   * Fixture selection
-  //   * Placement strategy
-  //   * Balance principles
+  // 光線的力量：從直觀理解到深度洞察
+  // - Opening Hook: The Dramatic Power
+  //   * Hotel lobby example
+  //   * Immediate emotional impact
+  //   * Transformation stories
+  
+  // - Practical Impact
+  //   * Daily life examples
+  //   * Cost-effective changes
+  //   * Quick wins
+  
+  // - Light as Foundation
+  //   * How light reveals space
+  //   * Light and human perception
+  //   * The science of seeing
+  
+  // - Light's Transformative Power
+  //   * Space transformation
+  //   * Material enhancement
+  //   * Color dynamics
+  //   * Mood creation
+  
+  // - Design Implications
+  //   * Key principles
+  //   * Common applications
+  //   * Strategic thinking
 
 - "Light Planning: Room by Room"
   // 空間照明規劃
