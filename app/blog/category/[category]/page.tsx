@@ -14,7 +14,7 @@ const navCategories = [
   "space-planning",
   "lighting",
   "colors-and-palettes",
-  "materials-textures",
+  "materials-and-textures",
   "cozy-home",
   "modern-living",
   "trending",
