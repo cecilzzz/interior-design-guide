@@ -4,24 +4,23 @@
 ## Product Positioning
 // 產品定位
 - Bridge between basic and intermediate design
-- Systematic upgrade from IKEA-level solutions
+- Structured upgrade from IKEA-level solutions
 - Focus on design thinking and decision making
 - Provide actionable frameworks and standards
 - Enable confident design choices
-- Support autonomous decision-making
-- Offer engineering-minded design approach
+- Offer structured yet flexible design approach
 
 ## Target Audience
 // 目標用戶畫像定位
 
 ### Primary Users
 // 核心用戶群體
-- Systematic Thinkers
-  // 系統思維者
-  // - 習慣邏輯分析
-  // - 追求可驗證方案
-  // - 重視決策框架
-  // - 依賴客觀標準
+- Structured Thinkers
+  // 結構化思維者
+  // - 重視思考方法
+  // - 追求清晰決策
+  // - 欣賞設計邏輯
+  // - 善用參考標準
 
 - First-time Renters & New Homeowners
   // 首次租房者與新房業主

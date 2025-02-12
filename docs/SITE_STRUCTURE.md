@@ -32,11 +32,6 @@
 // 具體內容規劃，按板塊細分
 
 ### Design Framework
-// 核心知識體系，建立思維框架和技術基礎
-// 注意：這部分內容需要特別注意理論與實踐的結合
-// - 從具體場景引入抽象概念
-// - 運用決策框架幫助理解
-// - 通過實例展示應用方法
 
 #### Design Principles
 // 設計基礎理論，提供決策框架
@@ -127,6 +122,14 @@
   //   * Key principles
   //   * Common applications
   //   * Strategic thinking
+
+- "Lighting Design Framework: A Systematic Approach"
+  // 照明設計框架
+  // - Three Layers of Light
+  // - Role of Decorative Lighting
+  // - Design Process
+  // - Common Challenges
+  // - Implementation Strategy
 
 - "Light Planning: Room by Room"
   // 空間照明規劃
