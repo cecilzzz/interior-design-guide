@@ -1,19 +1,15 @@
 # Project Context
 // 項目背景與定位
 
-## Website Positioning
-// 網站定位
-- Bridge between systematic thinking and accessibility
-- Focus on making design principles understandable
-- Transform complex concepts into practical guidance
-- Help users build systematic thinking in design
+## Product Positioning
+// 產品定位
+- Bridge between basic and intermediate design
+- Systematic upgrade from IKEA-level solutions
 - Focus on design thinking and decision making
 - Provide actionable frameworks and standards
 - Enable confident design choices
 - Support autonomous decision-making
 - Offer engineering-minded design approach
-- Bridge between basic and intermediate design
-- Systematic upgrade from IKEA-level solutions
 
 ## Target Audience
 // 目標用戶畫像定位
@@ -67,22 +63,26 @@
 
 ## Content Approach
 // 內容方法論
+- Decision Frameworks
+  // 決策框架
+  // - 決策樹：引導思考流程
+  // - 維度分析：拓展思考角度
+  // - 需求分析：梳理關鍵需求
+  // - 場景映射：具體化應用場景
 
-### Content Style Guide
-// 內容風格指南
-- Narrative Flow
-  // 敘事流程
-  // - 從具體場景引入抽象概念
-  // - 用實例說明系統思維
-  // - 通過案例展示決策過程
-  // - 循序漸進建立理解
+- Design Standards
+  // 設計標準
+  // - Best Practices：最佳實踐
+  // - 基礎比例：空間關係參考
+  // - 舒適區間：體驗指標範圍
+  // - 經驗法則：實用參考準則
 
-- Content Structure
-  // 內容結構
-  // - 先建立直觀認知
-  // - 再引入系統框架
-  // - 然後深化原理
-  // - 最後回到應用
+- Solution Guides
+  // 方案指南
+  // - 典型配置：常見解決方案
+  // - 參考案例：實際應用示範
+  // - 應用建議：靈活運用方向
+  // - 優化方法：提升空間體驗
 
 - Learning Path Design
   // 學習路徑
@@ -91,19 +91,3 @@
   // - 提供具體的實踐指引
   // - 設計漸進式的認知過程
 
-## For Content Generation
-// 內容生成指引
-
-### Next Steps
-// 後續步驟
-- Refer to AI_GUIDE.md for detailed content generation instructions
-  // 請參考AI_GUIDE.md獲取詳細的內容生成指南
-  // - 完整的文檔閱讀順序
-  // - 具體的內容生成流程
-  // - 詳細的寫作原則說明
-
-- Review SITE_STRUCTURE.md for content planning
-  // 查看SITE_STRUCTURE.md了解內容規劃
-  // - 具體的內容架構
-  // - 各板塊的重點要求
-  // - 專題內容規劃
