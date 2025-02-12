@@ -97,31 +97,26 @@
 
 - "The Power of Light: Transform Your Space"
   // 光線的力量：從直觀理解到深度洞察
-  // - Opening Hook: The Dramatic Power
-  //   * Hotel lobby example
-  //   * Immediate emotional impact
-  //   * Transformation stories
+  // - Opening Example
+  //   * Hotel lobby transformation
+  //   * Light's dramatic impact
   
   // - Practical Impact
-  //   * Daily life examples
-  //   * Cost-effective changes
-  //   * Quick wins
+  //   * Simple transformations
+  //   * Quick improvements
   
   // - Light as Foundation
   //   * How light reveals space
   //   * Light and human perception
-  //   * The science of seeing
   
   // - Light's Transformative Power
-  //   * Space transformation
-  //   * Material enhancement
-  //   * Color dynamics
-  //   * Mood creation
+  //   * Space transformation principles
+  //   * Material and color interplay
+  //   * Mood creation science
   
   // - Design Implications
-  //   * Key principles
-  //   * Common applications
-  //   * Strategic thinking
+  //   * Core lighting principles
+  //   * Professional insights
 
 - "Lighting Design Framework: A Systematic Approach"
   // 照明設計框架
