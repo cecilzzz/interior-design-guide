@@ -163,6 +163,18 @@
 - "Color Schemes: Mathematical Combinations"
 - "Color Psychology: Evidence-Based Approach"
 - "Color Intensity: Calculation Methods"
+- "Room Color Guide: Classic Combinations"
+  // 經典空間配色指南
+  // - 臥室：暖色系為主
+  // - 客廳：中性色調搭配
+  // - 廚房：明亮清爽色系
+  // - 書房：專注力配色
+  // - 浴室：清新色調
+  // 每個空間包含：
+  //   * 主色建議
+  //   * 搭配方案
+  //   * 常見誤區
+  //   * 調整建議
 
 #### Materials & Textures
 // 材質應用的技術標準
