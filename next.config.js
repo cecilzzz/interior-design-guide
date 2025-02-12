@@ -7,12 +7,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
-      // 將來遷移到 Cloudinary 時，添加：
-      // {
-      //   protocol: 'https',
-      //   hostname: 'res.cloudinary.com',
-      //   pathname: '/your-cloud-name/**',  // 替換 your-cloud-name
-      // },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/dwobltzw/**',
+      },
     ],
     // 靜態導出需要 unoptimized: true
     // 如果將來不需要靜態導出，可以：

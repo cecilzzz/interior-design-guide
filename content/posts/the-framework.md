@@ -10,6 +10,8 @@ excerpt: "Discover a clear, structured approach to interior design through four 
 
 Have you ever walked into a beautifully designed room and wondered, "What makes this space work so well?" While some might attribute it to pure intuition or talent, the truth is that exceptional interior design often follows clear principles and patterns that we can understand and apply.
 
+![test](https://res.cloudinary.com/dwobltbzw/image/upload/w_800,c_fit,q_auto,f_auto/v1739369511/nn4598959_A_cozy_modern_living_room_corner_soft_natural_light_t_ce577322-d25e-4da9-a84c-3a7b33269260_bcsuiw.png)
+
 ## Why We Need a Framework
 
 Interior design can feel overwhelming. With countless decisions to make - from space planning to material selection - it's easy to get lost in the details or make choices that don't work together harmoniously. This is where a systematic approach becomes invaluable.
