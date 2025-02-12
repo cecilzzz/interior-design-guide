@@ -110,7 +110,7 @@ Watch how your family naturally responds to these changes. Children gravitate to
 
 ## Design Implications
 
-When you understand light's fundamental role in shaping space, you approach design differently. Instead of treating light as a final touch, you begin to see it as a primary design element.
+Now that we see how profoundly light shapes our spaces and experiences, we can approach lighting design with more intention. This isn't about following trends or buying expensive fixtures - it's about understanding fundamental principles that make spaces work better.
 
 ### Key Principles
 The most effective lighting designs follow these essential principles:
