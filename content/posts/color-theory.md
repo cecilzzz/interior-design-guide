@@ -83,6 +83,24 @@ Color never exists in isolation - it's always affected by light. Understanding t
 - Southern exposure intensifies colors
 - Artificial light can dramatically alter color perception, especially in evening hours
 
+## Color Impact Control
+
+Understanding how to control color's impact is crucial for sophisticated design.
+
+### Intensity Management
+How to control color strength:
+- Use strong colors sparingly for focal points
+- Apply muted tones for larger surfaces
+- Consider viewing distance when choosing intensity
+- Balance multiple strong colors with neutral spaces
+
+### Surface Effects
+Different surfaces and materials can dramatically change how we perceive color:
+- Matte finishes tend to soften color impact
+- Glossy surfaces intensify color and create reflection
+- Textured materials can blend multiple color tones
+- Natural materials often have color variation that adds depth
+
 ## Application Framework
 
 A systematic approach to color selection helps ensure success. While creativity and intuition play important roles, having a structured process helps avoid costly mistakes.
@@ -107,24 +125,6 @@ Putting your color scheme into practice requires careful planning:
 - Think about which surfaces will carry which colors
 - Account for different material finishes and textures
 - Plan transitions between different color areas
-
-## Color Impact Control
-
-Understanding how to control color's impact is crucial for sophisticated design.
-
-### Intensity Management
-How to control color strength:
-- Use strong colors sparingly for focal points
-- Apply muted tones for larger surfaces
-- Consider viewing distance when choosing intensity
-- Balance multiple strong colors with neutral spaces
-
-### Surface Effects
-Different surfaces and materials can dramatically change how we perceive color:
-- Matte finishes tend to soften color impact
-- Glossy surfaces intensify color and create reflection
-- Textured materials can blend multiple color tones
-- Natural materials often have color variation that adds depth
 
 ## Common Challenges
 

@@ -2,6 +2,25 @@ import { getAllPosts } from '@/app/lib/posts';
 import PostGrid from '@/app/components/PostGrid';
 import type { Metadata } from 'next';
 
+// 從 Navigation 中提取分類列表
+const navCategories = [
+  "living-room",
+  "bedroom",
+  "kitchen-and-dining",
+  "bathroom",
+  "work-from-home",
+  "rentals",
+  "design-principles",
+  "space-planning",
+  "lighting",
+  "colors-and-palettes",
+  "materials-textures",
+  "cozy-home",
+  "modern-living",
+  "trending",
+  "makeovers"
+];
+
 type Props = {
   params: { category: string }
 };
@@ -52,18 +71,18 @@ export default function CategoryPage({ params }: { params: { category: string } 
 
 export function generateStaticParams() {
   const posts = getAllPosts();
+  const categories = new Set<string>(navCategories);
   
-  // 獲取所有唯一的分類
-  const categories = new Set<string>();
+  // 添加文章中的分類
   posts.forEach(post => {
     post.categories.forEach(category => {
-      categories.add(category.toLowerCase()
-        .replace(' & ', '-and-')
-        .replace(/\s+/g, '-'));
+      const urlCategory = category.toLowerCase()
+        .replace(/\s*&\s*/g, '-and-')  // 處理 & 符號，包括周圍的空格
+        .replace(/\s+/g, '-');         // 其他空格轉換為連字符
+      categories.add(urlCategory);
     });
   });
   
-  // 返回所有分類的路徑參數
   return Array.from(categories).map(category => ({
     category: category
   }));

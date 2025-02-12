@@ -162,7 +162,6 @@
 - "Color Theory for Interior Design: Technical Guide"
 - "Color Schemes: Mathematical Combinations"
 - "Color Psychology: Evidence-Based Approach"
-- "Color Intensity: Calculation Methods"
 - "Room Color Guide: Classic Combinations"
   // 經典空間配色指南
   // - 臥室：暖色系為主
@@ -178,10 +177,52 @@
 
 #### Materials & Textures
 // 材質應用的技術標準
+
 - "Material Properties: Technical Guide"
+  // 材料基礎知識與選擇框架
+  // - 材質認知的四個維度：視覺、觸覺、功能、耐用
+  // - 使用場景分析：強度、環境、清潔、維護
+  // - 決策考量層面：實用、美觀、經濟、永續
+  // - 系統性選擇流程
+  // 每個面向包含：
+  //   * 評估標準
+  //   * 考量因素
+  //   * 常見誤區
+  //   * 權衡方法
+
+- "Interior Materials: A Systematic Guide"
+  // 室內材質系統介紹
+  // - 木材類：實木、複合板、木皮
+  // - 石材類：大理石、花崗岩、人造石
+  // - 金屬類：不鏽鋼、黃銅、鋁合金
+  // - 織品類：棉麻、化纖、混紡
+  // - 塑料類：壓克力、PVC、美耐皿
+  // 每個材質基於框架分析：
+  //   * 四個維度表現
+  //   * 適用場景
+  //   * 優缺點
+  //   * 維護方式
+
 - "Texture Combinations: Scientific Approach"
+  // 材質搭配方法
+  // - 質感層次與平衡
+  // - 材質與色彩關係
+  // - 視覺觸覺體驗
+  // - 空間感知影響
+
 - "Surface Reflection: Light Analysis"
-- "Material Durability: Standards Guide"
+  // 光線與材質互動
+  // - 反射類型與效果
+  // - 光澤度與空間感
+  // - 自然光人工光考量
+  // - 材質光線優化
+
+- "Room by Room: Material Selection Guide"
+  // 場景化材質指南
+  // - 不同空間材質選擇
+  // - 經典材質組合
+  // - 預算等級建議
+  // - 實用維護建議
 
 ### Living Spaces
 // 框架知識的具體應用，場景化的解決方案

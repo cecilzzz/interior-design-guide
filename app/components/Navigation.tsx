@@ -31,7 +31,7 @@ const navItems: NavItem[] = [
       { title: "Space Planning", link: "/blog/category/space-planning" },
       { title: "Lighting", link: "/blog/category/lighting" },
       { title: "Colors & Palettes", link: "/blog/category/colors-and-palettes" },
-      { title: "Materials & Textures", link: "/blog/category/materials-textures" }
+      { title: "Materials & Textures", link: "/blog/category/materials-and-textures" }
     ],
   },
   {
