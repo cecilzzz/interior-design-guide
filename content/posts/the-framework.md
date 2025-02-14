@@ -8,9 +8,9 @@ excerpt: "Discover a clear, structured approach to interior design through four 
 
 # The Framework: A Systematic Approach to Interior Design
 
-Have you ever walked into a beautifully designed room and wondered, "What makes this space work so well?" While some might attribute it to pure intuition or talent, the truth is that exceptional interior design often follows clear principles and patterns that we can understand and apply.
+When people think of interior design, they often picture the final touches - selecting cushions, hanging artwork, or choosing curtains. While these decorative elements are important, interior design is much more than decoration. It's a comprehensive discipline that considers how people interact with spaces, how spaces affect well-being, and how to create environments that truly serve their purpose.
 
-![test](https://res.cloudinary.com/dwobltbzw/image/upload/w_800,c_fit,q_auto,f_auto/v1739369511/nn4598959_A_cozy_modern_living_room_corner_soft_natural_light_t_ce577322-d25e-4da9-a84c-3a7b33269260_bcsuiw.png)
+Have you ever walked into a beautifully designed room and wondered, "What makes this space work so well?" While some might attribute it to pure intuition or talent, the truth is that exceptional interior design often follows clear principles and patterns that we can understand and apply.
 
 ## Why We Need a Framework
 
