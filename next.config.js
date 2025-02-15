@@ -10,7 +10,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-        pathname: '/dwobltzw/**',
+        pathname: '/dwobltbzw/**',
       },
     ],
     // 靜態導出需要 unoptimized: true

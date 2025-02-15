@@ -1,5 +1,7 @@
 import Image from "next/image";
 import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-markdown
+import { getImageUrl } from '@/app/lib/imageUtils';
+import React from 'react';
 
 type BlogPostProps = {
   category: string;
@@ -39,7 +41,38 @@ export default function BlogPost({
       </div>
       
       <div className="prose max-w-none">
-        <ReactMarkdown>{content}</ReactMarkdown>
+        <ReactMarkdown
+          components={{
+            // 覆蓋 p 標籤的渲染，確保圖片容器不被包在 p 標籤內
+            p: ({ children, ...props }) => {
+              // 檢查是否只包含 img 元素
+              const hasOnlyImage = React.Children.toArray(children).every(
+                child => React.isValidElement(child) && child.type === 'img'
+              );
+              
+              // 如果是圖片，返回 Fragment，否則返回正常的 p 標籤
+              return hasOnlyImage ? <>{children}</> : <p {...props}>{children}</p>;
+            },
+            img: ({ src, alt }) => {
+              if (!src) return null;
+              // 使用 content 類型的圖片優化參數
+              const optimizedSrc = getImageUrl(src, 'content');
+              return (
+                <div className="relative aspect-[16/9] my-8">
+                  <Image
+                    src={optimizedSrc}
+                    alt={alt || ''}
+                    fill
+                    className="object-cover rounded-lg"
+                    sizes="(min-width: 1024px) 65vw, (min-width: 768px) 75vw, 100vw"
+                  />
+                </div>
+              );
+            },
+          }}
+        >
+          {content}
+        </ReactMarkdown>
       </div>
       
       <div className="flex justify-center space-x-4 mt-8">

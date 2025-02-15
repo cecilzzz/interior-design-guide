@@ -9,6 +9,8 @@ excerpt: "Discover 40 timeless Japanese dining room designs that embrace minimal
 1. **Woven Light Cluster**
 Multiple woven bamboo pendants at varying heights create a warm, dynamic dining focal point while maintaining visual lightness.
 
+![Woven Light Cluster](/interior-inspiration-website/posts/40-japanese-dining-room-designs/nn4598959_Professional_interior_design_photo_of_a_luxury_Japane_de1e01ff-5ba7-4108-b64f-fdac90a737da.png)
+
 **Low Table with Floor Cushions**
 Traditional chabudai setup with zabuton cushions, perfect for intimate family gatherings.
 
