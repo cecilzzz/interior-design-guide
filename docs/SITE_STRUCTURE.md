@@ -4,34 +4,44 @@
 ## Navigation Structure
 // 完整導航框架，定義網站整體結構
 
-### 1. Living Spaces
-// 空間應用層：具體場景的系統解決方案
-- Living Room
-- Bedroom
-- Kitchen & Dining
-- Bathroom
-- Work From Home
-- Rentals
-
-### 2. Design Framework
-// 核心知識層：設計的技術基礎與方法論
+### 1. The Framework
 - Design Principles
 - Space Planning
 - Colors & Palettes
 - Lighting
 - Materials & Textures
 
-### 3. Inspiration
-// 風格應用層：系統化的風格解讀
-- Cozy Home
-- Modern Living
-- Trending
-- Makeovers
+### 2. Rooms
+// 空間應用層：具體場景的系統解決方案
+- Small Space 
+- Living Room
+- Bedroom
+- Kitchen & Dining
+- Bathroom
+- Storage & Organization
+- Rental & Budget
+
+### 3. Styles
+// 風格應用層：主流設計風格
+- Modern
+- Minimalist
+- Scandinavian
+- Japandi
+- Industrial
+- Contemporary
+
+- Coastal
+- Rustic
+- Farmhouse
+- Boho
+- Mid-century Modern
+- French
+
 
 ## Content Planning
 // 具體內容規劃，按板塊細分
 
-### Design Framework
+### The Framework
 
 #### Design Principles
 // 設計基礎理論，提供決策框架
@@ -42,7 +52,6 @@
 
 #### Space Planning
 // 空間規劃的技術方法論
-
 - "Space Planning Fundamentals: A Technical Framework"
   // 整體框架介紹
   // - 空間規劃的核心原則
