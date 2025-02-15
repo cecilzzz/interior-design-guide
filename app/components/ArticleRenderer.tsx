@@ -3,7 +3,14 @@ import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-
 import { getImageUrl } from '@/app/lib/imageUtils';
 import React from 'react';
 
-type BlogPostProps = {
+/**
+ * ArticleRenderer 組件
+ * 負責渲染文章的主體內容，包括：
+ * 1. 文章標題和元信息
+ * 2. 主圖片
+ * 3. Markdown 內容轉換和渲染
+ */
+type ArticleRendererProps = {
   category: string;
   title: string;
   date: string;
@@ -11,13 +18,13 @@ type BlogPostProps = {
   content: string;
 };
 
-export default function BlogPost({ 
+export default function ArticleRenderer({ 
   category, 
   title, 
   date, 
   image, 
   content,
-}: BlogPostProps) {
+}: ArticleRendererProps) {
   return (
     <article>
       <div className="text-center mb-12">

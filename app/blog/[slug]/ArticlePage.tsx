@@ -1,10 +1,16 @@
 'use client';
 
 import { useEffect } from 'react';
-import BlogContent from '@/app/components/BlogContent';
+import ArticleLayout from '@/app/components/ArticleLayout';
 import { trackArticleRead, trackScrollDepth, trackTimeOnPage } from '@/app/utils/analytics';
 
-type BlogPostClientProps = {
+/**
+ * ArticlePage 組件
+ * 客戶端容器組件，負責：
+ * 1. 處理客戶端特定的功能（分析追蹤）
+ * 2. 渲染文章頁面的整體佈局
+ */
+type ArticlePageProps = {
   post: {
     category: string;
     title: string;
@@ -20,7 +26,7 @@ type BlogPostClientProps = {
   }>;
 };
 
-export default function BlogPostClient({ post, relatedPosts }: BlogPostClientProps) {
+export default function ArticlePage({ post, relatedPosts }: ArticlePageProps) {
   useEffect(() => {
     // 開始所有追蹤
     const cleanupArticleRead = trackArticleRead(post.title);
@@ -35,5 +41,5 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
     };
   }, [post.title]);
 
-  return <BlogContent post={post} relatedPosts={relatedPosts} />;
+  return <ArticleLayout post={post} relatedPosts={relatedPosts} />;
 } 

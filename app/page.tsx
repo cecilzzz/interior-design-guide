@@ -1,6 +1,6 @@
 import HeroSection from "./components/HeroSection";
 import FeaturedCards from "./components/FeaturedCards";
-import BlogContent from "./components/BlogContent";
+import ArticleLayout from "./components/ArticleLayout";
 import Sidebar from "./components/Sidebar";
 
 const recommendedPosts = [
@@ -70,7 +70,7 @@ export default function Home() {
       {/* Blog section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
-          <BlogContent post={blogPost} relatedPosts={relatedPosts} />
+          <ArticleLayout post={blogPost} relatedPosts={relatedPosts} />
           <Sidebar recommendedPosts={recommendedPosts} />
         </div>
       </div>

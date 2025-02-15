@@ -1,9 +1,8 @@
 import { getAllPosts } from '@/app/lib/posts';
 import { getImageUrl } from '@/app/lib/imageUtils';
-import BlogContent from '@/app/components/BlogContent';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
-import BlogPostClient from './BlogPostClient';
+import ArticlePage from './ArticlePage';
 
 // 這些是示例數據，實際應該從數據庫或其他地方獲取
 const relatedPosts = [
@@ -91,7 +90,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
-        <BlogPostClient post={blogPost} relatedPosts={relatedPosts} />
+        <ArticlePage post={blogPost} relatedPosts={relatedPosts} />
         <Sidebar recommendedPosts={recommendedPosts} />
       </div>
     </div>
