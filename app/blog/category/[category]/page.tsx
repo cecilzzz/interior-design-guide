@@ -4,21 +4,35 @@ import type { Metadata } from 'next';
 
 // 從 Navigation 中提取分類列表
 const navCategories = [
+  // Rooms
+  "small-space",
   "living-room",
   "bedroom",
   "kitchen-and-dining",
   "bathroom",
-  "work-from-home",
-  "rentals",
+  "storage-and-organization",
+  "rental-and-budget",
+  
+  // Styles
+  "modern",
+  "minimalist",
+  "scandinavian",
+  "japandi",
+  "industrial",
+  "contemporary",
+  "coastal",
+  "rustic",
+  "farmhouse",
+  "boho",
+  "mid-century-modern",
+  "french",
+  
+  // Framework
   "design-principles",
   "space-planning",
-  "lighting",
   "colors-and-palettes",
-  "materials-and-textures",
-  "cozy-home",
-  "modern-living",
-  "trending",
-  "makeovers"
+  "lighting",
+  "materials-and-textures"
 ];
 
 type Props = {

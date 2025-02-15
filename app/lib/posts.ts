@@ -126,6 +126,20 @@ export function getAllPosts(): Post[] {
           return null;
         }
 
+        // 驗證分類格式
+        const invalidCategories = data.categories.filter(
+          (category: string) => 
+            typeof category !== 'string' || 
+            category.trim().length === 0
+        );
+        
+        if (invalidCategories.length > 0) {
+          console.warn(
+            `Post ${filePath} has invalid category format. Categories must be non-empty strings.`
+          );
+          return null;
+        }
+
         // 組合並返回文章數據
         return {
           id,

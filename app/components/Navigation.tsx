@@ -14,33 +14,44 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    title: "LIVING SPACES",
+    title: "ROOMS",
     subItems: [
+      { title: "Small Space", link: "/blog/category/small-space" },
       { title: "Living Room", link: "/blog/category/living-room" },
       { title: "Bedroom", link: "/blog/category/bedroom" },
       { title: "Kitchen & Dining", link: "/blog/category/kitchen-and-dining" },
       { title: "Bathroom", link: "/blog/category/bathroom" },
-      { title: "Work From Home", link: "/blog/category/work-from-home" },
-      { title: "Rentals", link: "/blog/category/rentals" }
+      { title: "Storage & Organization", link: "/blog/category/storage-and-organization" },
+      { title: "Rental & Budget", link: "/blog/category/rental-and-budget" }
     ],
   },
   {
-    title: "DESIGN FRAMEWORK",
+    title: "STYLES",
+    subItems: [
+      // Primary Styles
+      { title: "Modern", link: "/blog/category/modern" },
+      { title: "Minimalist", link: "/blog/category/minimalist" },
+      { title: "Scandinavian", link: "/blog/category/scandinavian" },
+      { title: "Japandi", link: "/blog/category/japandi" },
+      { title: "Industrial", link: "/blog/category/industrial" },
+      { title: "Contemporary", link: "/blog/category/contemporary" },
+      // Secondary Styles
+      { title: "Coastal", link: "/blog/category/coastal" },
+      { title: "Rustic", link: "/blog/category/rustic" },
+      { title: "Farmhouse", link: "/blog/category/farmhouse" },
+      { title: "Boho", link: "/blog/category/boho" },
+      { title: "Mid-century Modern", link: "/blog/category/mid-century-modern" },
+      { title: "French", link: "/blog/category/french" }
+    ],
+  },
+  {
+    title: "THE FRAMEWORK",
     subItems: [
       { title: "Design Principles", link: "/blog/category/design-principles" },
       { title: "Space Planning", link: "/blog/category/space-planning" },
       { title: "Lighting", link: "/blog/category/lighting" },
       { title: "Colors & Palettes", link: "/blog/category/colors-and-palettes" },
       { title: "Materials & Textures", link: "/blog/category/materials-and-textures" }
-    ],
-  },
-  {
-    title: "INSPIRATION",
-    subItems: [
-      { title: "Cozy Home", link: "/blog/category/cozy-home" },
-      { title: "Modern Living", link: "/blog/category/modern-living" },
-      { title: "Trending", link: "/blog/category/trending" },
-      { title: "Makeovers", link: "/blog/category/makeovers" }
     ],
   },
   {
