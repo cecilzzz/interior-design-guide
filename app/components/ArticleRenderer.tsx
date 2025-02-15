@@ -5,19 +5,53 @@ import React from 'react';
 
 /**
  * ArticleRenderer 組件
- * 負責渲染文章的主體內容，包括：
- * 1. 文章標題和元信息
- * 2. 主圖片
- * 3. Markdown 內容轉換和渲染
+ * 
+ * 負責渲染文章的完整內容，包括標題區、主圖和 Markdown 內容。
+ * 這是最基礎的內容渲染組件，不包含任何佈局邏輯。
+ * 
+ * 被以下組件使用：
+ * - ArticleLayout (app/components/ArticleLayout.tsx) - 作為主要內容渲染器
+ * 
+ * 依賴的組件和工具：
+ * - next/image: 圖片優化組件
+ * - react-markdown: Markdown 渲染
+ * - @/app/lib/imageUtils: 圖片 URL 處理
+ * 
+ * 功能：
+ * 1. 渲染文章標題區（類別、標題、日期）
+ * 2. 顯示文章主圖，帶有懸停效果
+ * 3. 將 Markdown 內容轉換為 HTML
+ * 4. 優化文章中的圖片，使用 Next.js Image 組件
+ * 
+ * 注意事項：
+ * - 主圖使用 fill 模式，需要父元素設置尺寸
+ * - Markdown 中的圖片會被轉換為優化後的 Image 組件
+ * - 使用 Tailwind 的 prose 類來美化 Markdown 內容
  */
-type ArticleRendererProps = {
-  category: string;
-  title: string;
-  date: string;
-  image: string;
-  content: string;
-};
 
+interface ArticleRendererProps {
+  /** 文章分類 */
+  category: string;
+  /** 文章標題 */
+  title: string;
+  /** 發布日期 */
+  date: string;
+  /** 主圖 URL */
+  image: string;
+  /** Markdown 格式的文章內容 */
+  content: string;
+}
+
+/**
+ * 渲染文章內容的主要組件
+ * 
+ * @param props - 文章相關屬性
+ * @param props.category - 文章分類，顯示在標題上方
+ * @param props.title - 文章標題
+ * @param props.date - 發布日期
+ * @param props.image - 主圖 URL
+ * @param props.content - Markdown 格式的文章內容
+ */
 export default function ArticleRenderer({ 
   category, 
   title, 
@@ -27,6 +61,7 @@ export default function ArticleRenderer({
 }: ArticleRendererProps) {
   return (
     <article>
+      {/* 標題區域 */}
       <div className="text-center mb-12">
         <div className="text-coral-400 uppercase tracking-[0.2em] text-xs sm:text-sm mb-4 sm:mb-6 font-light">
           {category} / <span className="text-gray-500">DESIGN</span>
@@ -35,6 +70,7 @@ export default function ArticleRenderer({
         <div className="text-gray-400 text-xs sm:text-sm tracking-wider">{date}</div>
       </div>
       
+      {/* 主圖區域 */}
       <div className="mb-8 relative aspect-[16/9] overflow-hidden rounded-lg group">
         <Image
           src={image}
@@ -47,11 +83,14 @@ export default function ArticleRenderer({
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
       
+      {/* Markdown 內容區域 */}
       <div className="prose max-w-none">
         <ReactMarkdown
           components={{
+            // 自定義圖片渲染
             img: ({ src, alt }) => {
               if (!src) return null;
+              // 使用 content 類型的圖片優化參數
               const optimizedSrc = getImageUrl(src, 'content');
               return (
                 <Image
@@ -69,6 +108,7 @@ export default function ArticleRenderer({
         </ReactMarkdown>
       </div>
       
+      {/* 社交分享區域 */}
       <div className="flex justify-center space-x-4 mt-8">
         <a href="#" className="text-gray-500 hover:text-gray-700">
           <span className="sr-only">Facebook</span>
