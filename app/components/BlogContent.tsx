@@ -1,5 +1,7 @@
 import BlogPost from "./BlogPost";
 import RelatedPosts from "./RelatedPosts";
+import { getImageUrl } from '@/app/lib/imageUtils';
+import ReactMarkdown from 'react-markdown';
 
 type BlogContentProps = {
   post: {
@@ -23,5 +25,23 @@ export default function BlogContent({ post, relatedPosts }: BlogContentProps) {
       <BlogPost {...post} />
       <RelatedPosts posts={relatedPosts} />
     </div>
+  );
+}
+
+export function BlogContentMarkdown({ content }: { content: string }) {
+  return (
+    <ReactMarkdown
+      components={{
+        img: ({ src, alt }) => (
+          <img 
+            src={src ? getImageUrl(src, 'content') : ''} 
+            alt={alt || ''} 
+            className="w-full rounded-lg"
+          />
+        ),
+      }}
+    >
+      {content}
+    </ReactMarkdown>
   );
 } 

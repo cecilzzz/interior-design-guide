@@ -1,4 +1,5 @@
 import { getAllPosts } from '@/app/lib/posts';
+import { getImageUrl } from '@/app/lib/imageUtils';
 import BlogContent from '@/app/components/BlogContent';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: post.date,
       images: [
         {
-          url: post.image,
+          url: getImageUrl(post.image, 'hero'),
           width: 1200,
           height: 630,
           alt: post.title,
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [post.image],
+      images: [getImageUrl(post.image, 'hero')],
     },
   };
 }
@@ -83,7 +84,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   // 將 post 數據轉換為 BlogContent 需要的格式
   const blogPost = {
     ...post,
-    category: post.categories[0],  // 暫時使用第一個分類作為主分類
+    image: getImageUrl(post.image, 'hero'),
+    category: post.categories[0],
   };
 
   return (
