@@ -34,4 +34,5 @@ export default function ArticleLayout({ post, relatedPosts }: ArticleLayoutProps
   );
 }
 
-// 移除未使用的 BlogContentMarkdown 組件，因為我們現在在 ArticleRenderer 中處理 Markdown 
+// 注意：Markdown 的處理已經移到 ArticleRenderer 組件中
+// 該組件使用 ReactMarkdown 來渲染內容並處理圖片優化 
