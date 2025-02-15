@@ -1,6 +1,6 @@
 ---
 title: "40 Classic Japanese Dining Room Designs For A Clear Mind"
-categories: ["Japandi"]
+categories: ["Japandi", "Kitchen & Dining"]
 date: "2024-04-15"
 image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1920"
 excerpt: "Discover 40 timeless Japanese dining room designs that embrace minimalism, natural elements, and tranquil aesthetics for a peaceful dining experience."
