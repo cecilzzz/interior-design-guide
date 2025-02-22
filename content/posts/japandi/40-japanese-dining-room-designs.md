@@ -46,16 +46,43 @@ Dark wood table against a dramatic arched window creates a dining experience tha
 
 ![Arched Window Dining](/interior-inspiration-website/posts/40-japanese-dining-room-designs/nn4598959_Professional_interior_design_photo_of_a_luxury_Japane_de1e01ff-5ba7-4108-b64f-fdac90a737da.png)
 
-4. **Low Table with Floor Cushions**
-Traditional chabudai setup with zabuton cushions, perfect for intimate family gatherings.
+### Monochromatic Harmony
+Textured white globe pendants float above a raw-edge wooden table, while cream upholstered chairs and matte ceramic vases create a serene tonal palette that epitomizes modern Japanese minimalism.
 
-2. **Tatami Mat Flooring**
-Natural reed matting that adds warmth and traditional character to the dining space.
+![Monochromatic Harmony](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_c_2abdabfb-77a5-48a8-99b7-5ece3eac0bc8.png)
+![Monochromatic Harmony](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_c_22cb12c8-b0c3-46fd-912e-9e6265f9e97e.png)
 
-3. **Shoji Screen Dividers**
-Translucent paper screens that filter natural light and create flexible dining zones.
+### Wabi-Sabi Contrast
+Industrial X-base table paired with woven pendant lights creates dramatic tension, while textured plaster walls and dried botanicals add organic warmth to the modern Japanese dining space.
 
-4. **Wooden Beam Ceiling**
+![Wabi-Sabi Contrast](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_c_c6fe21fa-aac6-42f1-a654-3bac1f60eb9b.png)
+
+### Layered Warmth Display
+Modern metal-framed mesh screens filter natural light while illuminated wood shelving showcases ceramic collections, creating depth through alternating dark ceramics and warm wood tones.
+
+![Layered Warmth Display](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_l_6fd69824-042f-42b0-9a4d-a964cce682a8.png)
+![Layered Warmth Display](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_l_ed2a9358-7bff-4b16-9755-b4cfb450644f.png)
+
+### Layered Lighting Harmony
+Paper lantern, table lamp, and cherry blossoms create three levels of gentle illumination, embodying the Japanese concept of balanced light and shadow (陰影).
+
+![Layered Lighting Harmony](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_m_0c1e78e7-7ed5-4abd-9f03-8b791bda4eb3.png)
+![Layered Lighting Harmony](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_m_8771b1e0-40eb-4f62-adfc-e4ffe3124ba0.png)
+
+### Panoramic Nature Connection
+Floor-to-ceiling windows frame the forest and lake view, while warm wood tones throughout create a seamless indoor-outdoor dining experience.
+
+![Panoramic Nature Connection](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_N_ea140ff3-bc45-43a6-935e-8d18899131de.png)
+
+
+### Vertical Wood Slat Feature Wall
+Natural wood slats create rhythm and warmth while adding architectural interest as a dining room backdrop. The repetitive pattern offers both texture and sophistication.
+
+![Vertical Wood Slat Feature Wall](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_J_8ff33e43-45e6-491a-ab7a-719fadb2be6a.png)
+
+
+
+### Wooden Beam Ceiling
 Exposed wooden beams that add architectural interest and ground the space.
 
 5. **Natural Light Focus**
