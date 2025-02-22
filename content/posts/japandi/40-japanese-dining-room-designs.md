@@ -110,11 +110,6 @@ Rough white plaster walls paired with wooden beams and amber glass lights create
 
 ![Textured White Walls](/interior-inspiration-website/posts/40-japanese-dining-room-designs/Professional_interior_architecture_photography_of_a_m_ca2c828a-0a54-4c8c-a7b4-5ed201f916e0.png)
 
-### Neutral Color Magic
-Warm beige walls, light wood furniture, and paper lanterns work together with cherry blossoms to create a peaceful dining room that feels both modern and cozy.
-
-![Neutral Color Magic](/interior-inspiration-website/posts/40-japanese-dining-room-designs/interior_architectural_photography_of_a_minimal_dinin_6ab1d2d1-dd56-46ab-a4ce-630f4fefdaa8.png)
-
 ### Vertical Wood Slat Feature Wall
 Natural wood slats create rhythm and warmth while adding architectural interest as a dining room backdrop. The repetitive pattern offers both texture and sophistication.
 
