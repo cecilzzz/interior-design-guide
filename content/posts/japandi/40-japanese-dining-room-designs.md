@@ -6,11 +6,6 @@ image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format
 excerpt: "Discover 40 timeless Japanese dining room designs that embrace minimalism, natural elements, and tranquil aesthetics for a peaceful dining experience."
 ---
 
-### Woven Screen Room Divider
-Natural reed screen creates a gentle separation between work and rest zones while maintaining visual continuity and light flow through the space.
-
-![Woven Screen Room Divider](/interior-inspiration-website/posts/40-japanese-dining-room-designs/nn4598959_Professional_interior_design_photo_of_a_Japanese_mini_bada0481-2345-4c32-a161-cd19746e33a1.png)
-
 ### Vertical Wood Slat Feature Wall
 Natural wood slats create rhythm and warmth while adding architectural interest as a dining room backdrop. The repetitive pattern offers both texture and sophistication.
 
