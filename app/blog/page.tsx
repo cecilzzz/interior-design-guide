@@ -5,7 +5,7 @@ import PostGrid from '@/app/components/PostGrid';
 export default function BlogPage() {
   const posts = getAllPosts().map(post => ({
     ...post,
-    image: getImageUrl(post.image, 'hero')
+    image: post.image.startsWith('http') ? post.image : getImageUrl(post.image, 'hero')
   }));
 
   return (

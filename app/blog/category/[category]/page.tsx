@@ -1,4 +1,5 @@
 import { getAllPosts } from '@/app/lib/posts';
+import { getImageUrl } from '@/app/lib/imageUtils';
 import PostGrid from '@/app/components/PostGrid';
 import type { Metadata } from 'next';
 
@@ -63,7 +64,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function CategoryPage({ params }: { params: { category: string } }) {
-  const posts = getAllPosts();
+  const posts = getAllPosts().map(post => ({
+    ...post,
+    // 使用 hero 類型處理圖片，確保在網格中顯示最佳尺寸
+    image: post.image.startsWith('http') ? post.image : getImageUrl(post.image, 'hero')
+  }));
   
   // 用於顯示的格式：'Living Room'
   const displayCategory = params.category
