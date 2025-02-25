@@ -29,13 +29,19 @@ interface PinterestButtonProps {
   imageUrl: string;
   /** 圖片描述，將用作 Pinterest 的描述文字 */
   description: string;
+  /** 文章標題 */
+  title?: string;
+  /** 作者名稱 */
+  author?: string;
   /** 可選的額外 CSS 類名 */
   className?: string;
 }
 
 export default function PinterestButton({ 
   imageUrl, 
-  description, 
+  description,
+  title,
+  author,
   className = ''
 }: PinterestButtonProps) {
   /**
@@ -43,14 +49,22 @@ export default function PinterestButton({
    * 打開一個新視窗來進行 Pinterest 分享
    */
   const handlePinterestShare = () => {
-    // 獲取當前頁面 URL
     const url = window.location.href;
     
-    // 構建 Pinterest 分享 URL
-    const shareUrl = `http://pinterest.com/pin/create/button/` +
+    // 構建完整的描述文字
+    let fullDescription = description;
+    if (title) {
+      fullDescription = `${title} | ${fullDescription}`;
+    }
+    if (author) {
+      fullDescription = `${fullDescription} | By ${author}`;
+    }
+    
+    // 構建 Pinterest 分享 URL（使用 HTTPS）
+    const shareUrl = `https://pinterest.com/pin/create/button/` +
       `?url=${encodeURIComponent(url)}` +
       `&media=${encodeURIComponent(imageUrl)}` +
-      `&description=${encodeURIComponent(description)}`;
+      `&description=${encodeURIComponent(fullDescription)}`;
     
     // 打開分享視窗
     window.open(
@@ -75,7 +89,7 @@ export default function PinterestButton({
         shadow-sm
         ${className}
       `}
-      aria-label="Share on Pinterest"
+      aria-label="Save to Pinterest"
       title="Save to Pinterest"
     >
       <FaPinterestP className="w-5 h-5" />
