@@ -10,26 +10,10 @@ Japandi, the artful fusion of Japanese wabi-sabi philosophy and Scandinavian hyg
 
 These 40 carefully curated designs showcase how Japandi principles can transform your living space into a sanctuary of calm. From the Japanese concept of ma (間, meaningful empty space) to the Scandinavian practice of creating hygge through thoughtful lighting and natural textures, each element works in concert to achieve the perfect balance between serenity and warmth, minimalism and comfort.
 
-### Floor Cushion Harmony
-Large, textured floor cushions (座布団) in natural linen create a casual and meditative seating arrangement, perfect for both daily relaxation and social gatherings. The neutral palette and organic textures embody the Japandi principle of comfortable minimalism.
-
-![Floor Cushion Harmony](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Interior_architectural_photography_of_a_minimalist_li_92587a57-ca0b-4f55-a07c-fda7aa08c772.png)
-
-### Natural Material Mix
-Layer wood, stone, and textiles thoughtfully - raw-edge table with plush cushions against wooden wall panels creates the perfect balance of warmth and wabi-sabi aesthetics. The neutral color palette enhances the organic textures.
-
-![Natural Material Mix](/interior-inspiration-website/posts/40-japandi-living-room-ideas/interior_architecture_photography_ultra-wide_angle_le_f6a8dfe0-addb-4785-8e05-738a0b0a9499.png)
-
-### Wabi-Sabi Coffee Table
-Live-edge wood coffee table celebrating natural imperfections and organic forms. The contrast between the raw wooden slab and modern metal base creates a perfect balance of nature and sophistication.
-
-![Wabi-Sabi Coffee Table](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Professional_interior_architecture_photography_modern_36739311-126c-44b6-8b96-b1d51b10738d.png)
-
 ### Natural Light Control
 Sheer shoji screens (障子) filter sunlight to create an ever-changing play of light and shadow throughout the day, while cherry blossoms add seasonal poetry to the living space. This thoughtful light control is essential to the Japanese concept of utsuroi (移ろい), the beauty of impermanence.
 
-![Natural Light Control](/interior-inspiration-website/posts/40-japandi-living-room-ideas/
-Professional_interior_architecture_photography_of_a_J_8e132d22-e157-432d-b245-c1e611746515.png)
+![Natural Light Control](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Professional_interior_architecture_photography_of_a_J_8e132d22-e157-432d-b245-c1e611746515.png)
 ![Natural Light Control](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Professional_interior_architecture_photography_of_a_J_042bd712-4a3f-46b5-a37e-9ce2b265f727.png)
 
 ### Textured Plaster Walls
@@ -193,6 +177,21 @@ Embrace the beauty of exposed concrete walls and floors, finished with a subtle 
 Exposed ceiling beams in natural wood showcase the raw beauty of traditional Japanese architecture, while their organic forms add warmth and character to modern spaces. The contrast between rough-hewn beams and smooth white walls creates a perfect balance of rustic and refined elements.
 
 ![Wooden Beam Feature](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Professional_interior_architecture_photography_of_a_m_46007b91-019a-4272-8cb6-150aa4f2105b.png)
+
+### Floor Cushion Harmony
+Large, textured floor cushions (座布団) in natural linen create a casual and meditative seating arrangement, perfect for both daily relaxation and social gatherings. The neutral palette and organic textures embody the Japandi principle of comfortable minimalism.
+
+![Floor Cushion Harmony](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Interior_architectural_photography_of_a_minimalist_li_92587a57-ca0b-4f55-a07c-fda7aa08c772.png)
+
+### Natural Material Mix
+Layer wood, stone, and textiles thoughtfully - raw-edge table with plush cushions against wooden wall panels creates the perfect balance of warmth and wabi-sabi aesthetics. The neutral color palette enhances the organic textures.
+
+![Natural Material Mix](/interior-inspiration-website/posts/40-japandi-living-room-ideas/interior_architecture_photography_ultra-wide_angle_le_f6a8dfe0-addb-4785-8e05-738a0b0a9499.png)
+
+### Wabi-Sabi Coffee Table
+Live-edge wood coffee table celebrating natural imperfections and organic forms. The contrast between the raw wooden slab and modern metal base creates a perfect balance of nature and sophistication.
+
+![Wabi-Sabi Coffee Table](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Professional_interior_architecture_photography_modern_36739311-126c-44b6-8b96-b1d51b10738d.png)
 
 
 These designs embrace the Japanese principle of "Ma" - the conscious use of negative space - creating rooms that feel both purposeful and peaceful. Whether you're furnishing your first apartment or upgrading from basic IKEA setups, understanding these Japandi principles will help you create a living room that's not just beautiful, but deeply livable.
