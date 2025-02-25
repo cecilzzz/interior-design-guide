@@ -29,20 +29,20 @@ interface PinterestButtonProps {
   imageUrl: string;
   /** 圖片描述，將用作 Pinterest 的描述文字 */
   description: string;
-  /** 文章標題 */
-  title?: string;
-  /** 作者名稱 */
-  author?: string;
   /** 可選的額外 CSS 類名 */
   className?: string;
+  /** Pinterest 創作者 ID（可選） */
+  creatorId?: string;
+  /** 原始 Pin ID（如果圖片已經是一個 Pin） */
+  pinId?: string;
 }
 
 export default function PinterestButton({ 
   imageUrl, 
-  description,
-  title,
-  author,
-  className = ''
+  description, 
+  className = '',
+  creatorId,
+  pinId
 }: PinterestButtonProps) {
   /**
    * 處理 Pinterest 分享按鈕點擊
@@ -51,22 +51,21 @@ export default function PinterestButton({
   const handlePinterestShare = () => {
     const url = window.location.href;
     
-    // 構建完整的描述文字
-    let fullDescription = description;
-    if (title) {
-      fullDescription = `${title} | ${fullDescription}`;
-    }
-    if (author) {
-      fullDescription = `${fullDescription} | By ${author}`;
-    }
-    
-    // 構建 Pinterest 分享 URL（使用 HTTPS）
-    const shareUrl = `https://pinterest.com/pin/create/button/` +
+    // 基礎分享 URL
+    let shareUrl = 'https://pinterest.com/pin/create/button/' +
       `?url=${encodeURIComponent(url)}` +
       `&media=${encodeURIComponent(imageUrl)}` +
-      `&description=${encodeURIComponent(fullDescription)}`;
+      `&description=${encodeURIComponent(description)}`;
     
-    // 打開分享視窗
+    // 如果有 Pin ID，直接重新分享該 Pin
+    if (pinId) {
+      shareUrl = `https://pinterest.com/pin/${pinId}/repin/x/`;
+    }
+    // 如果有創作者 ID，添加創作者歸屬
+    else if (creatorId) {
+      shareUrl += `&creator=${encodeURIComponent(creatorId)}`;
+    }
+    
     window.open(
       shareUrl,
       'Pinterest',
@@ -82,7 +81,7 @@ export default function PinterestButton({
         bg-red-600
         text-white
         rounded-full 
-        p-1.5
+        p-2.5
         transition-all duration-300
         hover:scale-110
         hover:bg-red-700

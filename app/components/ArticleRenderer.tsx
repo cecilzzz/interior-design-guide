@@ -41,8 +41,6 @@ interface ArticleRendererProps {
   image: string;
   /** Markdown 格式的文章內容 */
   content: string;
-  /** 作者 */
-  author?: string;
 }
 
 /**
@@ -54,7 +52,6 @@ interface ArticleRendererProps {
  * @param props.date - 發布日期
  * @param props.image - 主圖 URL
  * @param props.content - Markdown 格式的文章內容
- * @param props.author - 作者
  */
 export default function ArticleRenderer({ 
   category, 
@@ -62,7 +59,6 @@ export default function ArticleRenderer({
   date, 
   image, 
   content,
-  author = "Interior Design Guide"  // 添加默認作者
 }: ArticleRendererProps) {
   return (
     <article>
@@ -88,9 +84,7 @@ export default function ArticleRenderer({
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <PinterestButton 
           imageUrl={image}
-          description={`${category} Design Inspiration`}
-          title={title}
-          author={author}
+          description={title}
         />
       </div>
       
@@ -115,8 +109,6 @@ export default function ArticleRenderer({
                   <PinterestButton 
                     imageUrl={optimizedSrc}
                     description={alt || title}
-                    title={title}
-                    author={author}
                   />
                 </div>
               );

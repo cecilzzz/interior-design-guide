@@ -74,6 +74,11 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1,
   },
+
+  // Pinterest domain verification
+  other: {
+    'p:domain_verify': 'b23e59bbecfac7fc71535e2c969afc73'
+  }
 };
 
 export default function RootLayout({
@@ -99,6 +104,7 @@ export default function RootLayout({
             gtag('config', 'G-PGBK5E7000');
           `}
         </Script>
+        <meta name="p:domain_verify" content="b23e59bbecfac7fc71535e2c969afc73" />
       </head>
       <body className={`${playfair.variable} ${montserrat.variable}`}>
         <Navigation />
