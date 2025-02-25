@@ -4,14 +4,7 @@
 ## Navigation Structure
 // 完整導航框架，定義網站整體結構
 
-### 1. The Framework
-- Design Principles
-- Space Planning
-- Colors & Palettes
-- Lighting
-- Materials & Textures
-
-### 2. Rooms
+### Rooms
 // 空間應用層：具體場景的系統解決方案
 - Small Space 
 - Living Room
@@ -21,7 +14,7 @@
 - Storage & Organization
 - Rental & Budget
 
-### 3. Styles
+### Styles
 // 風格應用層：主流設計風格
 - Modern
 - Minimalist
@@ -36,6 +29,13 @@
 - Boho
 - Mid-century Modern
 - French
+
+### The Framework
+- Design Principles
+- Space Planning
+- Lighting
+- Colors & Palettes
+- Materials & Textures
 
 
 ## Content Planning
