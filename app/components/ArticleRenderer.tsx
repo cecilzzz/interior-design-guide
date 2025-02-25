@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-markdown
 import { getImageUrl } from '@/app/lib/imageUtils';
+import PinterestButton from './PinterestButton';
 import React from 'react';
 
 /**
@@ -81,6 +82,10 @@ export default function ArticleRenderer({
           quality={85}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <PinterestButton 
+          imageUrl={image}
+          description={title}
+        />
       </div>
       
       {/* Markdown 內容區域 */}
@@ -91,15 +96,21 @@ export default function ArticleRenderer({
             img: ({ src, alt }) => {
               if (!src) return null;
               // 使用 content 類型的圖片優化參數
-              const optimizedSrc = getImageUrl(src, 'content');
+              const optimizedSrc = src.startsWith('http') ? src : getImageUrl(src, 'content');
               return (
-                <Image
-                  src={optimizedSrc}
-                  alt={alt || ''}
-                  width={800}
-                  height={450}
-                  className="rounded-lg my-8 w-full h-auto"
-                />
+                <div className="relative group my-8">
+                  <Image
+                    src={optimizedSrc}
+                    alt={alt || ''}
+                    width={800}
+                    height={450}
+                    className="rounded-lg w-full h-auto"
+                  />
+                  <PinterestButton 
+                    imageUrl={optimizedSrc}
+                    description={alt || title}
+                  />
+                </div>
               );
             },
           }}
