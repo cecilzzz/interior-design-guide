@@ -31,6 +31,9 @@ export const metadata: Metadata = {
   // Google Search Console Verification
   verification: {
     google: 'MIQAEqy4KvQJvS-DeDe1H-X9RYLznKd622lpC_sgydI',
+    other: {
+      'p:domain_verify': ['b23e59bbecfac7fc71535e2c969afc73'],
+    },
   },
   
   // Basic OpenGraph
@@ -73,11 +76,6 @@ export const metadata: Metadata = {
     width: "device-width",
     initialScale: 1,
     maximumScale: 1,
-  },
-
-  // Pinterest domain verification
-  other: {
-    'p:domain_verify': 'b23e59bbecfac7fc71535e2c969afc73'
   }
 };
 
