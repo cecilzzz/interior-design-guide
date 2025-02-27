@@ -39,9 +39,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const imageUrl = post.image.startsWith('http') ? post.image : getImageUrl(post.image, 'hero');
+  const canonicalUrl = `https://interior-design-guide.vercel.app/blog/${params.slug}`;
+
   return {
     title: post.title,
     description: post.excerpt,
+    metadataBase: new URL('https://interior-design-guide.vercel.app'),
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -49,18 +56,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: post.date,
       images: [
         {
-          url: getImageUrl(post.image, 'hero'),
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: post.title,
         },
       ],
+      url: canonicalUrl,
+      siteName: 'Interior Design Guide',
+    },
+    // 只保留 Article Rich Pins 特有的標籤
+    other: {
+      'article:published_time': post.date,
+      'article:section': post.categories[0],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [getImageUrl(post.image, 'hero')],
+      images: [imageUrl],
     },
   };
 }

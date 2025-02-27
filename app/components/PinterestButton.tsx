@@ -26,46 +26,32 @@ import { FaPinterestP } from 'react-icons/fa';
 
 interface PinterestButtonProps {
   /** 要分享的圖片 URL */
-  imageUrl: string;
+  media: string;
   /** 圖片描述，將用作 Pinterest 的描述文字 */
   description: string;
+  /** 文章頁面的 URL */
+  url: string;
   /** 可選的額外 CSS 類名 */
   className?: string;
-  /** Pinterest 創作者 ID（可選） */
-  creatorId?: string;
-  /** 原始 Pin ID（如果圖片已經是一個 Pin） */
-  pinId?: string;
 }
 
 export default function PinterestButton({ 
-  imageUrl, 
+  media, 
   description, 
-  className = '',
-  creatorId,
-  pinId
+  url,
+  className = ''
 }: PinterestButtonProps) {
   /**
    * 處理 Pinterest 分享按鈕點擊
    * 打開一個新視窗來進行 Pinterest 分享
    */
   const handlePinterestShare = () => {
-    const url = window.location.href;
-    
-    // 基礎分享 URL
-    let shareUrl = 'https://pinterest.com/pin/create/button/' +
+    const shareUrl = 'https://pinterest.com/pin/create/button/' +
       `?url=${encodeURIComponent(url)}` +
-      `&media=${encodeURIComponent(imageUrl)}` +
+      `&media=${encodeURIComponent(media)}` +
       `&description=${encodeURIComponent(description)}`;
     
-    // 如果有 Pin ID，直接重新分享該 Pin
-    if (pinId) {
-      shareUrl = `https://pinterest.com/pin/${pinId}/repin/x/`;
-    }
-    // 如果有創作者 ID，添加創作者歸屬
-    else if (creatorId) {
-      shareUrl += `&creator=${encodeURIComponent(creatorId)}`;
-    }
-    
+    // 打開分享視窗
     window.open(
       shareUrl,
       'Pinterest',
@@ -81,7 +67,7 @@ export default function PinterestButton({
         bg-red-600
         text-white
         rounded-full 
-        p-2.5
+        p-1.5
         transition-all duration-300
         hover:scale-110
         hover:bg-red-700

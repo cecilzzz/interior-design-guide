@@ -60,6 +60,17 @@ export default function ArticleRenderer({
   image, 
   content,
 }: ArticleRendererProps) {
+  const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+  // 創建 Pinterest Pin 的數據結構
+  const createPinData = (media: string, description: string) => {
+    return {
+      url: pageUrl,     // 文章 URL
+      media,            // 圖片 URL
+      description,      // Pin 描述
+    };
+  };
+
   return (
     <article>
       {/* 標題區域 */}
@@ -83,8 +94,7 @@ export default function ArticleRenderer({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <PinterestButton 
-          imageUrl={image}
-          description={title}
+          {...createPinData(image, `${title} - Cover Image`)}
         />
       </div>
       
@@ -92,23 +102,22 @@ export default function ArticleRenderer({
       <div className="prose max-w-none">
         <ReactMarkdown
           components={{
-            // 自定義圖片渲染
             img: ({ src, alt }) => {
               if (!src) return null;
-              // 使用 content 類型的圖片優化參數
               const optimizedSrc = src.startsWith('http') ? src : getImageUrl(src, 'content');
+              const imageAltText = alt || title;
+              
               return (
                 <div className="relative group my-8">
                   <Image
                     src={optimizedSrc}
-                    alt={alt || ''}
+                    alt={imageAltText}
                     width={800}
                     height={450}
                     className="rounded-lg w-full h-auto"
                   />
                   <PinterestButton 
-                    imageUrl={optimizedSrc}
-                    description={alt || title}
+                    {...createPinData(optimizedSrc, `${title} - ${imageAltText}`)}
                   />
                 </div>
               );
