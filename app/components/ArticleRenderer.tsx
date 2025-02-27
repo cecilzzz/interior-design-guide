@@ -2,7 +2,7 @@ import Image from "next/image";
 import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-markdown
 import { getImageUrl } from '@/app/lib/imageUtils';
 import PinterestButton from './PinterestButton';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 /**
  * ArticleRenderer 組件
@@ -60,14 +60,20 @@ export default function ArticleRenderer({
   image, 
   content,
 }: ArticleRendererProps) {
-  const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
+  // 使用 state 來存儲 URL
+  const [pageUrl, setPageUrl] = useState('');
 
-  // 創建 Pinterest Pin 的數據結構
-  const createPinData = (media: string, description: string) => {
+  // 在客戶端設置 URL
+  useEffect(() => {
+    setPageUrl(window.location.href);
+  }, []);
+
+  // 創建 Pin 數據的函數
+  const createPinData = (media: string, imageAltText: string) => {
     return {
-      url: pageUrl,     // 文章 URL
-      media,            // 圖片 URL
-      description,      // Pin 描述
+      url: pageUrl,
+      media,
+      description: `${title} - ${imageAltText}`,
     };
   };
 
@@ -93,9 +99,11 @@ export default function ArticleRenderer({
           quality={85}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        <PinterestButton 
-          {...createPinData(image, `${title} - Cover Image`)}
-        />
+        {pageUrl && (  // 只在有 URL 時渲染 Pinterest 按鈕
+          <PinterestButton 
+            {...createPinData(image, 'Cover Image')}
+          />
+        )}
       </div>
       
       {/* Markdown 內容區域 */}
@@ -108,7 +116,7 @@ export default function ArticleRenderer({
               const imageAltText = alt || title;
               
               return (
-                <div className="relative group my-8">
+                <span className="block relative group my-8">
                   <Image
                     src={optimizedSrc}
                     alt={imageAltText}
@@ -116,11 +124,16 @@ export default function ArticleRenderer({
                     height={450}
                     className="rounded-lg w-full h-auto"
                   />
-                  <PinterestButton 
-                    {...createPinData(optimizedSrc, `${title} - ${imageAltText}`)}
-                  />
-                </div>
+                  {pageUrl && (
+                    <PinterestButton 
+                      {...createPinData(optimizedSrc, imageAltText)}
+                    />
+                  )}
+                </span>
               );
+            },
+            p: ({ children }) => {
+              return <span className="block mb-4">{children}</span>;
             },
           }}
         >
