@@ -63,7 +63,7 @@ export default function PinterestButton({
         bg-red-600
         text-white
         rounded-full 
-        p-2.5
+        p-1.5
         transition-all duration-300
         hover:scale-110
         hover:bg-red-700
