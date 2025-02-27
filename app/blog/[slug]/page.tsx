@@ -35,25 +35,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) {
     return {
       title: 'Post Not Found',
-      description: 'The requested blog post could not be found.'
     };
   }
 
-  const imageUrl = post.image.startsWith('http') ? post.image : getImageUrl(post.image, 'hero');
   const canonicalUrl = `https://interior-design-guide.vercel.app/blog/${params.slug}`;
+  const imageUrl = post.image.startsWith('http') ? post.image : getImageUrl(post.image, 'hero');
 
   return {
     title: post.title,
     description: post.excerpt,
     metadataBase: new URL('https://interior-design-guide.vercel.app'),
-    alternates: {
-      canonical: canonicalUrl,
-    },
+    
     openGraph: {
+      type: 'article',
       title: post.title,
       description: post.excerpt,
-      type: 'article',
-      publishedTime: post.date,
+      url: canonicalUrl,
+      siteName: 'Interior Design Guide',
       images: [
         {
           url: imageUrl,
@@ -62,14 +60,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           alt: post.title,
         },
       ],
-      url: canonicalUrl,
-      siteName: 'Interior Design Guide',
     },
-    // Pinterest 特定的 meta 標籤
+    
+    // 完整的文章相關 meta 標籤
     other: {
-      'og:description': post.excerpt,
       'article:published_time': post.date,
+      'article:author': 'Interior Design Guide',  // 添加作者
       'article:section': post.categories[0],
+      'article:tag': post.categories.join(','),  // 添加標籤
     },
   };
 }
