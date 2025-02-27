@@ -24,11 +24,9 @@ import { FaPinterestP } from 'react-icons/fa';
  * ```
  */
 
-interface PinterestButtonProps {
+export interface PinterestButtonProps {
   /** 要分享的圖片 URL */
   media: string;
-  /** 圖片描述，將用作 Pinterest 的描述文字 */
-  description: string;
   /** 文章頁面的 URL */
   url: string;
   /** 可選的額外 CSS 類名 */
@@ -37,7 +35,6 @@ interface PinterestButtonProps {
 
 export default function PinterestButton({ 
   media, 
-  description, 
   url,
   className = ''
 }: PinterestButtonProps) {
@@ -48,8 +45,7 @@ export default function PinterestButton({
   const handlePinterestShare = () => {
     const shareUrl = 'https://pinterest.com/pin/create/button/' +
       `?url=${encodeURIComponent(url)}` +
-      `&media=${encodeURIComponent(media)}` +
-      `&description=${encodeURIComponent(description)}`;
+      `&media=${encodeURIComponent(media)}`;
     
     // 打開分享視窗
     window.open(
@@ -67,7 +63,7 @@ export default function PinterestButton({
         bg-red-600
         text-white
         rounded-full 
-        p-1.5
+        p-2.5
         transition-all duration-300
         hover:scale-110
         hover:bg-red-700

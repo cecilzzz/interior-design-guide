@@ -3,7 +3,7 @@
 import Image from "next/image";
 import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-markdown
 import { getImageUrl } from '@/app/lib/imageUtils';
-import PinterestButton from './PinterestButton';
+import PinterestButton, { PinterestButtonProps } from './PinterestButton';
 import React, { useEffect, useState } from 'react';
 
 /**
@@ -71,11 +71,10 @@ export default function ArticleRenderer({
   }, []);
 
   // 創建 Pin 數據的函數
-  const createPinData = (media: string, imageAltText: string) => {
+  const createPinData = (media: string): PinterestButtonProps => {
     return {
       url: pageUrl,
       media,
-      description: `${title} - ${imageAltText}`,
     };
   };
 
@@ -101,9 +100,9 @@ export default function ArticleRenderer({
           quality={85}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {pageUrl && (  // 只在有 URL 時渲染 Pinterest 按鈕
+        {pageUrl && (
           <PinterestButton 
-            {...createPinData(image, 'Cover Image')}
+            {...createPinData(image)}
           />
         )}
       </div>
@@ -128,7 +127,7 @@ export default function ArticleRenderer({
                   />
                   {pageUrl && (
                     <PinterestButton 
-                      {...createPinData(optimizedSrc, imageAltText)}
+                      {...createPinData(optimizedSrc)}
                     />
                   )}
                 </span>

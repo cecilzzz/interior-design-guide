@@ -65,16 +65,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: canonicalUrl,
       siteName: 'Interior Design Guide',
     },
-    // 只保留 Article Rich Pins 特有的標籤
+    // Pinterest 特定的 meta 標籤
     other: {
+      'og:description': post.excerpt,
       'article:published_time': post.date,
       'article:section': post.categories[0],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
-      images: [imageUrl],
     },
   };
 }
