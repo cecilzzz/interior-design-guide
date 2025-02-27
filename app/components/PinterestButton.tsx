@@ -49,13 +49,15 @@ export default function PinterestButton({
     const shareUrl = 'https://pinterest.com/pin/create/button/' +
       `?url=${encodeURIComponent(url)}` +
       `&media=${encodeURIComponent(media)}` +
-      `&description=${encodeURIComponent(description)}`;
+      `&description=${encodeURIComponent(description)}` +
+      '&is_video=false' +
+      '&method=button';
     
     // 打開分享視窗
     window.open(
       shareUrl,
       'Pinterest',
-      'width=750,height=650,toolbar=0,menubar=0,location=0'
+      'width=750,height=650,toolbar=0,menubar=0,location=0,status=0'
     );
   };
 

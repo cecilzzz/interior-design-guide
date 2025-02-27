@@ -48,9 +48,11 @@ export const metadata: Metadata = {
         url: "og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "Interior Design Guide"
+        alt: "Interior Design Guide",
+        type: 'image/jpeg',
       }
     ],
+    url: 'https://interior-design-guide.vercel.app',
   },
   
   // Twitter
@@ -59,6 +61,8 @@ export const metadata: Metadata = {
     title: "Interior Design Guide",
     description: "Your comprehensive resource for interior design inspiration and guidance",
     images: ["og-default.jpg"],
+    site: "@interiorguide",
+    creator: "@interiorguide",
   },
   
   // Robots
@@ -76,6 +80,13 @@ export const metadata: Metadata = {
     width: "device-width",
     initialScale: 1,
     maximumScale: 1,
+  },
+  
+  // 添加額外的 meta tags
+  other: {
+    'og:site_name': 'Interior Design Guide',
+    'og:type': 'website',
+    'article:publisher': 'https://www.pinterest.com/interiorguide/',
   }
 };
 
