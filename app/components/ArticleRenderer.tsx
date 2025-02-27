@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-markdown
 import { getImageUrl } from '@/app/lib/imageUtils';
