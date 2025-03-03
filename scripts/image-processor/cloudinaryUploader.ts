@@ -3,25 +3,23 @@ import { access } from 'fs/promises';
 import { PathManager } from './paths';
 import type { ImageData } from './markdownProcessor';
 
-// Cloudinary 配置
-const cloudinaryConfig = {
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-};
-
-// 上傳選項
-const uploadOptions = {
-  tags: ['interior-design'] as const
-};
-
 // 驗證 Cloudinary 環境變數
 const validateEnv = () => {
-  const { cloud_name, api_key, api_secret } = cloudinaryConfig;
-  
-  if (!cloud_name) throw new Error('缺少 Cloudinary Cloud Name');
-  if (!api_key) throw new Error('缺少 Cloudinary API Key');
-  if (!api_secret) throw new Error('缺少 Cloudinary API Secret');
+  if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) 
+    throw new Error(`缺少 Cloudinary Cloud Name: ${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}`);
+  if (!process.env.CLOUDINARY_API_KEY) 
+    throw new Error(`缺少 Cloudinary API Key: ${process.env.CLOUDINARY_API_KEY}`);
+  if (!process.env.CLOUDINARY_API_SECRET) 
+    throw new Error(`缺少 Cloudinary API Secret: ${process.env.CLOUDINARY_API_SECRET}`);
+};
+
+// 配置 Cloudinary SDK
+const configureCloudinary = () => {
+  cloudinary.config({
+    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
 };
 
 // 驗證本地文件是否存在
@@ -33,16 +31,11 @@ const validateFile = async (localPath: string) => {
   }
 };
 
-// 配置 Cloudinary SDK
-const configureCloudinary = () => {
-  cloudinary.config(cloudinaryConfig);
-};
-
 // 執行上傳操作
 const performUpload = async (localPath: string, cloudinaryPath: string, altText: string) => {
   try {
     const result = await cloudinary.uploader.upload(localPath, {
-      ...uploadOptions,
+      tags: ['interior-design'],
       public_id: cloudinaryPath,
       context: { alt: altText }
     });
