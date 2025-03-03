@@ -134,13 +134,17 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
                 return;
               }
 
-              // 從 localRelativePath 中提取 articleSlug
-              const pathParts = seoData.localRelativePath.split('/');
-              const articleSlug = pathParts[pathParts.length - 1];
-              
+              // 優先使用 SEO 注釋中的 articleSlug，如果不存在才從 localRelativePath 提取
+              let articleSlug = seoData.articleSlug;
               if (!articleSlug) {
-                console.error('無法從 localRelativePath 提取 articleSlug:', seoData.localRelativePath);
-                return;
+                console.warn('SEO 注釋中缺少 articleSlug，嘗試從 localRelativePath 提取');
+                const pathParts = seoData.localRelativePath.split('/');
+                articleSlug = pathParts[pathParts.length - 1];
+                
+                if (!articleSlug) {
+                  console.error('無法從 localRelativePath 提取 articleSlug:', seoData.localRelativePath);
+                  return;
+                }
               }
 
               const imageData: ImageData = {
