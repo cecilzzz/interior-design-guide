@@ -29,14 +29,16 @@ async function main() {
         const { secure_url } = await uploadToCloudinary(imageData);
         console.log(`Cloudinary 上傳成功: ${secure_url}`);
 
-        // 發布到 Pinterest
+        // 發布到 Pinterest（暫時跳過，因為 API 未通過審核）
+        /* 等 API 審核通過後再啟用
         const { id } = await createPin(
           imageData,
           secure_url,
           process.env.NEXT_PUBLIC_SITE_URL || ''
         );
         console.log(`Pinterest 發布成功: ${id}`);
-
+        */
+        console.log('Pinterest 發布已跳過（API 未通過審核）');
         success++;
       } catch (error: any) {
         failed++;

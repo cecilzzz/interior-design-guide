@@ -18,6 +18,7 @@ Sheer shoji screens (障子) filter sunlight to create an ever-changing play of 
   "originalName": "Professional_interior_architecture_photography_of_a_J_8e132d22-e157-432d-b245-c1e611746515.png",
   "localRelativePath": "japandi/40-japandi-living-room-ideas",
   "seoFileName": "japanese-zen-meditation-room-cherry-blossom",
+  "articleSlug": "40-japandi-living-room-ideas",
   "altText": "Japanese meditation room with cherry blossom bonsai, shoji screens and wooden tea table",
   "pin": {
     "title": "Japanese Zen Interior: Minimalist Tea Room with Cherry Blossom",
