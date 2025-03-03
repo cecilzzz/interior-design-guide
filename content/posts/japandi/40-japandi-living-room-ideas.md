@@ -13,7 +13,7 @@ These 40 carefully curated designs showcase how Japandi principles can transform
 ### Natural Light Control
 Sheer shoji screens (障子) filter sunlight to create an ever-changing play of light and shadow throughout the day, while cherry blossoms add seasonal poetry to the living space. This thoughtful light control is essential to the Japanese concept of utsuroi (移ろい), the beauty of impermanence.
 
-<!--SEO
+[//]: # (SEO
 {
   "originalName": "Professional_interior_architecture_photography_of_a_J_8e132d22-e157-432d-b245-c1e611746515.png",
   "localRelativePath": "japandi/40-japandi-living-room-ideas",
@@ -25,7 +25,7 @@ Sheer shoji screens (障子) filter sunlight to create an ever-changing play of 
     "description": "Experience the tranquility of Japanese design where cherry blossoms meet natural sunlight through shoji screens. Concrete walls and wooden elements create an authentic zen atmosphere perfect for mindful tea ceremonies."
   }
 }
--->
+)
 ![Japanese meditation room with cherry blossom bonsai, shoji screens and wooden tea table](/interior-inspiration-website/posts/40-japandi-living-room-ideas/japanese-zen-meditation-room-cherry-blossom.png)
 ![Natural Light Control](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Professional_interior_architecture_photography_of_a_J_042bd712-4a3f-46b5-a37e-9ce2b265f727.png)
 

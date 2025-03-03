@@ -22,14 +22,6 @@ async function main() {
     const content = readFileSync(markdownPath, 'utf-8');
     console.log('成功讀取文件內容，長度:', content.length, '字節');
     
-    // 檢查 SEO 注釋
-    const seoComments = content.match(/<!--SEO[\s\S]*?-->/g);
-    console.log('找到 SEO 注釋數量:', seoComments?.length || 0);
-    if (seoComments) {
-      console.log('\n第一個 SEO 注釋內容:');
-      console.log(seoComments[0]);
-    }
-    
     const images = await processMarkdown(content);
     console.log('\n處理後的圖片數量:', images.length);
     

@@ -11,7 +11,7 @@ import type { Root, Image, Heading, Text } from 'mdast';
  * 
  * 2. 格式範例：
  *    ```markdown
- *    <!--SEO
+ *    [//]: # (SEO
  *    {
  *      "originalName": "zen-room.jpg",        // 原始圖片檔名（必填）
  *      "localRelativePath": "japandi/zen",    // 本地相對路徑（必填）
@@ -23,7 +23,7 @@ import type { Root, Image, Heading, Text } from 'mdast';
  *        "description": "打造寧靜的冥想空間"   // Pin 描述
  *      }
  *    }
- *    -->
+ *    )
  *    ![日式禪風冥想房間](/images/zen-room.jpg)
  *    ```
  * 
@@ -71,7 +71,7 @@ interface ProcessedImage {
 
 // 內部函數：從 markdown 內容中提取 SEO 數據
 const extractSeoData = (content: string): ImageData[] => {
-  const seoDataRegex = /<!--SEO([\s\S]*?)-->/g;
+  const seoDataRegex = /\[\/\/\]: # \(SEO\s*([\s\S]*?)\s*\)/g;
   const matches = content.matchAll(seoDataRegex);
   const results: ImageData[] = [];
 
@@ -119,12 +119,21 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
           if (!imageNode.position) return;
 
           const beforeContent = content.slice(0, imageNode.position.start.offset);
-          const afterContent = content.slice(imageNode.position.end.offset);
           
-          const seoComment = beforeContent.match(/<!--SEO([\s\S]*?)-->\s*$/);
+          // 修改正則表達式以只匹配 SEO 注釋內容
+          const seoCommentRegex = /\[\/\/\]: # \(SEO\s*(\{[\s\S]*?\})\s*\)\s*$/;
+          const seoComment = beforeContent.match(seoCommentRegex);
+          
           if (seoComment) {
             try {
-              const seoData = JSON.parse(seoComment[1].trim());
+              // 直接解析 JSON 字符串
+              let seoData;
+              try {
+                seoData = JSON.parse(seoComment[1]);
+              } catch (e) {
+                console.error('JSON 解析錯誤，原始字符串:', seoComment[1]);
+                throw e;
+              }
               
               // 驗證基本必需字段
               if (!seoData.originalName || !seoData.localRelativePath || 
@@ -160,7 +169,7 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
               images.push({
                 imageData,
                 sectionId: currentSectionId,
-                markdown: { before: beforeContent, after: afterContent }
+                markdown: { before: beforeContent, after: '' }
               });
             } catch (error) {
               console.error('解析圖片 SEO 數據時出錯:', error);
