@@ -1,6 +1,22 @@
 import { CldUploadApi } from 'next-cloudinary/server';
+import { join } from 'path';
+import { access } from 'fs/promises';
 import type { ImageData } from './markdownProcessor';
 
+/**
+ * 圖片處理結果介面
+ * 用於追蹤單個圖片的處理狀態和結果
+ * 
+ * @interface ProcessingResult
+ * @property {boolean} success - 處理是否成功
+ * @property {string} [cloudinaryUrl] - 成功時的 Cloudinary URL
+ * @property {string} [pinId] - 成功時的 Pinterest Pin ID
+ * @property {string} [error] - 失敗時的錯誤訊息
+ * 
+ * @internal
+ * 被 processImage 函數返回
+ * 被 process-images.ts 用於追蹤處理狀態
+ */
 interface ProcessingResult {
   success: boolean;
   cloudinaryUrl?: string;
@@ -8,6 +24,19 @@ interface ProcessingResult {
   error?: string;
 }
 
+/**
+ * 處理統計資訊介面
+ * 用於追蹤批次處理的整體狀態
+ * 
+ * @interface ProcessingStats
+ * @property {number} total - 總處理數量
+ * @property {number} success - 成功處理數量
+ * @property {number} failed - 失敗處理數量
+ * @property {Array<{file: string, error: string}>} errors - 錯誤詳情列表
+ * 
+ * @exports
+ * 被 process-images.ts 用於生成處理報告
+ */
 interface ProcessingStats {
   total: number;
   success: number;
@@ -18,6 +47,20 @@ interface ProcessingStats {
   }>;
 }
 
+/**
+ * Pinterest Pin 資料介面
+ * 定義創建 Pinterest Pin 所需的資料結構
+ * 
+ * @interface PinterestPinData
+ * @property {string} title - Pin 標題
+ * @property {string} description - Pin 描述
+ * @property {object} media_source - 媒體來源資訊
+ * @property {string} link - Pin 連結
+ * @property {string} board_id - Pinterest 面板 ID
+ * 
+ * @internal
+ * 僅在 createPinterestPin 函數中使用
+ */
 interface PinterestPinData {
   title: string;
   description: string;
@@ -30,6 +73,15 @@ interface PinterestPinData {
 
 /**
  * 上傳圖片到 Cloudinary
+ * 處理圖片上傳和優化設定
+ * 
+ * @param {string} file - 圖片檔案路徑
+ * @param {string} seoFileName - SEO 友好的檔名
+ * @param {string} altText - 圖片替代文字
+ * @returns {Promise<{secure_url: string}>} Cloudinary 上傳結果
+ * 
+ * @internal
+ * 被 processImage 函數調用
  */
 export const uploadToCloudinary = async (
   file: string,
@@ -59,6 +111,13 @@ export const uploadToCloudinary = async (
 
 /**
  * 創建 Pinterest Pin
+ * 將圖片發布到 Pinterest
+ * 
+ * @param {PinterestPinData} pinData - Pin 相關資料
+ * @returns {Promise<{id: string}>} 創建的 Pin ID
+ * 
+ * @internal
+ * 被 processImage 函數調用
  */
 export const createPinterestPin = async (
   pinData: PinterestPinData
@@ -81,6 +140,16 @@ export const createPinterestPin = async (
 
 /**
  * 處理單個圖片
+ * 包括上傳到 Cloudinary 和發布到 Pinterest
+ * 
+ * @param {ImageData} imageData - 圖片資料
+ * @param {string} sectionId - 文章段落 ID
+ * @param {string} articleSlug - 文章 slug
+ * @param {string} boardId - Pinterest 面板 ID
+ * @returns {Promise<ProcessingResult>} 處理結果
+ * 
+ * @exports
+ * 被 process-images.ts 用於處理每個圖片
  */
 export const processImage = async (
   imageData: ImageData,
@@ -121,7 +190,13 @@ export const processImage = async (
 };
 
 /**
- * 追蹤處理統計
+ * 創建處理統計對象
+ * 初始化統計追蹤器
+ * 
+ * @returns {ProcessingStats} 初始化的統計對象
+ * 
+ * @exports
+ * 被 process-images.ts 用於開始批次處理
  */
 export const createProcessingStats = (): ProcessingStats => ({
   total: 0,
@@ -130,6 +205,17 @@ export const createProcessingStats = (): ProcessingStats => ({
   errors: []
 });
 
+/**
+ * 更新處理統計
+ * 根據處理結果更新統計資訊
+ * 
+ * @param {ProcessingStats} stats - 當前統計資訊
+ * @param {ProcessingResult} result - 處理結果
+ * @param {string} file - 處理的檔案名
+ * 
+ * @exports
+ * 被 process-images.ts 用於追蹤處理進度
+ */
 export const updateStats = (
   stats: ProcessingStats,
   result: ProcessingResult,

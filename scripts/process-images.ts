@@ -1,11 +1,37 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import { join } from 'path';
-import { extractImagesWithSections, updateMarkdownImageUrls } from '../app/lib/markdownProcessor';
+import { extractImagesWithSections } from '../app/lib/markdownProcessor';
 import { processImage, createProcessingStats, updateStats } from '../app/lib/imageProcessor';
 
+/**
+ * 內容目錄常量
+ * 指定 markdown 文件的根目錄
+ */
 const CONTENT_DIR = join(process.cwd(), 'content');
+
+/**
+ * Pinterest 面板 ID
+ * 從環境變數獲取
+ */
 const BOARD_ID = process.env.PINTEREST_BOARD_ID;
 
+/**
+ * 處理單篇文章
+ * 主要處理流程：
+ * 1. 讀取並解析 markdown 文件
+ * 2. 提取圖片資訊
+ * 3. 處理每張圖片（上傳到 Cloudinary 和 Pinterest）
+ * 4. 追蹤處理統計
+ * 
+ * @param {string} filePath - markdown 文件路徑
+ * @returns {Promise<void>}
+ * 
+ * 使用了以下導入的函數：
+ * - extractImagesWithSections: 從 markdownProcessor
+ * - processImage: 從 imageProcessor
+ * - createProcessingStats: 從 imageProcessor
+ * - updateStats: 從 imageProcessor
+ */
 async function processArticle(filePath: string) {
   try {
     // 檢查 BOARD_ID
@@ -21,9 +47,6 @@ async function processArticle(filePath: string) {
     
     // 創建統計對象
     const stats = createProcessingStats();
-    
-    // 存儲圖片更新信息
-    const imageUpdates = new Map<string, string>();
     
     // 獲取文章 slug
     const slug = filePath
@@ -41,15 +64,7 @@ async function processArticle(filePath: string) {
       );
       
       updateStats(stats, result, imageData.originalName);
-      
-      if (result.success && result.cloudinaryUrl) {
-        imageUpdates.set(imageData.originalName, result.cloudinaryUrl);
-      }
     }
-    
-    // 更新 markdown 文件中的圖片 URL
-    const updatedContent = updateMarkdownImageUrls(content, imageUpdates);
-    await writeFile(filePath, updatedContent, 'utf-8');
     
     // 輸出統計信息
     console.log('\nProcessing Statistics:');
@@ -70,7 +85,15 @@ async function processArticle(filePath: string) {
   }
 }
 
-// 主函數
+/**
+ * 主程序入口
+ * 處理命令行參數並啟動文章處理
+ * 
+ * 使用方式：
+ * ```bash
+ * npm run process-images <markdown-file>
+ * ```
+ */
 async function main() {
   const [,, filePath] = process.argv;
   
