@@ -1,5 +1,5 @@
-import { CldUploadApi } from 'next-cloudinary/server';
-import { join } from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+import { join, resolve } from 'path';
 import { access } from 'fs/promises';
 import type { ImageData } from './markdownProcessor';
 
@@ -79,6 +79,7 @@ interface PinterestPinData {
  * @param {string} seoFileName - SEO 友好的檔名
  * @param {string} altText - 圖片替代文字
  * @param {string} articleSlug - 文章 slug
+ * @param {string} relativePath - 相對路徑
  * @returns {Promise<{secure_url: string}>} Cloudinary 上傳結果
  * 
  * @internal
@@ -88,24 +89,75 @@ export const uploadToCloudinary = async (
   originalName: string,
   seoFileName: string,
   altText: string,
-  articleSlug: string
+  articleSlug: string,
+  relativePath: string
 ): Promise<{ secure_url: string }> => {
   try {
+    if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) {
+      throw new Error('NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME environment variable is required');
+    }
+    if (!process.env.CLOUDINARY_API_KEY) {
+      throw new Error('CLOUDINARY_API_KEY environment variable is required');
+    }
+    if (!process.env.CLOUDINARY_API_SECRET) {
+      throw new Error('CLOUDINARY_API_SECRET environment variable is required');
+    }
+
+    // 構建圖片的完整路徑，使用 resolve 來處理相對路徑
+    const imagePath = resolve(process.cwd(), relativePath, originalName);
+
+    console.log('Looking for image at:', imagePath);
+
+    // 檢查圖片文件是否存在
+    try {
+      await access(imagePath);
+    } catch (error) {
+      throw new Error(`Image file not found: ${imagePath}`);
+    }
+
+    console.log('Configuring Cloudinary with:', {
+      cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY?.slice(0, 4) + '...',
+      has_api_secret: !!process.env.CLOUDINARY_API_SECRET
+    });
+
+    // 配置 Cloudinary
+    cloudinary.config({
+      cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET
+    });
+
     // 構建與你現有結構匹配的 public_id
-    const publicId = `interior-inspiration-website/posts/${articleSlug}/${seoFileName}`;
+    const publicId = `${process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER || 'interior-inspiration-website'}/posts/${articleSlug}/${seoFileName}`;
     
-    const result = await CldUploadApi.upload(originalName, {
-      public_id: publicId,  // 例如: "interior-inspiration-website/posts/40-japandi-living-room-ideas/modern-japandi-living-room-2024"
+    console.log('Attempting to upload:', {
+      imagePath,
+      publicId,
+      altText
+    });
+
+    const result = await cloudinary.uploader.upload(imagePath, {
+      public_id: publicId,
       tags: ['interior-design'],
       context: {
         alt: altText
       }
     });
 
+    console.log('Upload successful:', result.secure_url);
+
     return {
       secure_url: result.secure_url
     };
   } catch (error: any) {
+    console.error('Cloudinary upload error details:', {
+      message: error?.message,
+      error: error,
+      originalName,
+      seoFileName,
+      relativePath
+    });
     throw new Error(`Cloudinary upload failed: ${error?.message || 'Unknown error'}`);
   }
 };
@@ -159,12 +211,17 @@ export const processImage = async (
   boardId: string
 ): Promise<ProcessingResult> => {
   try {
+    if (!process.env.NEXT_PUBLIC_SITE_URL) {
+      throw new Error('NEXT_PUBLIC_SITE_URL environment variable is required');
+    }
+
     // 上傳到 Cloudinary
     const uploadResult = await uploadToCloudinary(
       imageData.originalName,
       imageData.seoFileName,
       imageData.altText,
-      articleSlug
+      articleSlug,
+      imageData.relativePath
     );
 
     // 創建 Pinterest Pin

@@ -1,13 +1,17 @@
-import { readFile } from 'fs/promises';
-import { join } from 'path';
+import { readFile, access } from 'fs/promises';
+import { join, resolve } from 'path';
+import { config } from 'dotenv';
 import { extractImagesWithSections } from '../app/lib/markdownProcessor';
 import { processImage, createProcessingStats, updateStats } from '../app/lib/imageProcessor';
+
+// 載入環境變數
+config({ path: '.env.local' });
 
 /**
  * 內容目錄常量
  * 指定 markdown 文件的根目錄
  */
-const CONTENT_DIR = join(process.cwd(), 'content');
+const CONTENT_DIR = resolve(__dirname, '..', 'content');
 
 /**
  * Pinterest 面板 ID
@@ -37,6 +41,13 @@ async function processArticle(filePath: string) {
     // 檢查 BOARD_ID
     if (!BOARD_ID) {
       throw new Error('PINTEREST_BOARD_ID environment variable is required');
+    }
+
+    // 檢查文件是否存在
+    try {
+      await access(filePath);
+    } catch (error) {
+      throw new Error(`File not found: ${filePath}`);
     }
 
     // 讀取 markdown 文件
@@ -74,7 +85,7 @@ async function processArticle(filePath: string) {
     
     if (stats.errors.length > 0) {
       console.log('\nErrors:');
-      stats.errors.forEach(({ file, error }) => {
+      stats.errors.forEach(({ file, error }: { file: string; error: string }) => {
         console.log(`${file}: ${error}`);
       });
     }

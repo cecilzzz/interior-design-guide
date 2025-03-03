@@ -1,6 +1,6 @@
 import { remark } from 'remark';
 import { visit } from 'unist-util-visit';
-import type { Root } from 'mdast';
+import type { Root, Image, Heading, Text } from 'mdast';
 
 /**
  * 圖片資料介面定義
@@ -62,14 +62,23 @@ interface ProcessedImage {
 export const extractSeoData = (content: string): ImageData[] => {
   const seoDataRegex = /<!--SEO([\s\S]*?)-->/g;
   const matches = content.matchAll(seoDataRegex);
-  return Array.from(matches).map(match => {
+  const results: ImageData[] = [];
+
+  for (const match of matches) {
     try {
-      return JSON.parse(match[1].trim());
+      const data = JSON.parse(match[1].trim());
+      // 驗證必要欄位
+      if (!data.originalName || !data.relativePath || !data.seoFileName || !data.altText || !data.pin) {
+        console.error('Missing required fields in SEO data:', data);
+        continue;
+      }
+      results.push(data);
     } catch (error) {
-      console.error('Error parsing SEO data:', error);
-      return null;
+      console.error('Error parsing SEO data:', error, '\nRaw data:', match[1].trim());
     }
-  }).filter(Boolean);
+  }
+
+  return results;
 };
 
 /**
@@ -88,26 +97,40 @@ export const extractImagesWithSections = async (content: string): Promise<Proces
 
   const processor = remark()
     .use(() => (tree: Root) => {
-      visit(tree, (node: any) => {
+      visit(tree, (node) => {
         // 檢查段落標題中的 ID
         if (node.type === 'heading') {
-          const headingText = String(node.children?.[0]?.value || '');
-          const idMatch = headingText.match(/{#([^}]+)}/);
-          if (idMatch) {
-            currentSectionId = idMatch[1];
+          const headingNode = node as Heading;
+          const textNode = headingNode.children[0] as Text;
+          if (textNode && textNode.value) {
+            const idMatch = textNode.value.match(/{#([^}]+)}/);
+            if (idMatch) {
+              currentSectionId = idMatch[1];
+            }
           }
         }
 
         // 提取圖片和相關的 SEO 數據
         if (node.type === 'image') {
-          const beforeContent = content.slice(0, node.position?.start?.offset);
-          const afterContent = content.slice(node.position?.end?.offset);
+          const imageNode = node as Image;
+          if (!imageNode.position) {
+            console.warn('Image node missing position information');
+            return;
+          }
+
+          const beforeContent = content.slice(0, imageNode.position.start.offset);
+          const afterContent = content.slice(imageNode.position.end.offset);
           
           // 尋找最近的 SEO 註釋
           const seoComment = beforeContent.match(/<!--SEO([\s\S]*?)-->\s*$/);
           if (seoComment) {
             try {
               const imageData: ImageData = JSON.parse(seoComment[1].trim());
+              // 驗證必要欄位
+              if (!imageData.originalName || !imageData.relativePath || !imageData.seoFileName || !imageData.altText || !imageData.pin) {
+                console.error('Missing required fields in image SEO data');
+                return;
+              }
               images.push({
                 imageData,
                 sectionId: currentSectionId,
@@ -117,8 +140,10 @@ export const extractImagesWithSections = async (content: string): Promise<Proces
                 }
               });
             } catch (error) {
-              console.error('Error parsing image SEO data:', error);
+              console.error('Error parsing image SEO data:', error, '\nRaw data:', seoComment[1].trim());
             }
+          } else {
+            console.warn('Image missing SEO comment:', imageNode.url);
           }
         }
       });
