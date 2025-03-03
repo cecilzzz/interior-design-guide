@@ -8,12 +8,6 @@ import { processImage, createProcessingStats, updateStats } from '../app/lib/ima
 config({ path: '.env.local' });
 
 /**
- * 內容目錄常量
- * 指定 markdown 文件的根目錄
- */
-const CONTENT_DIR = resolve(__dirname, '..', 'content');
-
-/**
  * Pinterest 面板 ID
  * 從環境變數獲取
  */
@@ -29,12 +23,6 @@ const BOARD_ID = process.env.PINTEREST_BOARD_ID;
  * 
  * @param {string} filePath - markdown 文件路徑
  * @returns {Promise<void>}
- * 
- * 使用了以下導入的函數：
- * - extractImagesWithSections: 從 markdownProcessor
- * - processImage: 從 imageProcessor
- * - createProcessingStats: 從 imageProcessor
- * - updateStats: 從 imageProcessor
  */
 async function processArticle(filePath: string) {
   try {
@@ -118,7 +106,8 @@ async function main() {
     process.exit(1);
   }
   
-  const fullPath = join(CONTENT_DIR, filePath);
+  // 使用 resolve 來處理相對路徑
+  const fullPath = resolve(process.cwd(), filePath);
   await processArticle(fullPath);
 }
 

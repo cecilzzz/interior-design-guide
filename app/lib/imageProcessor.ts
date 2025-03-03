@@ -2,6 +2,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { join, resolve } from 'path';
 import { access } from 'fs/promises';
 import type { ImageData } from './markdownProcessor';
+import { getImagePath, PATHS } from '../config/paths';
 
 /**
  * 圖片處理結果介面
@@ -103,8 +104,8 @@ export const uploadToCloudinary = async (
       throw new Error('CLOUDINARY_API_SECRET environment variable is required');
     }
 
-    // 構建圖片的完整路徑，使用 resolve 來處理相對路徑
-    const imagePath = resolve(process.cwd(), relativePath, originalName);
+    // 使用 getImagePath 取得圖片路徑
+    const imagePath = getImagePath(relativePath, originalName);
 
     console.log('Looking for image at:', imagePath);
 
@@ -129,7 +130,7 @@ export const uploadToCloudinary = async (
     });
 
     // 構建與你現有結構匹配的 public_id
-    const publicId = `${process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER || 'interior-inspiration-website'}/posts/${articleSlug}/${seoFileName}`;
+    const publicId = `${PATHS.CLOUDINARY_BASE_PATH}/${articleSlug}/${seoFileName}`;
     
     console.log('Attempting to upload:', {
       imagePath,
