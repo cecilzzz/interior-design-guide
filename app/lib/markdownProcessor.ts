@@ -3,14 +3,48 @@ import { visit } from 'unist-util-visit';
 import type { Root, Image, Heading, Text } from 'mdast';
 
 /**
+ * Markdown 文件中的路徑處理流程：
+ * 
+ * 1. 文件結構：
+ *    content/posts/[category]/[article-name].md
+ *    例如：content/posts/japandi/40-japandi-living-room-ideas.md
+ * 
+ * 2. SEO 注釋格式：
+ *    ```
+ *    <!--SEO
+ *    {
+ *      "originalName": "image.png",                    // 原始圖片檔名
+ *      "relativePath": "japandi/40-japandi-living-room-ideas", // 相對路徑
+ *      "seoFileName": "japanese-zen-meditation-room",  // SEO 友好的檔名
+ *      "altText": "Image description",                 // 圖片描述
+ *      "pin": {
+ *        "title": "Pinterest title",
+ *        "description": "Pinterest description"
+ *      }
+ *    }
+ *    -->
+ *    ```
+ * 
+ * 3. Markdown 圖片引用：
+ *    ```
+ *    ![Alt text](/interior-inspiration-website/posts/40-japandi-living-room-ideas/image.png)
+ *    ```
+ * 
+ * 4. 路徑轉換流程：
+ *    a) 從 SEO 注釋提取路徑資訊
+ *    b) 傳遞給 imageProcessor.ts 進行處理
+ *    c) 最終在 Cloudinary 中使用 SEO 友好的檔名
+ */
+
+/**
  * 圖片資料介面定義
  * 用於存儲圖片的基本資訊和 Pinterest 相關資料
  * 
- * @interface ImageData
- * @property {string} originalName - 原始圖片檔名
- * @property {string} relativePath - 圖片相對於根目錄的路徑（例如：'article-1/images/'）
- * @property {string} seoFileName - 優化後的 SEO 友好檔名
- * @property {string} altText - 圖片替代文字
+ * 路徑相關欄位：
+ * @property {string} originalName - 原始圖片檔名，用於本地檔案存取
+ * @property {string} relativePath - 圖片相對路徑，用於構建完整的檔案路徑
+ * @property {string} seoFileName - SEO 友好的檔名，用於 Cloudinary 存儲
+ * @property {string} altText - 圖片替代文字，用於 SEO 和無障礙
  * @property {object} pin - Pinterest 相關資訊
  * 
  * @exports

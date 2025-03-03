@@ -7,6 +7,32 @@ import utils from './utils';
 const { getImagePath } = utils;
 
 /**
+ * 路徑參數在圖片處理過程中的流動：
+ * 
+ * 1. 從 Markdown 解析：
+ *    - markdownProcessor.ts 解析 SEO 注釋，提取：
+ *      - originalName: 原始圖片檔名
+ *      - relativePath: 圖片相對路徑
+ *      - seoFileName: SEO 友好的檔名
+ * 
+ * 2. 圖片處理流程：
+ *    a) processImage 函數接收 ImageData：
+ *       - 包含從 SEO 注釋解析出的所有路徑資訊
+ *       - 傳遞給 uploadToCloudinary 進行處理
+ * 
+ *    b) uploadToCloudinary 函數：
+ *       - 使用 getImagePath 構建本地圖片的完整路徑
+ *       - 使用 CLOUDINARY_BASE_PATH 構建 Cloudinary 的目標路徑
+ * 
+ * 3. 路徑轉換：
+ *    本地路徑：
+ *    IMAGES_ROOT_DIR/relativePath/originalName
+ *    ↓
+ *    Cloudinary 路徑：
+ *    CLOUDINARY_BASE_PATH/articleSlug/seoFileName
+ */
+
+/**
  * 圖片處理結果介面
  * 用於追蹤單個圖片的處理狀態和結果
  * 
