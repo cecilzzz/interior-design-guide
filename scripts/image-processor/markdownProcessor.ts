@@ -69,30 +69,10 @@ interface ProcessedImage {
   }
 }
 
-// 內部函數：從 markdown 內容中提取 SEO 數據
-const extractSeoData = (content: string): ImageData[] => {
-  const seoDataRegex = /\[\/\/\]: # \(SEO\s*([\s\S]*?)\s*\)/g;
-  const matches = content.matchAll(seoDataRegex);
-  const results: ImageData[] = [];
-
-  for (const match of matches) {
-    try {
-      const data = JSON.parse(match[1].trim());
-      if (!data.originalName || !data.localRelativePath || !data.seoFileName || 
-          !data.altText || !data.pin || !data.articleSlug) {
-        console.error('缺少必要的 SEO 欄位:', data);
-        continue;
-      }
-      results.push(data);
-    } catch (error) {
-      console.error('解析 SEO 數據時出錯:', error);
-    }
-  }
-
-  return results;
-};
-
-// 內部函數：從 markdown 內容中提取圖片和相關的段落 ID
+/**
+ * 從 markdown 內容中提取圖片和相關的段落 ID
+ * @internal 僅在 markdownProcessor.ts 內部使用
+ */
 const extractImagesWithSections = async (content: string): Promise<ProcessedImage[]> => {
   const images: ProcessedImage[] = [];
   let currentSectionId = '';
@@ -105,11 +85,10 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
           const headingNode = node as Heading;
           const textNode = headingNode.children[0] as Text;
           if (textNode?.value) {
-            // 將標題文本轉換為 URL 友好的格式
             currentSectionId = textNode.value
               .toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-') // 將非字母數字字符替換為連字符
-              .replace(/^-+|-+$/g, '');     // 移除開頭和結尾的連字符
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-+|-+$/g, '');
           }
         }
 
@@ -119,14 +98,11 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
           if (!imageNode.position) return;
 
           const beforeContent = content.slice(0, imageNode.position.start.offset);
-          
-          // 修改正則表達式以只匹配 SEO 注釋內容
           const seoCommentRegex = /\[\/\/\]: # \(SEO\s*(\{[\s\S]*?\})\s*\)\s*$/;
           const seoComment = beforeContent.match(seoCommentRegex);
           
           if (seoComment) {
             try {
-              // 直接解析 JSON 字符串
               let seoData;
               try {
                 seoData = JSON.parse(seoComment[1]);
@@ -135,7 +111,6 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
                 throw e;
               }
               
-              // 驗證基本必需字段
               if (!seoData.originalName || !seoData.localRelativePath || 
                   !seoData.seoFileName || !seoData.altText || 
                   !seoData.pin) {
@@ -143,7 +118,6 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
                 return;
               }
 
-              // 優先使用 SEO 注釋中的 articleSlug，如果不存在才從 localRelativePath 提取
               let articleSlug = seoData.articleSlug;
               if (!articleSlug) {
                 console.warn('SEO 注釋中缺少 articleSlug，嘗試從 localRelativePath 提取');
