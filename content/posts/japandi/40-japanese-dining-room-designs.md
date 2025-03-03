@@ -205,4 +205,4 @@ Single statement light fixture in natural materials.
 
 ![Pendant Light Focus](/interior-inspiration-website/posts/40-japanese-dining-room-designs/nn4598959_Professional_interior_design_photo_of_a_luxury_Japane_de1e01ff-5ba7-4108-b64f-fdac90a737da.png)
 
-Remember: These designs embrace the Japanese principle of "Ma" - the conscious use of negative space - creating rooms that feel both purposeful and peaceful. 
+These designs embrace the Japanese principle of "Ma" - the conscious use of negative space - creating rooms that feel both purposeful and peaceful. 
