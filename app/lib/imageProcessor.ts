@@ -2,7 +2,9 @@ import { v2 as cloudinary } from 'cloudinary';
 import { join, resolve } from 'path';
 import { access } from 'fs/promises';
 import type { ImageData } from './markdownProcessor';
-import { getImagePath, PATHS } from '../config/paths';
+import utils from './utils';
+
+const { getImagePath } = utils;
 
 /**
  * 圖片處理結果介面
@@ -103,6 +105,9 @@ export const uploadToCloudinary = async (
     if (!process.env.CLOUDINARY_API_SECRET) {
       throw new Error('CLOUDINARY_API_SECRET environment variable is required');
     }
+    if (!process.env.CLOUDINARY_BASE_PATH) {
+      throw new Error('CLOUDINARY_BASE_PATH environment variable is required');
+    }
 
     // 使用 getImagePath 取得圖片路徑
     const imagePath = getImagePath(relativePath, originalName);
@@ -130,7 +135,7 @@ export const uploadToCloudinary = async (
     });
 
     // 構建與你現有結構匹配的 public_id
-    const publicId = `${PATHS.CLOUDINARY_BASE_PATH}/${articleSlug}/${seoFileName}`;
+    const publicId = `${process.env.CLOUDINARY_BASE_PATH}/${articleSlug}/${seoFileName}`;
     
     console.log('Attempting to upload:', {
       imagePath,
