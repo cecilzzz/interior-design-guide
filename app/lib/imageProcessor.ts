@@ -1,7 +1,6 @@
 import { CldUploadApi } from 'next-cloudinary/server';
 import { join } from 'path';
 import { access } from 'fs/promises';
-import { PATHS } from '../config/paths';
 import type { ImageData } from './markdownProcessor';
 
 /**
@@ -76,7 +75,9 @@ interface PinterestPinData {
  * 上傳圖片到 Cloudinary
  * 處理圖片上傳和優化設定
  * 
- * @param {ImageData} imageData - 圖片資料
+ * @param {string} originalName - 圖片原始名稱
+ * @param {string} seoFileName - SEO 友好的檔名
+ * @param {string} altText - 圖片替代文字
  * @param {string} articleSlug - 文章 slug
  * @returns {Promise<{secure_url: string}>} Cloudinary 上傳結果
  * 
@@ -84,26 +85,20 @@ interface PinterestPinData {
  * 被 processImage 函數調用
  */
 export const uploadToCloudinary = async (
-  imageData: ImageData,
+  originalName: string,
+  seoFileName: string,
+  altText: string,
   articleSlug: string
 ): Promise<{ secure_url: string }> => {
   try {
-    // 構建本地文件完整路徑
-    const imagePath = join(
-      PATHS.IMAGES_BASE_DIR,
-      imageData.categories,
-      articleSlug,
-      imageData.originalName
-    );
+    // 構建與你現有結構匹配的 public_id
+    const publicId = `interior-inspiration-website/posts/${articleSlug}/${seoFileName}`;
     
-    // 構建 Cloudinary public_id
-    const publicId = `${PATHS.CLOUDINARY_BASE_PATH}/${articleSlug}/${imageData.seoFileName}`;
-    
-    const result = await CldUploadApi.upload(imagePath, {
-      public_id: publicId,
+    const result = await CldUploadApi.upload(originalName, {
+      public_id: publicId,  // 例如: "interior-inspiration-website/posts/40-japandi-living-room-ideas/modern-japandi-living-room-2024"
       tags: ['interior-design'],
       context: {
-        alt: imageData.altText
+        alt: altText
       }
     });
 
@@ -165,7 +160,12 @@ export const processImage = async (
 ): Promise<ProcessingResult> => {
   try {
     // 上傳到 Cloudinary
-    const uploadResult = await uploadToCloudinary(imageData, articleSlug);
+    const uploadResult = await uploadToCloudinary(
+      imageData.originalName,
+      imageData.seoFileName,
+      imageData.altText,
+      articleSlug
+    );
 
     // 創建 Pinterest Pin
     const pinResult = await createPinterestPin({
