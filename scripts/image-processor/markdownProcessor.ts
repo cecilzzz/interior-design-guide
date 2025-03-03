@@ -100,15 +100,16 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
   const processor = remark()
     .use(() => (tree: Root) => {
       visit(tree, (node) => {
-        // 檢查段落標題中的 ID
+        // 從標題文本生成 ID
         if (node.type === 'heading') {
           const headingNode = node as Heading;
           const textNode = headingNode.children[0] as Text;
           if (textNode?.value) {
-            const idMatch = textNode.value.match(/{#([^}]+)}/);
-            if (idMatch) {
-              currentSectionId = idMatch[1];
-            }
+            // 將標題文本轉換為 URL 友好的格式
+            currentSectionId = textNode.value
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-') // 將非字母數字字符替換為連字符
+              .replace(/^-+|-+$/g, '');     // 移除開頭和結尾的連字符
           }
         }
 
@@ -123,17 +124,34 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
           const seoComment = beforeContent.match(/<!--SEO([\s\S]*?)-->\s*$/);
           if (seoComment) {
             try {
-              const imageData: ImageData = {
-                ...JSON.parse(seoComment[1].trim()),
-                sectionId: currentSectionId
-              };
-
-              if (!imageData.originalName || !imageData.localRelativePath || 
-                  !imageData.seoFileName || !imageData.altText || 
-                  !imageData.pin || !imageData.articleSlug) {
-                console.error('圖片 SEO 數據缺少必要欄位');
+              const seoData = JSON.parse(seoComment[1].trim());
+              
+              // 驗證基本必需字段
+              if (!seoData.originalName || !seoData.localRelativePath || 
+                  !seoData.seoFileName || !seoData.altText || 
+                  !seoData.pin) {
+                console.error('圖片 SEO 數據缺少基本必需字段:', seoData);
                 return;
               }
+
+              // 從 localRelativePath 中提取 articleSlug
+              const pathParts = seoData.localRelativePath.split('/');
+              const articleSlug = pathParts[pathParts.length - 1];
+              
+              if (!articleSlug) {
+                console.error('無法從 localRelativePath 提取 articleSlug:', seoData.localRelativePath);
+                return;
+              }
+
+              const imageData: ImageData = {
+                originalName: seoData.originalName,
+                localRelativePath: seoData.localRelativePath,
+                seoFileName: seoData.seoFileName,
+                articleSlug: articleSlug,
+                sectionId: currentSectionId,
+                altText: seoData.altText,
+                pin: seoData.pin
+              };
 
               images.push({
                 imageData,
