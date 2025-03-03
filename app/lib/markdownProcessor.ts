@@ -11,6 +11,7 @@ import type { Root } from 'mdast';
  * @property {string} relativePath - 圖片相對於根目錄的路徑（例如：'article-1/images/'）
  * @property {string} seoFileName - 優化後的 SEO 友好檔名
  * @property {string} altText - 圖片替代文字
+ * @property {string} categories - 圖片分類
  * @property {object} pin - Pinterest 相關資訊
  * 
  * @exports
@@ -22,6 +23,7 @@ export interface ImageData {
   relativePath: string;
   seoFileName: string;
   altText: string;
+  categories: string;
   pin: {
     title: string;
     description: string;
