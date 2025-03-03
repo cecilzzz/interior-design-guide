@@ -13,6 +13,18 @@ These 40 carefully curated designs showcase how Japandi principles can transform
 ### Natural Light Control
 Sheer shoji screens (障子) filter sunlight to create an ever-changing play of light and shadow throughout the day, while cherry blossoms add seasonal poetry to the living space. This thoughtful light control is essential to the Japanese concept of utsuroi (移ろい), the beauty of impermanence.
 
+<!--SEO
+{
+  "originalName": "room-1.jpg",
+  "relativePath": "modern-living-room/images",
+  "seoFileName": "modern-living-room-design-2024",
+  "altText": "現代客廳設計，帶有大型落地窗和舒適的灰色沙發",
+  "pin": {
+    "title": "2024 現代客廳設計靈感",
+    "description": "探索這個充滿現代感的客廳設計：大型落地窗帶來充足自然光，舒適的灰色沙發創造完美的休息空間。#室內設計 #客廳設計 #現代風格"
+  }
+}
+-->
 ![Natural Light Control](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Professional_interior_architecture_photography_of_a_J_8e132d22-e157-432d-b245-c1e611746515.png)
 ![Natural Light Control](/interior-inspiration-website/posts/40-japandi-living-room-ideas/Professional_interior_architecture_photography_of_a_J_042bd712-4a3f-46b5-a37e-9ce2b265f727.png)
 

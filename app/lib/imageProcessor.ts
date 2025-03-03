@@ -75,30 +75,31 @@ interface PinterestPinData {
  * 上傳圖片到 Cloudinary
  * 處理圖片上傳和優化設定
  * 
- * @param {string} file - 圖片檔案路徑
+ * @param {string} originalName - 圖片原始名稱
  * @param {string} seoFileName - SEO 友好的檔名
  * @param {string} altText - 圖片替代文字
+ * @param {string} articleSlug - 文章 slug
  * @returns {Promise<{secure_url: string}>} Cloudinary 上傳結果
  * 
  * @internal
  * 被 processImage 函數調用
  */
 export const uploadToCloudinary = async (
-  file: string,
+  originalName: string,
   seoFileName: string,
-  altText: string
+  altText: string,
+  articleSlug: string
 ): Promise<{ secure_url: string }> => {
   try {
-    const result = await CldUploadApi.upload(file, {
-      public_id: seoFileName,
+    // 構建與你現有結構匹配的 public_id
+    const publicId = `interior-inspiration-website/posts/${articleSlug}/${seoFileName}`;
+    
+    const result = await CldUploadApi.upload(originalName, {
+      public_id: publicId,  // 例如: "interior-inspiration-website/posts/40-japandi-living-room-ideas/modern-japandi-living-room-2024"
       tags: ['interior-design'],
       context: {
         alt: altText
-      },
-      transformation: [
-        { quality: 'auto:best' },
-        { fetch_format: 'auto' }
-      ]
+      }
     });
 
     return {
@@ -160,9 +161,10 @@ export const processImage = async (
   try {
     // 上傳到 Cloudinary
     const uploadResult = await uploadToCloudinary(
-      `content/images/${imageData.originalName}`,
+      imageData.originalName,
       imageData.seoFileName,
-      imageData.altText
+      imageData.altText,
+      articleSlug
     );
 
     // 創建 Pinterest Pin
