@@ -13,8 +13,8 @@ These 40 carefully curated designs showcase how Japandi principles can transform
 ### Natural Light Control
 Sheer shoji screens (障子) filter sunlight to create an ever-changing play of light and shadow throughout the day, while cherry blossoms add seasonal poetry to the living space. This thoughtful light control is essential to the Japanese concept of utsuroi (移ろい), the beauty of impermanence.
 
-[//]: # (SEO
-{
+[//]: # "SEO-START"
+[//]: # ({
   "originalName": "Professional_interior_architecture_photography_of_a_J_8e132d22-e157-432d-b245-c1e611746515.png",
   "localRelativePath": "japandi/40-japandi-living-room-ideas",
   "seoFileName": "japanese-zen-meditation-room-cherry-blossom",
@@ -24,24 +24,24 @@ Sheer shoji screens (障子) filter sunlight to create an ever-changing play of 
     "title": "Japanese Zen Interior: Minimalist Tea Room with Cherry Blossom",
     "description": "Experience the tranquility of Japanese design where cherry blossoms meet natural sunlight through shoji screens. Concrete walls and wooden elements create an authentic zen atmosphere perfect for mindful tea ceremonies."
   }
-}
-)
+})
+[//]: # "SEO-END"
 ![Japanese meditation room with cherry blossom bonsai, shoji screens and wooden tea table](/japanese-zen-meditation-room-cherry-blossom.png)
 
-[//]: # (SEO
-{
+[//]: # "SEO-START"
+[//]: # ({
   "originalName": "Professional_interior_architecture_photography_of_a_J_042bd712-4a3f-46b5-a37e-9ce2b265f727.png",
   "localRelativePath": "japandi/40-japandi-living-room-ideas",
   "seoFileName": "japanese-zen-meditation-space-natural-light",
-  "articleSlug": "40-japandi-living-room-ideas", 
+  "articleSlug": "40-japandi-living-room-ideas",
   "altText": "Japanese zen meditation space with floor cushions, wooden table and cherry blossom tree by large windows",
   "pin": {
     "title": "Japanese Zen Living: Sunlit Meditation Space with Cherry Blossoms",
     "description": "Experience the serenity of Japanese minimalism where natural light streams through tall windows onto floor cushions and wooden surfaces. Cherry blossoms add organic beauty to this peaceful meditation sanctuary."
   }
-}
-)
-![Japanese zen meditation space with floor cushions, wooden table and cherry blossom tree by large windows](/interior-inspiration-website/posts/40-japandi-living-room-ideas/japanese-zen-meditation-space-natural-light.png)
+})
+[//]: # "SEO-END"
+![Japanese zen meditation space with floor cushions, wooden table and cherry blossom tree by large windows](/japanese-zen-meditation-space-natural-light.png)
 
 ### Textured Plaster Walls
 Warm, earthy plaster walls with subtle texture variations create depth and visual interest while maintaining the minimalist Japanese aesthetic. The natural imperfections add wabi-sabi charm to the living space.

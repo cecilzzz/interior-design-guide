@@ -76,7 +76,11 @@ interface ProcessedImage {
 const extractImagesWithSections = async (content: string): Promise<ProcessedImage[]> => {
   const images: ProcessedImage[] = [];
   let currentSectionId = '';
+  const processedUrls = new Set<string>();  // 用於追蹤已處理的圖片 URL
 
+  // 1. 找出所有圖片
+  const allImages: { node: Image; sectionId: string }[] = [];
+  
   const processor = remark()
     .use(() => (tree: Root) => {
       visit(tree, (node) => {
@@ -92,68 +96,92 @@ const extractImagesWithSections = async (content: string): Promise<ProcessedImag
           }
         }
 
-        // 提取圖片和相關的 SEO 數據
+        // 收集圖片節點
         if (node.type === 'image') {
           const imageNode = node as Image;
-          if (!imageNode.position) return;
-
-          const beforeContent = content.slice(0, imageNode.position.start.offset);
-          const seoCommentRegex = /\[\/\/\]: # \(SEO\s*(\{[\s\S]*?\})\s*\)\s*$/;
-          const seoComment = beforeContent.match(seoCommentRegex);
-          
-          if (seoComment) {
-            try {
-              let seoData;
-              try {
-                seoData = JSON.parse(seoComment[1]);
-              } catch (e) {
-                console.error('JSON 解析錯誤，原始字符串:', seoComment[1]);
-                throw e;
-              }
-              
-              if (!seoData.originalName || !seoData.localRelativePath || 
-                  !seoData.seoFileName || !seoData.altText || 
-                  !seoData.pin) {
-                console.error('圖片 SEO 數據缺少基本必需字段:', seoData);
-                return;
-              }
-
-              let articleSlug = seoData.articleSlug;
-              if (!articleSlug) {
-                console.warn('SEO 注釋中缺少 articleSlug，嘗試從 localRelativePath 提取');
-                const pathParts = seoData.localRelativePath.split('/');
-                articleSlug = pathParts[pathParts.length - 1];
-                
-                if (!articleSlug) {
-                  console.error('無法從 localRelativePath 提取 articleSlug:', seoData.localRelativePath);
-                  return;
-                }
-              }
-
-              const imageData: ImageData = {
-                originalName: seoData.originalName,
-                localRelativePath: seoData.localRelativePath,
-                seoFileName: seoData.seoFileName,
-                articleSlug: articleSlug,
-                sectionId: currentSectionId,
-                altText: seoData.altText,
-                pin: seoData.pin
-              };
-
-              images.push({
-                imageData,
-                sectionId: currentSectionId,
-                markdown: { before: beforeContent, after: '' }
-              });
-            } catch (error) {
-              console.error('解析圖片 SEO 數據時出錯:', error);
-            }
+          if (imageNode.position && !processedUrls.has(imageNode.url)) {
+            allImages.push({ node: imageNode, sectionId: currentSectionId });
           }
         }
       });
     });
 
   await processor.process(content);
+  console.log(`找到 ${allImages.length} 張圖片`);
+
+  // 2. 處理每張圖片的 SEO 注釋
+  for (const { node: imageNode, sectionId } of allImages) {
+    // 如果圖片已經處理過，跳過
+    if (processedUrls.has(imageNode.url)) {
+      continue;
+    }
+
+    const beforeContent = content.slice(0, imageNode.position!.start.offset);
+    const seoCommentRegex = /\[\/\/\]: # \(SEO\s*(\{[\s\S]*?\})\s*\)[\s\n]*$/;
+    const match = beforeContent.match(seoCommentRegex);
+
+    if (!match) {
+      console.warn(`圖片缺少 SEO 注釋: ${imageNode.url}`);
+      continue;
+    }
+
+    try {
+      // 清理 JSON 字符串：移除額外的空格和換行符
+      const jsonStr = match[1]
+        .replace(/\s+$/gm, '')        // 移除每行末尾的空格
+        .replace(/,\s*([\]}])/g, '$1') // 移除對象和數組結尾的逗號
+        .trim();                       // 移除開頭和結尾的空格
+
+      const seoData = JSON.parse(jsonStr);
+
+      // 驗證必要欄位
+      if (!seoData.originalName || !seoData.localRelativePath || 
+          !seoData.seoFileName || !seoData.altText || 
+          !seoData.pin) {
+        console.warn(`圖片的 SEO 注釋缺少必要欄位: ${imageNode.url}`);
+        continue;
+      }
+
+      // 處理 articleSlug
+      let articleSlug = seoData.articleSlug?.trim();  // 確保移除空格
+      if (!articleSlug) {
+        const pathParts = seoData.localRelativePath.split('/');
+        articleSlug = pathParts[pathParts.length - 1];
+        
+        if (!articleSlug) {
+          console.warn(`無法從 localRelativePath 提取 articleSlug: ${seoData.localRelativePath}`);
+          continue;
+        }
+      }
+
+      const imageData: ImageData = {
+        originalName: seoData.originalName.trim(),
+        localRelativePath: seoData.localRelativePath.trim(),
+        seoFileName: seoData.seoFileName.trim(),
+        articleSlug: articleSlug,
+        sectionId: sectionId,
+        altText: seoData.altText.trim(),
+        pin: {
+          title: seoData.pin.title.trim(),
+          description: seoData.pin.description.trim()
+        }
+      };
+
+      images.push({
+        imageData,
+        sectionId: sectionId,
+        markdown: { before: beforeContent, after: '' }
+      });
+
+      // 標記圖片已處理
+      processedUrls.add(imageNode.url);
+    } catch (error) {
+      console.warn(`解析圖片 SEO 注釋失敗: ${imageNode.url}`, error);
+      continue;
+    }
+  }
+
+  console.log(`成功處理 ${images.length} 張帶有完整 SEO 注釋的圖片`);
   return images;
 };
 
