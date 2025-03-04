@@ -8,11 +8,11 @@ import type { ImageData } from './markdownProcessor';
  */
 interface CloudinaryUploadConfig {
   /** 本地檔案路徑 */
-  localPath: string;
-  /** Cloudinary 資料夾路徑 */
-  folder: string;
-  /** 檔案名稱 */
-  fileName: string;
+  file: string;
+  /** 資產在 Media Library 中的存放位置 */
+  assetFolder: string;
+  /** Public ID（簡短的 SEO 友好名稱） */
+  publicId: string;
   /** 圖片替代文字 */
   altText: string;
 }
@@ -21,7 +21,7 @@ interface CloudinaryUploadConfig {
  * 驗證環境變數和檔案
  * @throws {Error} 當環境變數缺失或檔案不存在時
  */
-const validateUploadPrerequisites = async (localPath: string) => {
+const validateUploadPrerequisites = async (filePath: string) => {
   // 驗證環境變數
   const requiredEnvVars = {
     'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME': process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -35,9 +35,9 @@ const validateUploadPrerequisites = async (localPath: string) => {
 
   // 驗證檔案存在
   try {
-    await access(localPath);
+    await access(filePath);
   } catch {
-    throw new Error(`找不到圖片文件: ${localPath}`);
+    throw new Error(`找不到圖片文件: ${filePath}`);
   }
 
   // 配置 Cloudinary SDK
@@ -53,7 +53,7 @@ const validateUploadPrerequisites = async (localPath: string) => {
  */
 const prepareUploadConfig = (imageData: ImageData): CloudinaryUploadConfig => {
   const pathInfo = PathManager.createPathInfo(imageData);
-  const localPath = PathManager.getLocalPath(pathInfo);
+  const file = PathManager.getLocalPath(pathInfo);
   const cloudinaryPath = PathManager.getCloudinaryPath(pathInfo);
 
   // 分解 Cloudinary 路徑
@@ -62,9 +62,9 @@ const prepareUploadConfig = (imageData: ImageData): CloudinaryUploadConfig => {
   const folder = pathParts.join('/');
 
   return {
-    localPath,
-    folder,
-    fileName,
+    file,
+    assetFolder: folder,
+    publicId: fileName,  // 只使用檔名作為 Public ID，保持 URL 簡短
     altText: imageData.altText
   };
 };
@@ -79,19 +79,23 @@ export const uploadToCloudinary = async (imageData: ImageData): Promise<{ secure
   const config = prepareUploadConfig(imageData);
   
   // 2. 驗證必要條件
-  await validateUploadPrerequisites(config.localPath);
+  await validateUploadPrerequisites(config.file);
   
-  // 3. 執行上傳
+  // 3. 執行上傳（使用 signed upload）
   try {
-    const result = await cloudinary.uploader.upload(config.localPath, {
-      tags: ['interior-design'],
-      public_id: config.fileName,
-      folder: config.folder,
-      use_filename: true,
-      unique_filename: false,
-      overwrite: true,
-      context: { alt: config.altText }
-    });
+    const result = await cloudinary.uploader.upload(
+      config.file,
+      {
+        tags: ['interior-design'],
+        public_id: config.publicId,                    // 使用簡短的檔名作為 Public ID
+        asset_folder: config.assetFolder,              // 只用於 Media Library 的組織
+        use_asset_folder_as_public_id_prefix: false,   // 不將資料夾路徑加入到 public_id
+        use_filename: false,                           // 不使用原始文件名
+        unique_filename: false,                        // 不添加唯一後綴
+        overwrite: true,                              // 允許覆蓋已存在的文件
+        context: { alt: config.altText }
+      }
+    );
     return { secure_url: result.secure_url };
   } catch (error: any) {
     throw new Error(`Cloudinary 上傳失敗: ${error?.message || '未知錯誤'}`);
