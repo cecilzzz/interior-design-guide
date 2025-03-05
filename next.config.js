@@ -1,6 +1,5 @@
-/** @type {import('next').NextConfig} */
-const createMDX = require('@next/mdx');
-const remarkGfm = require('remark-gfm');
+const createMDX = require('@next/mdx')
+const remarkGfm = require('remark-gfm')
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
@@ -8,8 +7,9 @@ const withMDX = createMDX({
     remarkPlugins: [remarkGfm],
     rehypePlugins: [],
   },
-});
+})
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
@@ -36,4 +36,5 @@ const nextConfig = {
   trailingSlash: true,
 };
 
+// 使用 withMDX 包裝配置
 module.exports = withMDX(nextConfig);
