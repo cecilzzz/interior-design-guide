@@ -31,8 +31,8 @@ import { trackArticleRead, trackScrollDepth, trackTimeOnPage } from '@/app/utils
  */
 
 interface ArticlePageProps {
-  /** 文章數據 */
-  article: {
+  /** 當前文章數據 */
+  currentArticle: {
     /** 文章分類 */
     category: string;
     /** 文章標題 */
@@ -61,13 +61,13 @@ interface ArticlePageProps {
  * 文章頁面的客戶端容器組件
  * 
  * @param props - 組件屬性
- * @param props.article - 文章完整數據
+ * @param props.currentArticle - 當前文章完整數據
  * @param props.relatedArticles - 相關文章列表
  */
-export default function ArticlePage({ article, relatedArticles }: ArticlePageProps) {
+export default function ArticlePage({ currentArticle, relatedArticles }: ArticlePageProps) {
   useEffect(() => {
     // 初始化所有追蹤功能
-    const cleanupArticleRead = trackArticleRead(article.title);
+    const cleanupArticleRead = trackArticleRead(currentArticle.title);
     const cleanupScrollDepth = trackScrollDepth();
     const cleanupTimeOnPage = trackTimeOnPage();
 
@@ -77,9 +77,9 @@ export default function ArticlePage({ article, relatedArticles }: ArticlePagePro
       cleanupScrollDepth();
       cleanupTimeOnPage();
     };
-  }, [article.title]);
+  }, [currentArticle.title]);
 
-  return <ArticleLayout article={article} relatedArticles={relatedArticles} />;
+  return <ArticleLayout currentArticle={currentArticle} relatedArticles={relatedArticles} />;
 }
 
 /**

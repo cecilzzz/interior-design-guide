@@ -136,7 +136,7 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
         <ArticlePage 
-          article={processedCurrentArticle}  // 輸入：處理後的當前文章數據
+          currentArticle={processedCurrentArticle}  // 輸入：處理後的當前文章數據
           relatedArticles={relatedArticles}  // 輸入：相關文章列表
         />
         <Sidebar 

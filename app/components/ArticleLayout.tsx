@@ -26,8 +26,8 @@ import ReactMarkdown from 'react-markdown';
  */
 
 interface ArticleLayoutProps {
-  /** 主要文章數據 */
-  article: {
+  /** 當前文章數據 */
+  currentArticle: {
     /** 文章分類 */
     category: string;
     /** 文章標題 */
@@ -56,14 +56,14 @@ interface ArticleLayoutProps {
  * 文章頁面的佈局組件
  * 
  * @param props - 組件屬性
- * @param props.article - 主要文章的完整數據
+ * @param props.currentArticle - 當前文章的完整數據
  * @param props.relatedArticles - 相關文章列表
  */
-export default function ArticleLayout({ article, relatedArticles }: ArticleLayoutProps) {
+export default function ArticleLayout({ currentArticle, relatedArticles }: ArticleLayoutProps) {
   return (
     <div className="space-y-16">
       {/* 主要文章內容 */}
-      <ArticleRenderer {...article} />
+      <ArticleRenderer {...currentArticle} />
       {/* 相關文章列表 */}
       <RelatedPosts posts={relatedArticles} />
     </div>
