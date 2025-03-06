@@ -51,9 +51,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // 3. 處理圖片 URL 和規範 URL
-  const imageUrl = currentArticle.image.startsWith('http') 
-    ? currentArticle.image 
-    : getImageUrl(currentArticle.image, 'hero');
+  const imageUrl = currentArticle.coverImageUrl.startsWith('http') 
+    ? currentArticle.coverImageUrl 
+    : getImageUrl(currentArticle.coverImageUrl, 'hero');
   const canonicalUrl = `https://interior-design-guide.vercel.app/blog/${params.slug}`;
 
   // 4. 返回完整的元數據
@@ -127,7 +127,7 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
   // 3. 處理文章數據
   const processedCurrentArticle = {
     ...currentArticle,  // 展開原文章數據
-    image: getImageUrl(currentArticle.image, 'hero'),  // 處理圖片 URL
+    coverImageUrl: getImageUrl(currentArticle.coverImageUrl, 'hero'),  // 處理圖片 URL
     category: currentArticle.categories[0],  // 獲取第一個分類
   };
 

@@ -47,8 +47,8 @@ interface ArticleRendererProps {
     title: string;
     /** 發布日期（從 frontmatter 獲取）*/
     date: string;
-    /** 主圖 URL（從 frontmatter 獲取）*/
-    image: string;
+    /** 文章封面圖片 URL（從 frontmatter 獲取）*/
+    coverImageUrl: string;
     /** Markdown 格式的文章內容（從 .md 文件的 body 獲取）*/
     content: string;
   };
@@ -61,7 +61,7 @@ interface ArticleRendererProps {
  * @param props.currentArticle - 當前文章的完整數據
  */
 export default function ArticleRenderer({ currentArticle }: ArticleRendererProps) {
-  const { category, title, date, image, content } = currentArticle;
+  const { category, title, date, coverImageUrl, content } = currentArticle;
   
   // Pinterest 分享功能需要頁面 URL
   const [pageUrl, setPageUrl] = useState('');
@@ -89,10 +89,10 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
         <div className="text-gray-400 text-xs sm:text-sm tracking-wider">{date}</div>
       </div>
       
-      {/* 主圖區域：使用從 props 傳入的 image URL */}
+      {/* 主圖區域：使用從 props 傳入的 coverImageUrl */}
       <div className="mb-8 relative aspect-[16/9] overflow-hidden rounded-lg group">
         <Image
-          src={image}
+          src={coverImageUrl}
           alt={title}
           fill
           className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"
@@ -102,7 +102,7 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         {pageUrl && (
           <PinterestButton 
-            {...createPinData(image, 'Cover Image')}
+            {...createPinData(coverImageUrl, 'Cover Image')}
           />
         )}
       </div>

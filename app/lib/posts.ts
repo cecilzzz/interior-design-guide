@@ -20,10 +20,10 @@ import path from 'path';
 import matter from 'gray-matter';  // 需要安裝: npm install gray-matter
 
 /**
- * 文章數據結構
- * 定義了文章的完整數據模型
+ * 單篇文章的完整數據結構
+ * 定義了從 Markdown 文件中解析出的所有必要屬性
  */
-interface Post {
+interface SingleArticle {
   /** 文章唯一標識符，基於文件名生成 */
   id: string;
   /** Markdown 格式的文章內容 */
@@ -35,7 +35,7 @@ interface Post {
   /** 發布日期，格式：YYYY-MM-DD */
   date: string;
   /** 文章封面圖片 URL */
-  image: string;
+  coverImageUrl: string;
   /** 文章摘要，用於列表展示 */
   excerpt: string;
 }
@@ -91,7 +91,7 @@ function getAllMarkdownFiles(dir: string): string[] {
  * 
  * @returns 處理後的文章數組，按日期降序排序
  */
-export function getAllPosts(): Post[] {
+export function getAllPosts(): SingleArticle[] {
   try {
     // 確保目錄存在
     if (!fs.existsSync(postsDirectory)) {
@@ -109,7 +109,7 @@ export function getAllPosts(): Post[] {
     }
     
     // 處理每個文件
-    const allPostsData = filePaths.map((filePath) => {
+    const allArticles = filePaths.map((filePath) => {
       try {
         // 從文件路徑生成 id（只使用文件名）
         const relativePath = path.relative(postsDirectory, filePath);
@@ -144,16 +144,16 @@ export function getAllPosts(): Post[] {
         return {
           id,
           content,
-          ...(data as Omit<Post, 'id' | 'content'>),
+          ...(data as Omit<SingleArticle, 'id' | 'content'>),
         };
       } catch (error) {
         console.error(`Error processing file ${filePath}:`, error);
         return null;
       }
-    }).filter((post): post is Post => post !== null);  // 過濾掉處理失敗的文章
+    }).filter((article): article is SingleArticle => article !== null);  // 過濾掉處理失敗的文章
 
     // 按日期降序排序並返回
-    return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
+    return allArticles.sort((a, b) => (a.date < b.date ? 1 : -1));
   } catch (error) {
     console.error('Error in getAllPosts:', error);
     return [];
@@ -174,7 +174,7 @@ export function getAllPosts(): Post[] {
  * title: 文章標題
  * categories: [分類1, 分類2]
  * date: YYYY-MM-DD
- * image: 圖片URL
+ * coverImageUrl: 封面圖片URL
  * excerpt: 文章摘要
  * ---
  * 

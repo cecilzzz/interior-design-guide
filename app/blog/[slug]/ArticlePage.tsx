@@ -39,8 +39,8 @@ interface ArticlePageProps {
     title: string;
     /** 發布日期 */
     date: string;
-    /** 文章主圖 URL */
-    image: string;
+    /** 文章封面圖片 URL */
+    coverImageUrl: string;
     /** Markdown 格式的文章內容 */
     content: string;
   };
