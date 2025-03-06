@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/app/lib/posts';
+import { getAllPosts } from '@/app/lib/markdownProcessor';
 import { getImageUrl } from '@/app/lib/imageUtils';
 import PostGrid from '@/app/components/PostGrid';
 

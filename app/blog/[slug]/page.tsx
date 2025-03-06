@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/app/lib/posts';
+import { getAllPosts } from '@/app/lib/markdownProcessor';
 import { getImageUrl } from '@/app/lib/imageUtils';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
