@@ -4,7 +4,7 @@ import Link from "next/link";
 type RelatedPost = {
   category: string;
   title: string;
-  image: string;
+  coverImageUrl: string;
   link: string;
 };
 
@@ -27,7 +27,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
           >
             <div className="relative aspect-[3/2] mb-3 sm:mb-4 overflow-hidden rounded-lg">
               <Image
-                src={post.image}
+                src={post.coverImageUrl}
                 alt={post.title}
                 fill
                 className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"

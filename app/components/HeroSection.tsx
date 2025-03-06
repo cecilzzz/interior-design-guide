@@ -4,16 +4,16 @@ type HeroProps = {
   category: string;
   title: string;
   date: string;
-  image: string;
+  coverImageUrl: string;
 };
 
-export default function HeroSection({ category, title, date, image }: HeroProps) {
+export default function HeroSection({ category, title, date, coverImageUrl }: HeroProps) {
   return (
     <div className="relative aspect-[16/9] group">
       {/* 背景圖片容器 - 全寬 */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
-          src={image}
+          src={coverImageUrl}
           alt={title}
           fill
           className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 brightness-[0.85]"

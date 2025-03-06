@@ -9,7 +9,7 @@ const relatedArticles = [
   {
     category: "Interior Design",
     title: "How to Choose the Perfect Color Palette",
-    image: "https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?auto=format&fit=crop&q=80&w=800",
+    coverImageUrl: "https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?auto=format&fit=crop&q=80&w=800",
     link: "/blog/color-palette",
   },
   // ... 其他相關文章
@@ -19,7 +19,7 @@ const relatedArticles = [
 const recommendedArticles = [
   {
     title: "Essential Steps to Design Your Perfect Living Room",
-    image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=200",
+    coverImageUrl: "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=200",
     link: "/blog/perfect-living-room",
   },
   // ... 其他推薦文章

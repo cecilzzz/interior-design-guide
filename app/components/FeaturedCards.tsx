@@ -1,41 +1,41 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type Card = {
+type FeaturedCard = {
   title: string;
-  image: string;
+  coverImageUrl: string;
   link: string;
 };
 
-const cards: Card[] = [
+const featuredCards = [
   {
-    title: "DISCOVER CURATED FURNITURE COLLECTIONS",
-    image: "https://images.unsplash.com/photo-1486304873000-235643847519?auto=format&fit=crop&q=80&w=800",
-    link: "/collections",
+    title: "Modern Living Room Ideas",
+    coverImageUrl: "https://images.unsplash.com/photo-1486304873000-235643847519?auto=format&fit=crop&q=80&w=800",
+    link: "/blog/modern-living-room",
   },
   {
-    title: "STYLE GUIDES: FIND YOUR PERFECT FURNITURE MATCH",
-    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800",
-    link: "/style-guides",
+    title: "Small Space Solutions",
+    coverImageUrl: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800",
+    link: "/blog/small-space",
   },
   {
-    title: "EXPLORE OUR DESIGN INSPIRATION BLOG",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800",
-    link: "/blog",
+    title: "Color Theory in Design",
+    coverImageUrl: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800",
+    link: "/blog/color-theory",
   },
 ];
 
 export default function FeaturedCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-      {cards.map((card) => (
+      {featuredCards.map((card) => (
         <Link 
           key={card.title} 
           href={card.link}
           className="group relative aspect-[4/3] overflow-hidden bg-gray-100 rounded-lg hover:shadow-xl transition-all duration-500"
         >
           <Image
-            src={card.image}
+            src={card.coverImageUrl}
             alt={card.title}
             fill
             sizes="(min-width: 768px) 33vw, 100vw"

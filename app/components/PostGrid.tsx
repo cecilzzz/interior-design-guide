@@ -15,7 +15,7 @@ interface Post {
   /** 發布日期 */
   date: string;
   /** 文章封面圖片 URL */
-  image: string;
+  coverImageUrl: string;
   /** 文章摘要，用於預覽 */
   excerpt: string;
 }
@@ -72,7 +72,7 @@ export default function PostGrid({ posts, category }: PostGridProps) {
           {/* 文章封面圖片容器 */}
           <div className="relative aspect-[3/2] mb-4 overflow-hidden rounded-lg">
             <Image
-              src={post.image}
+              src={post.coverImageUrl}
               alt={post.title}
               fill
               className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"

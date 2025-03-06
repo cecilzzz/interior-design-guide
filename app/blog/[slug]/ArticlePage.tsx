@@ -50,8 +50,8 @@ interface ArticlePageProps {
     category: string;
     /** 文章標題 */
     title: string;
-    /** 文章圖片 URL */
-    image: string;
+    /** 文章封面圖片 URL */
+    coverImageUrl: string;
     /** 文章鏈接 */
     link: string;
   }>;

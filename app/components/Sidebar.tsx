@@ -4,7 +4,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from "react-icons/fa"
 
 type RecommendedArticle = {
   title: string;
-  image: string;
+  coverImageUrl: string;
   link: string;
 };
 
@@ -100,7 +100,7 @@ export default function Sidebar({ recommendedArticles }: SidebarProps) {
               </span>
               <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-md">
                 <Image
-                  src={article.image}
+                  src={article.coverImageUrl}
                   alt={article.title}
                   fill
                   className="object-cover transition-all duration-500 group-hover:scale-105"
