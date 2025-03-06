@@ -1,11 +1,13 @@
 'use client';
 
 import Image from "next/image";
-import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-markdown
+import { MDXProvider } from '@mdx-js/react';
 import { getImageUrl } from '@/app/lib/imageUtils';
 import PinterestButton from './PinterestButton';
 import React, { useEffect, useState } from 'react';
 import { Article } from '@/app/types/article';
+import { MDXImage } from './MDXImage';
+import type { HTMLAttributes } from 'react';
 
 /**
  * ArticleRenderer 組件
@@ -68,9 +70,25 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
     };
   };
 
+  // MDX 內容渲染組件配置
+  const mdxContentComponents = {
+    // 標題區域保持原有的樣式
+    h1: (props: HTMLAttributes<HTMLHeadingElement>) => (
+      <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6" {...props} />
+    ),
+
+    // 段落樣式：與原來的配置一致
+    p: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
+      <span className="block mb-4" {...props}>{children}</span>
+    ),
+
+    // 自定義圖片組件
+    MDXImage,
+  };
+
   return (
     <article>
-      {/* 標題區域：直接使用從 props 傳入的數據 */}
+      {/* 標題區域 */}
       <div className="text-center mb-12">
         <div className="text-coral-400 uppercase tracking-[0.2em] text-xs sm:text-sm mb-4 sm:mb-6 font-light">
           {category} / <span className="text-gray-500">DESIGN</span>
@@ -79,7 +97,7 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
         <div className="text-gray-400 text-xs sm:text-sm tracking-wider">{date}</div>
       </div>
       
-      {/* 主圖區域：使用從 props 傳入的 coverImageUrl */}
+      {/* 主圖區域 */}
       <div className="mb-8 relative aspect-[16/9] overflow-hidden rounded-lg group">
         <Image
           src={coverImageUrl}
@@ -97,50 +115,11 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
         )}
       </div>
       
-      {/* Markdown 內容區域：
-          1. content prop 包含原始的 Markdown 文本
-          2. ReactMarkdown 組件解析這個文本
-          3. 對於每個 Markdown 元素，使用自定義組件進行渲染 */}
+      {/* MDX 內容區域 */}
       <div className="prose max-w-none">
-        <ReactMarkdown
-          components={{
-            // 圖片渲染邏輯：
-            // 1. Markdown 中的 ![alt](src) 會觸發這個處理器
-            // 2. src 和 alt 由 ReactMarkdown 從 Markdown 語法中解析並傳入
-            img: ({ src, alt }) => {
-              if (!src) return null;
-              const optimizedSrc = src.startsWith('http') ? src : getImageUrl(src, 'content');
-              const imageAltText = alt || title;
-              
-              return (
-                <span className="block relative group my-8">
-                  <Image
-                    src={optimizedSrc}
-                    alt={imageAltText}
-                    width={800}
-                    height={450}
-                    className="rounded-lg w-full h-auto"
-                  />
-                  {pageUrl && (
-                    <PinterestButton 
-                      {...createPinData(optimizedSrc, imageAltText)}
-                    />
-                  )}
-                </span>
-              );
-            },
-            // 段落渲染邏輯：
-            // 1. Markdown 中的純文本會被解析為段落
-            // 2. children 是段落中的實際內容
-            // 3. 這個 children 不是傳入的 prop，而是 ReactMarkdown 的內部機制
-            p: ({ children }) => {
-              return <span className="block mb-4">{children}</span>;
-            },
-          }}
-        >
-          {/* 將 Markdown 內容傳給 ReactMarkdown 進行解析和渲染 */}
+        <MDXProvider components={mdxContentComponents}>
           {content}
-        </ReactMarkdown>
+        </MDXProvider>
       </div>
       
       {/* 社交分享區域 */}

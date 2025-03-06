@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
-import { MDXProvider } from '@mdx-js/react';
 import Script from "next/script";
 import "./globals.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-import { mdxComponents } from './components/mdx-components';
 
 // 配置 Playfair Display 字體
 const playfair = Playfair_Display({
@@ -119,9 +117,7 @@ export default function RootLayout({
       </head>
       <body className={`${playfair.variable} ${montserrat.variable}`}>
         <Navigation />
-        <MDXProvider components={mdxComponents}>
-          <main>{children}</main>
-        </MDXProvider>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
