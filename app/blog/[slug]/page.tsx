@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/app/lib/markdownProcessor';
+import { getAllArticles, getArticle } from '@/app/lib/markdownProcessor';
 import { getImageUrl } from '@/app/lib/imageUtils';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
@@ -39,8 +39,7 @@ type PageProps = {
  */
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   // 1. 獲取文章數據
-  const allArticles = getAllPosts();
-  const currentArticle = allArticles.find((article) => article.id === params.slug);
+  const currentArticle = getArticle(params.slug);
   
   // 2. 處理文章不存在的情況
   if (!currentArticle) {
@@ -101,7 +100,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
  * 用於靜態生成頁面時預先生成所有可能的文章頁面
  */
 export async function generateStaticParams() {
-  const allArticles = getAllPosts();
+  const allArticles = getAllArticles();
   return allArticles.map((article) => ({
     slug: article.id,
   }));
@@ -116,8 +115,7 @@ export async function generateStaticParams() {
  */
 export default function ArticleDetailPage({ params }: { params: { slug: string } }) {
   // 1. 獲取文章數據
-  const allArticles = getAllPosts();  // 輸入：無，輸出：文章列表數組
-  const currentArticle = allArticles.find((article) => article.id === params.slug);  // 輸入：slug，輸出：找到的文章或 undefined
+  const currentArticle = getArticle(params.slug);
 
   // 2. 處理文章不存在的情況
   if (!currentArticle) {

@@ -10,7 +10,6 @@ export interface PinData {
 
 /**
  * SEO 相關資訊
- * @internal
  */
 export interface ImageSEOData {
   /** 原始圖片檔名 */
