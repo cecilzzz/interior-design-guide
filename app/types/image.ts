@@ -10,6 +10,7 @@ export interface PinData {
 
 /**
  * SEO 相關資訊
+ * @internal
  */
 export interface ImageSEOData {
   /** 原始圖片檔名 */
@@ -32,13 +33,7 @@ export interface ImageSEOData {
  */
 export interface ImageData {
   /** 圖片來源 URL */
-  src: string;
-
-  /** 圖片標題（用於 SEO 和懸停提示） */
-  title: string;
-
-  /** 圖片替代文字（用於 SEO 和無障礙） */
-  alt: string;
+  src: string
 
   /** SEO 相關資訊 */
   seo: ImageSEOData;

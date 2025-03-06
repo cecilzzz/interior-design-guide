@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
+import { MDXProvider } from '@mdx-js/react';
 import Script from "next/script";
 import "./globals.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import { MDXImage } from "./components/MDXImage";
 
 // 配置 Playfair Display 字體
 const playfair = Playfair_Display({
@@ -18,6 +20,12 @@ const montserrat = Montserrat({
   display: "swap",
   variable: "--font-montserrat",
 });
+
+// MDX 組件映射
+const components = {
+  MDXImage,
+  // 可以添加更多自定義組件
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://interior-design-guide.vercel.app'),
@@ -117,7 +125,9 @@ export default function RootLayout({
       </head>
       <body className={`${playfair.variable} ${montserrat.variable}`}>
         <Navigation />
-        <main>{children}</main>
+        <MDXProvider components={components}>
+          <main>{children}</main>
+        </MDXProvider>
         <Footer />
       </body>
     </html>
