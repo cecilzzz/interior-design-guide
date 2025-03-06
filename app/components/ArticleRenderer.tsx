@@ -6,8 +6,8 @@ import { getImageUrl } from '@/app/lib/imageUtils';
 import PinterestButton from './PinterestButton';
 import React, { useEffect, useState } from 'react';
 import { Article } from '@/app/types/article';
-import { MDXImage } from './MDXImage';
 import type { HTMLAttributes } from 'react';
+import CategoryPage from "../blog/category/[category]/page";
 
 /**
  * ArticleRenderer 組件
@@ -55,6 +55,17 @@ interface ArticleRendererProps {
 export default function ArticleRenderer({ currentArticle }: ArticleRendererProps) {
   const { category, title, date, coverImageUrl, content } = currentArticle;
   
+  // 檢查整個 currentArticle 對象
+  console.log('Current Article:', {
+    title,
+    date,
+    category,
+    contentPreview: content.slice(0, 500) // 只顯示前 500 個字符
+  });
+
+  // 檢查 content 的類型
+  console.log('Content type:', typeof content);
+
   // Pinterest 分享功能需要頁面 URL
   const [pageUrl, setPageUrl] = useState('');
 
@@ -70,21 +81,9 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
     };
   };
 
-  // MDX 內容渲染組件配置
-  const mdxContentComponents = {
-    // 標題區域保持原有的樣式
-    h1: (props: HTMLAttributes<HTMLHeadingElement>) => (
-      <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6" {...props} />
-    ),
-
-    // 段落樣式：與原來的配置一致
-    p: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
-      <span className="block mb-4" {...props}>{children}</span>
-    ),
-
-    // 自定義圖片組件
-    MDXImage,
-  };
+  console.log('MDX Content Type:', typeof content);
+  console.log('MDX Content Preview:', content?.substring(0, 100));
+  console.log('MDX Content Length:', content?.length);
 
   return (
     <article>
@@ -117,9 +116,7 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
       
       {/* MDX 內容區域 */}
       <div className="prose max-w-none">
-        <MDXProvider components={mdxContentComponents}>
-          {content}
-        </MDXProvider>
+        {content}
       </div>
       
       {/* 社交分享區域 */}

@@ -1,13 +1,5 @@
-const createMDX = require('@next/mdx')
-const remarkGfm = require('remark-gfm')
-
-const withMDX = createMDX({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [],
-  },
-})
+import createMDX from '@next/mdx'
+import remarkGfm from 'remark-gfm'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -36,5 +28,16 @@ const nextConfig = {
   trailingSlash: true,
 };
 
-// 使用 withMDX 包裝配置
-module.exports = withMDX(nextConfig);
+// 配置 MDX
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],  // 支持 GitHub Flavored Markdown
+    rehypePlugins: [],
+    // 這個很重要，用於支持 MDX 中的 React 組件
+    providerImportSource: "@mdx-js/react",
+  },
+});
+
+// 合併配置
+export default withMDX(nextConfig);

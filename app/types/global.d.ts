@@ -12,10 +12,3 @@ interface Window {
   ) => void;
   dataLayer: any[];
 }
-
-// MDX 模組聲明
-declare module '*.mdx' {
-  export const frontmatter: MDXFrontmatter;
-  const MDXContent: (props: MDXComponentProps) => ReactNode;
-  export default MDXContent;
-} 
