@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';  // 需要安裝: npm install react-
 import { getImageUrl } from '@/app/lib/imageUtils';
 import PinterestButton from './PinterestButton';
 import React, { useEffect, useState } from 'react';
+import { Article } from '@/app/types/article';
 
 /**
  * ArticleRenderer 組件
@@ -40,18 +41,7 @@ import React, { useEffect, useState } from 'react';
 
 interface ArticleRendererProps {
   /** 當前文章數據 */
-  currentArticle: {
-    /** 文章分類（從 frontmatter 獲取）*/
-    category: string;
-    /** 文章標題（從 frontmatter 獲取）*/
-    title: string;
-    /** 發布日期（從 frontmatter 獲取）*/
-    date: string;
-    /** 文章封面圖片 URL（從 frontmatter 獲取）*/
-    coverImageUrl: string;
-    /** Markdown 格式的文章內容（從 .md 文件的 body 獲取）*/
-    content: string;
-  };
+  currentArticle: Omit<Article, 'id' | 'categories' | 'excerpt'> & { category: string };
 }
 
 /**

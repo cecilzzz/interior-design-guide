@@ -2,6 +2,7 @@ import ArticleRenderer from "./ArticleRenderer";
 import RelatedPosts from "./RelatedPosts";
 import { getImageUrl } from '@/app/lib/imageUtils';
 import ReactMarkdown from 'react-markdown';
+import { Article, RelatedArticle } from '@/app/types/article';
 /**
  * ArticleLayout 組件
  * 
@@ -27,29 +28,9 @@ import ReactMarkdown from 'react-markdown';
 
 interface ArticleLayoutProps {
   /** 當前文章數據 */
-  currentArticle: {
-    /** 文章分類 */
-    category: string;
-    /** 文章標題 */
-    title: string;
-    /** 發布日期 */
-    date: string;
-    /** 文章封面圖片 URL */
-    coverImageUrl: string;
-    /** Markdown 格式的文章內容 */
-    content: string;
-  };
+  currentArticle: Omit<Article, 'id' | 'categories' | 'excerpt'> & { category: string };
   /** 相關文章列表 */
-  relatedArticles: Array<{
-    /** 文章分類 */
-    category: string;
-    /** 文章標題 */
-    title: string;
-    /** 文章圖片 URL */
-    image: string;
-    /** 文章鏈接 */
-    link: string;
-  }>;
+  relatedArticles: RelatedArticle[];
 }
 
 /**
