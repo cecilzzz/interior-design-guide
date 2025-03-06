@@ -2,17 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from "react-icons/fa";
 
-type RecommendedPost = {
+type RecommendedArticle = {
   title: string;
   image: string;
   link: string;
 };
 
 type SidebarProps = {
-  recommendedPosts: RecommendedPost[];
+  recommendedArticles: RecommendedArticle[];
 };
 
-export default function Sidebar({ recommendedPosts }: SidebarProps) {
+export default function Sidebar({ recommendedArticles }: SidebarProps) {
   return (
     <aside className="space-y-16">
       {/* 作者簡介 */}
@@ -89,10 +89,10 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
           <span>MUST READ ARTICLES</span>
         </h3>
         <div className="space-y-6">
-          {recommendedPosts.map((post, index) => (
+          {recommendedArticles.map((article, index) => (
             <Link 
-              key={post.title}
-              href={post.link}
+              key={article.title}
+              href={article.link}
               className="flex items-center gap-4 group transition-all duration-300 hover:bg-gray-50 p-2 rounded-lg"
             >
               <span className="text-2xl font-playfair text-gray-300 transition-colors duration-300 group-hover:text-coral-500">
@@ -100,14 +100,14 @@ export default function Sidebar({ recommendedPosts }: SidebarProps) {
               </span>
               <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-md">
                 <Image
-                  src={post.image}
-                  alt={post.title}
+                  src={article.image}
+                  alt={article.title}
                   fill
                   className="object-cover transition-all duration-500 group-hover:scale-105"
                 />
               </div>
               <h4 className="text-sm font-medium transition-colors duration-300 group-hover:text-coral-500">
-                {post.title}
+                {article.title}
               </h4>
             </Link>
           ))}

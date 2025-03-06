@@ -2,7 +2,6 @@ import ArticleRenderer from "./ArticleRenderer";
 import RelatedPosts from "./RelatedPosts";
 import { getImageUrl } from '@/app/lib/imageUtils';
 import ReactMarkdown from 'react-markdown';
-
 /**
  * ArticleLayout 組件
  * 
@@ -28,7 +27,7 @@ import ReactMarkdown from 'react-markdown';
 
 interface ArticleLayoutProps {
   /** 主要文章數據 */
-  post: {
+  article: {
     /** 文章分類 */
     category: string;
     /** 文章標題 */
@@ -41,7 +40,7 @@ interface ArticleLayoutProps {
     content: string;
   };
   /** 相關文章列表 */
-  relatedPosts: Array<{
+  relatedArticles: Array<{
     /** 文章分類 */
     category: string;
     /** 文章標題 */
@@ -57,16 +56,16 @@ interface ArticleLayoutProps {
  * 文章頁面的佈局組件
  * 
  * @param props - 組件屬性
- * @param props.post - 主要文章的完整數據
- * @param props.relatedPosts - 相關文章列表
+ * @param props.article - 主要文章的完整數據
+ * @param props.relatedArticles - 相關文章列表
  */
-export default function ArticleLayout({ post, relatedPosts }: ArticleLayoutProps) {
+export default function ArticleLayout({ article, relatedArticles }: ArticleLayoutProps) {
   return (
     <div className="space-y-16">
       {/* 主要文章內容 */}
-      <ArticleRenderer {...post} />
+      <ArticleRenderer {...article} />
       {/* 相關文章列表 */}
-      <RelatedPosts posts={relatedPosts} />
+      <RelatedPosts posts={relatedArticles} />
     </div>
   );
 }

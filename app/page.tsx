@@ -70,8 +70,8 @@ export default function Home() {
       {/* Blog section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
-          <ArticleLayout post={blogPost} relatedPosts={relatedPosts} />
-          <Sidebar recommendedPosts={recommendedPosts} />
+          <ArticleLayout article={blogPost} relatedArticles={relatedPosts} />
+          <Sidebar recommendedArticles={recommendedPosts} />
         </div>
       </div>
     </div>
