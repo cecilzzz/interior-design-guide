@@ -1,31 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-
-/**
- * 文章數據結構
- * 用於描述網格中顯示的每篇文章的基本信息
- */
-interface Post {
-  /** 文章唯一標識符，用於 URL 和 key */
-  id: string;
-  /** 文章標題 */
-  title: string;
-  /** 文章分類列表，支持多分類 */
-  categories: string[];
-  /** 發布日期 */
-  date: string;
-  /** 文章封面圖片 URL */
-  coverImageUrl: string;
-  /** 文章摘要，用於預覽 */
-  excerpt: string;
-}
+import { Article } from "@/app/types/article";
 
 /**
  * PostGrid 組件的屬性定義
  */
 interface PostGridProps {
   /** 要顯示的文章列表 */
-  posts: Post[];
+  posts: Article[];
   /** 可選的分類過濾器 */
   category?: string;
 }

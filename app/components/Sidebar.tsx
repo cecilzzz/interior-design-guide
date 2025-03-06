@@ -1,12 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from "react-icons/fa";
-
-type RecommendedArticle = {
-  title: string;
-  coverImageUrl: string;
-  link: string;
-};
+import { RecommendedArticle } from "@/app/types/article";
 
 type SidebarProps = {
   recommendedArticles: RecommendedArticle[];

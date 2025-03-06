@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import ArticleLayout from '@/app/components/ArticleLayout';
 import { trackArticleRead, trackScrollDepth, trackTimeOnPage } from '@/app/utils/analytics';
+import { Article, RelatedArticle } from '@/app/types/article';
 
 /**
  * ArticlePage 組件
@@ -32,29 +33,9 @@ import { trackArticleRead, trackScrollDepth, trackTimeOnPage } from '@/app/utils
 
 interface ArticlePageProps {
   /** 當前文章數據 */
-  currentArticle: {
-    /** 文章分類 */
-    category: string;
-    /** 文章標題 */
-    title: string;
-    /** 發布日期 */
-    date: string;
-    /** 文章封面圖片 URL */
-    coverImageUrl: string;
-    /** Markdown 格式的文章內容 */
-    content: string;
-  };
+  currentArticle: Omit<Article, 'id' | 'categories' | 'excerpt'> & { category: string };
   /** 相關文章列表 */
-  relatedArticles: Array<{
-    /** 文章分類 */
-    category: string;
-    /** 文章標題 */
-    title: string;
-    /** 文章封面圖片 URL */
-    coverImageUrl: string;
-    /** 文章鏈接 */
-    link: string;
-  }>;
+  relatedArticles: RelatedArticle[];
 }
 
 /**

@@ -18,29 +18,11 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';  // 需要安裝: npm install gray-matter
+import { Article } from '@/app/types/article';
 
 /**
- * 單篇文章的完整數據結構
- * 定義了從 Markdown 文件中解析出的所有必要屬性
+ * 文章存儲目錄的絕對路徑
  */
-interface SingleArticle {
-  /** 文章唯一標識符，基於文件名生成 */
-  id: string;
-  /** Markdown 格式的文章內容 */
-  content: string;
-  /** 文章標題 */
-  title: string;
-  /** 文章分類列表，支持多分類 */
-  categories: string[];
-  /** 發布日期，格式：YYYY-MM-DD */
-  date: string;
-  /** 文章封面圖片 URL */
-  coverImageUrl: string;
-  /** 文章摘要，用於列表展示 */
-  excerpt: string;
-}
-
-/** 文章存儲目錄的絕對路徑 */
 const postsDirectory = path.join(process.cwd(), 'content/posts');
 
 /**
@@ -91,7 +73,7 @@ function getAllMarkdownFiles(dir: string): string[] {
  * 
  * @returns 處理後的文章數組，按日期降序排序
  */
-export function getAllPosts(): SingleArticle[] {
+export function getAllPosts(): Article[] {
   try {
     // 確保目錄存在
     if (!fs.existsSync(postsDirectory)) {
@@ -144,13 +126,13 @@ export function getAllPosts(): SingleArticle[] {
         return {
           id,
           content,
-          ...(data as Omit<SingleArticle, 'id' | 'content'>),
+          ...(data as Omit<Article, 'id' | 'content'>),
         };
       } catch (error) {
         console.error(`Error processing file ${filePath}:`, error);
         return null;
       }
-    }).filter((article): article is SingleArticle => article !== null);  // 過濾掉處理失敗的文章
+    }).filter((article): article is Article => article !== null);  // 過濾掉處理失敗的文章
 
     // 按日期降序排序並返回
     return allArticles.sort((a, b) => (a.date < b.date ? 1 : -1));
