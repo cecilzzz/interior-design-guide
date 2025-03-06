@@ -4,7 +4,7 @@ import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
 import ArticlePage from './ArticlePage';
 
-// 這些是示例數據，實際應該從數據庫或其他地方獲取
+// 靜態數據：相關文章列表
 const relatedPosts = [
   {
     category: "Interior Design",
@@ -15,6 +15,7 @@ const relatedPosts = [
   // ... 其他相關文章
 ];
 
+// 靜態數據：推薦文章列表
 const recommendedPosts = [
   {
     title: "Essential Steps to Design Your Perfect Living Room",
@@ -24,14 +25,24 @@ const recommendedPosts = [
   // ... 其他推薦文章
 ];
 
+// 定義頁面參數類型
 type Props = {
-  params: { slug: string }
+  params: { slug: string }  // 從 URL 動態路由中獲取的文章標識符
 };
 
+/**
+ * 生成頁面元數據
+ * @param {Object} props - 包含頁面參數的對象
+ * @param {Object} props.params - URL 參數
+ * @param {string} props.params.slug - 文章的唯一標識符
+ * @returns {Promise<Metadata>} 返回頁面的元數據，包含 title, description, OpenGraph 等
+ */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  // 1. 獲取文章數據
   const posts = getAllPosts();
   const post = posts.find((p) => p.id === params.slug);
   
+  // 2. 處理文章不存在的情況
   if (!post) {
     return {
       title: 'Post Not Found',
@@ -39,9 +50,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  // 3. 處理圖片 URL 和規範 URL
   const imageUrl = post.image.startsWith('http') ? post.image : getImageUrl(post.image, 'hero');
   const canonicalUrl = `https://interior-design-guide.vercel.app/blog/${params.slug}`;
 
+  // 4. 返回完整的元數據
   return {
     title: post.title,
     description: post.excerpt,
@@ -80,6 +93,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/**
+ * 生成靜態頁面參數
+ * @returns {Promise<Array<{slug: string}>>} 返回所有可能的文章路徑參數
+ * 用於靜態生成頁面時預先生成所有可能的文章頁面
+ */
 export async function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({
@@ -87,26 +105,41 @@ export async function generateStaticParams() {
   }));
 }
 
+/**
+ * 博客文章頁面組件
+ * @param {Object} props - 組件屬性
+ * @param {Object} props.params - URL 參數
+ * @param {string} props.params.slug - 文章的唯一標識符
+ * @returns {JSX.Element} 返回文章頁面的 JSX 元素
+ */
 export default function BlogPost({ params }: { params: { slug: string } }) {
-  const posts = getAllPosts();
-  const post = posts.find((p) => p.id === params.slug);
+  // 1. 獲取文章數據
+  const posts = getAllPosts();  // 輸入：無，輸出：文章列表數組
+  const post = posts.find((p) => p.id === params.slug);  // 輸入：slug，輸出：找到的文章或 undefined
 
+  // 2. 處理文章不存在的情況
   if (!post) {
     return <div>Post not found</div>;
   }
 
-  // 將 post 數據轉換為 BlogContent 需要的格式
+  // 3. 處理文章數據
   const blogPost = {
-    ...post,
-    image: getImageUrl(post.image, 'hero'),
-    category: post.categories[0],
+    ...post,  // 展開原文章數據
+    image: getImageUrl(post.image, 'hero'),  // 處理圖片 URL
+    category: post.categories[0],  // 獲取第一個分類
   };
 
+  // 4. 渲染頁面
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
-        <ArticlePage post={blogPost} relatedPosts={relatedPosts} />
-        <Sidebar recommendedPosts={recommendedPosts} />
+        <ArticlePage 
+          post={blogPost}  // 輸入：處理後的文章數據
+          relatedPosts={relatedPosts}  // 輸入：相關文章列表
+        />
+        <Sidebar 
+          recommendedPosts={recommendedPosts}  // 輸入：推薦文章列表
+        />
       </div>
     </div>
   );
