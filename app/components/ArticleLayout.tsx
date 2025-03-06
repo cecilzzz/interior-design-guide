@@ -63,7 +63,7 @@ export default function ArticleLayout({ currentArticle, relatedArticles }: Artic
   return (
     <div className="space-y-16">
       {/* 主要文章內容 */}
-      <ArticleRenderer {...currentArticle} />
+      <ArticleRenderer currentArticle={currentArticle} />
       {/* 相關文章列表 */}
       <RelatedPosts posts={relatedArticles} />
     </div>

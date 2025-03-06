@@ -39,35 +39,30 @@ import React, { useEffect, useState } from 'react';
  */
 
 interface ArticleRendererProps {
-  /** 文章分類（從 frontmatter 獲取）*/
-  category: string;
-  /** 文章標題（從 frontmatter 獲取）*/
-  title: string;
-  /** 發布日期（從 frontmatter 獲取）*/
-  date: string;
-  /** 主圖 URL（從 frontmatter 獲取）*/
-  image: string;
-  /** Markdown 格式的文章內容（從 .md 文件的 body 獲取）*/
-  content: string;
+  /** 當前文章數據 */
+  currentArticle: {
+    /** 文章分類（從 frontmatter 獲取）*/
+    category: string;
+    /** 文章標題（從 frontmatter 獲取）*/
+    title: string;
+    /** 發布日期（從 frontmatter 獲取）*/
+    date: string;
+    /** 主圖 URL（從 frontmatter 獲取）*/
+    image: string;
+    /** Markdown 格式的文章內容（從 .md 文件的 body 獲取）*/
+    content: string;
+  };
 }
 
 /**
  * 渲染文章內容的主要組件
  * 
  * @param props - 文章相關屬性
- * @param props.category - 文章分類，顯示在標題上方
- * @param props.title - 文章標題
- * @param props.date - 發布日期
- * @param props.image - 主圖 URL
- * @param props.content - Markdown 格式的文章內容
+ * @param props.currentArticle - 當前文章的完整數據
  */
-export default function ArticleRenderer({ 
-  category, 
-  title, 
-  date, 
-  image, 
-  content,
-}: ArticleRendererProps) {
+export default function ArticleRenderer({ currentArticle }: ArticleRendererProps) {
+  const { category, title, date, image, content } = currentArticle;
+  
   // Pinterest 分享功能需要頁面 URL
   const [pageUrl, setPageUrl] = useState('');
 
