@@ -1,8 +1,7 @@
 /**
  * Pinterest 分享資訊
- * @internal
  */
-interface PinData {
+export interface PinData {
   /** Pin 的標題 */
   title: string;
   /** Pin 的描述 */
@@ -11,9 +10,8 @@ interface PinData {
 
 /**
  * SEO 相關資訊
- * @internal
  */
-interface ImageSEOData {
+export interface ImageSEOData {
   /** 原始圖片檔名 */
   originalName: string;
   /** 本地相對路徑 */
@@ -35,6 +33,9 @@ interface ImageSEOData {
 export interface ImageData {
   /** 圖片來源 URL */
   src: string;
+
+  /** 圖片標題（用於 SEO 和懸停提示） */
+  title: string;
 
   /** 圖片替代文字（用於 SEO 和無障礙） */
   alt: string;
