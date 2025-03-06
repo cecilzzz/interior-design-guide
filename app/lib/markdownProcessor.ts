@@ -23,30 +23,22 @@ import { Article } from '@/app/types/article';
 /**
  * 文章存儲目錄的絕對路徑
  */
-const postsDirectory = path.join(process.cwd(), 'content/posts');
+const articlesDirectory = path.join(process.cwd(), 'content/posts');
 
 /**
- * 遞迴獲取指定目錄下的所有 Markdown 文件
- * 
- * 遍歷目錄及其子目錄，收集所有 .md 文件的路徑。
- * 支持任意深度的目錄結構。
- * 
- * @param dir - 要搜索的目錄路徑
- * @returns 所有找到的 Markdown 文件的完整路徑數組
+ * 獲取所有 MDX 文件
  */
-function getAllMarkdownFiles(dir: string): string[] {
+async function getAllArticleFiles(dir: string): Promise<string[]> {
   let results: string[] = [];
-  const items = fs.readdirSync(dir);
+  const items = await fs.promises.readdir(dir);
 
   for (const item of items) {
     const fullPath = path.join(dir, item);
-    const stat = fs.statSync(fullPath);
+    const stat = await fs.promises.stat(fullPath);
 
     if (stat.isDirectory()) {
-      // 遞迴處理子目錄
-      results = results.concat(getAllMarkdownFiles(fullPath));
-    } else if (item.endsWith('.md')) {
-      // 收集 Markdown 文件
+      results = results.concat(await getAllArticleFiles(fullPath));
+    } else if (item.endsWith('.mdx')) {  // 改為 .mdx
       results.push(fullPath);
     }
   }
@@ -55,110 +47,147 @@ function getAllMarkdownFiles(dir: string): string[] {
 }
 
 /**
- * 獲取所有文章數據
- * 
- * 讀取並解析所有 Markdown 文件，提取文章內容和元數據。
- * 包含錯誤處理和數據驗證。
- * 
- * 功能：
- * 1. 遞迴讀取所有文章文件
- * 2. 解析 frontmatter 和 Markdown 內容
- * 3. 驗證必要字段
- * 4. 按日期排序
- * 
- * 錯誤處理：
- * - 目錄不存在時返回空數組
- * - 單個文件處理失敗時跳過該文件
- * - 所有錯誤都會被記錄
- * 
- * @returns 處理後的文章數組，按日期降序排序
+ * 在所有分類目錄中尋找文章文件
  */
-export function getAllPosts(): Article[] {
+async function findArticleFile(id: string): Promise<string | null> {
   try {
-    // 確保目錄存在
-    if (!fs.existsSync(postsDirectory)) {
-      console.warn('Posts directory does not exist:', postsDirectory);
-      return [];
-    }
-
-    // 獲取所有 .md 文件的路徑
-    const filePaths = getAllMarkdownFiles(postsDirectory);
+    // 1. 獲取所有分類目錄
+    const categories = await fs.promises.readdir(articlesDirectory);
     
-    // 如果沒有文件，返回空數組
-    if (!filePaths || filePaths.length === 0) {
-      console.warn('No posts found in directory:', postsDirectory);
-      return [];
-    }
-    
-    // 處理每個文件
-    const allArticles = filePaths.map((filePath) => {
-      try {
-        // 從文件路徑生成 id（只使用文件名）
-        const relativePath = path.relative(postsDirectory, filePath);
-        const pathParts = relativePath.split(path.sep);
-        const id = pathParts[pathParts.length - 1].replace(/\.md$/, '');
-
-        // 讀取並解析 Markdown 文件
-        const fileContents = fs.readFileSync(filePath, 'utf8');
-        const { data, content } = matter(fileContents);
-
-        // 驗證必要字段
-        if (!data.title || !data.categories || !Array.isArray(data.categories)) {
-          console.warn(`Post ${filePath} is missing required fields`);
-          return null;
-        }
-
-        // 驗證分類格式
-        const invalidCategories = data.categories.filter(
-          (category: string) => 
-            typeof category !== 'string' || 
-            category.trim().length === 0
-        );
-        
-        if (invalidCategories.length > 0) {
-          console.warn(
-            `Post ${filePath} has invalid category format. Categories must be non-empty strings.`
-          );
-          return null;
-        }
-
-        // 組合並返回文章數據
-        return {
-          id,
-          content,
-          ...(data as Omit<Article, 'id' | 'content'>),
-        };
-      } catch (error) {
-        console.error(`Error processing file ${filePath}:`, error);
-        return null;
+    // 2. 在每個分類目錄中尋找文件
+    for (const category of categories) {
+      const categoryPath = path.join(articlesDirectory, category);
+      const stat = await fs.promises.stat(categoryPath);
+      
+      // 跳過非目錄
+      if (!stat.isDirectory()) continue;
+      
+      const filePath = path.join(categoryPath, `${id}.mdx`);
+      
+      // 檢查文件是否存在
+      if (await fs.promises.access(filePath).then(() => true).catch(() => false)) {
+        return filePath;
       }
-    }).filter((article): article is Article => article !== null);  // 過濾掉處理失敗的文章
-
-    // 按日期降序排序並返回
-    return allArticles.sort((a, b) => (a.date < b.date ? 1 : -1));
+    }
+    
+    return null;
   } catch (error) {
-    console.error('Error in getAllPosts:', error);
+    console.error(`Error finding article file ${id}:`, error);
+    return null;
+  }
+}
+
+/**
+ * 獲取單篇文章數據
+ */
+export async function getArticle(id: string): Promise<Article | null> {
+  try {
+    // 尋找文章文件
+    const filePath = await findArticleFile(id);
+    
+    if (!filePath) {
+      console.warn(`Article file not found: ${id}`);
+      return null;
+    }
+
+    const fileContents = await fs.promises.readFile(filePath, 'utf8');
+    const { data, content } = matter(fileContents);
+
+    // 驗證必要字段
+    if (!data.title || !data.categories) {
+      console.warn(`Article ${id} is missing required fields`);
+      return null;
+    }
+
+    return {
+      id,
+      title: data.title,
+      date: data.date,
+      categories: Array.isArray(data.categories) ? data.categories : [data.category],
+      coverImageUrl: data.coverImageUrl,
+      excerpt: data.excerpt,
+      content
+    };
+  } catch (error) {
+    console.error(`Error processing article ${id}:`, error);
+    return null;
+  }
+}
+
+/**
+ * 獲取所有文章數據
+ */
+export async function getAllArticles(): Promise<Article[]> {
+  try {
+    if (!await fs.promises.access(articlesDirectory).then(() => true).catch(() => false)) {
+      console.warn('Articles directory does not exist:', articlesDirectory);
+      return [];
+    }
+
+    const filePaths = await getAllArticleFiles(articlesDirectory);
+    
+    if (!filePaths.length) {
+      console.warn('No articles found in directory:', articlesDirectory);
+      return [];
+    }
+    
+    const articles = await Promise.all(
+      filePaths.map(async filePath => {
+        try {
+          // 只取文件名，不包含路徑和副檔名
+          const id = path.basename(filePath, '.mdx');
+          
+          const article = await getArticle(id);
+          return article;
+        } catch (error) {
+          console.error(`Error processing file ${filePath}:`, error);
+          return null;
+        }
+      })
+    );
+
+    return articles
+      .filter((article): article is Article => article !== null)
+      .sort((a, b) => (a.date < b.date ? 1 : -1));
+  } catch (error) {
+    console.error('Error in getAllArticles:', error);
     return [];
   }
+}
+
+/**
+ * 獲取特定分類的文章
+ */
+export async function getArticlesByCategory(category: string): Promise<Article[]> {
+  const articles = await getAllArticles();
+  return articles.filter(article => 
+    article.categories.includes(category)  // 直接使用 categories 數組
+  );
 }
 
 /**
  * 文件結構說明：
  * content/posts/
  * ├── category1/
- * │   ├── post1.md
- * │   └── post2.md
+ * │   ├── post1.mdx
+ * │   └── post2.mdx
  * └── category2/
- *     └── post3.md
+ *     └── post3.mdx
  * 
- * Markdown 文件格式：
+ * MDX 文件格式：
  * ---
  * title: 文章標題
- * categories: [分類1, 分類2]
+ * categories: [分類1, 分類2]  # 必需，至少包含一個分類
  * date: YYYY-MM-DD
  * coverImageUrl: 封面圖片URL
  * excerpt: 文章摘要
  * ---
  * 
  * 文章內容...
+ * 
+ * <MDXImage 
+ *   src="/path/to/image.jpg"
+ *   seo={{ altText: "圖片描述" }}
+ *   pin={{ description: "Pinterest 描述" }}
+ * />
  */ 

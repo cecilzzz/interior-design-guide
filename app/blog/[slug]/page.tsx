@@ -39,7 +39,7 @@ type PageProps = {
  */
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   // 1. 獲取文章數據
-  const currentArticle = getArticle(params.slug);
+  const currentArticle = await getArticle(params.slug);
   
   // 2. 處理文章不存在的情況
   if (!currentArticle) {
@@ -100,9 +100,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
  * 用於靜態生成頁面時預先生成所有可能的文章頁面
  */
 export async function generateStaticParams() {
-  const allArticles = getAllArticles();
+  const allArticles = await getAllArticles();
   return allArticles.map((article) => ({
-    slug: article.id,
+    slug: article.id
   }));
 }
 
@@ -113,9 +113,9 @@ export async function generateStaticParams() {
  * @param {string} props.params.slug - 文章的唯一標識符
  * @returns {JSX.Element} 返回文章頁面的 JSX 元素
  */
-export default function ArticleDetailPage({ params }: { params: { slug: string } }) {
+export default async function ArticleDetailPage({ params }: { params: { slug: string } }) {
   // 1. 獲取文章數據
-  const currentArticle = getArticle(params.slug);
+  const currentArticle = await getArticle(params.slug);
 
   // 2. 處理文章不存在的情況
   if (!currentArticle) {
