@@ -82,9 +82,20 @@ async function findArticleFile(id: string): Promise<string | null> {
  */
 export async function getArticle(id: string): Promise<Article | null> {
   try {
-    // 使用動態導入替代文件讀取
+    // 1. 先找到文章文件的完整路徑
+    const filePath = await findArticleFile(id);
+    
+    if (!filePath) {
+      console.warn(`Article file not found: ${id}`);
+      return null;
+    }
+
+    // 2. 將絕對路徑轉換為相對於 content/posts 的路徑
+    const relativePath = path.relative(articlesDirectory, filePath);
+    
+    // 3. 使用動態導入，注意路徑需要從 content/posts 開始
     const { default: MDXContent, frontmatter } = await import(
-      `@/content/posts/${id}.mdx`
+      `@/content/posts/${relativePath}`
     );
 
     // 驗證必要字段
