@@ -1,8 +1,8 @@
-import { getAllArticles, getArticle } from '@/app/lib/markdownProcessor';
-import { getImageUrl } from '@/app/lib/imageUtils';
+import { getAllArticlePaths } from '@/app/lib/markdownProcessor';
+import { notFound } from 'next/navigation';
+import ArticlePage from './ArticlePage';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
-import ArticlePage from './ArticlePage';
 
 // 靜態數據：相關文章列表
 const relatedArticles = [
@@ -27,118 +27,109 @@ const recommendedArticles = [
 
 // 定義頁面參數類型
 type PageProps = {
-  params: { slug: string }  // 從 URL 動態路由中獲取的文章標識符
+  params: { slug: string }
 };
 
 /**
  * 生成頁面元數據
- * @param {Object} props - 包含頁面參數的對象
- * @param {Object} props.params - URL 參數
- * @param {string} props.params.slug - 文章的唯一標識符
- * @returns {Promise<Metadata>} 返回頁面的元數據，包含 title, description, OpenGraph 等
  */
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // 1. 獲取文章數據
-  const currentArticle = await getArticle(params.slug);
+  const paths = await getAllArticlePaths();
+  const articlePath = paths.find(p => p.slug === params.slug);
   
-  // 2. 處理文章不存在的情況
-  if (!currentArticle) {
+  if (!articlePath) {
     return {
       title: 'Article Not Found',
       description: 'The requested article could not be found.'
     };
   }
 
-  // 3. 處理圖片 URL 和規範 URL
-  const imageUrl = currentArticle.coverImageUrl.startsWith('http') 
-    ? currentArticle.coverImageUrl 
-    : getImageUrl(currentArticle.coverImageUrl, 'hero');
+  // 導入文章數據
+  const { frontmatter } = await import(
+    `@/content/posts/${articlePath.category}/${params.slug}.mdx`
+  );
+
   const canonicalUrl = `https://interior-design-guide.vercel.app/blog/${params.slug}`;
 
-  // 4. 返回完整的元數據
   return {
-    title: currentArticle.title,
-    description: currentArticle.excerpt,
+    title: frontmatter.title,
+    description: frontmatter.excerpt,
     metadataBase: new URL('https://interior-design-guide.vercel.app'),
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: currentArticle.title,
-      description: currentArticle.excerpt,
+      title: frontmatter.title,
+      description: frontmatter.excerpt,
       type: 'article',
-      publishedTime: currentArticle.date,
-      modifiedTime: currentArticle.date,
+      publishedTime: frontmatter.date,
+      modifiedTime: frontmatter.date,
       authors: ['Interior Design Guide'],
       images: [
         {
-          url: imageUrl,
+          url: frontmatter.coverImageUrl,
           width: 1200,
           height: 630,
-          alt: currentArticle.title,
+          alt: frontmatter.title,
           type: 'image/jpeg',
         },
       ],
       url: canonicalUrl,
       siteName: 'Interior Design Guide',
       locale: 'en_US',
-      section: currentArticle.categories[0] || 'Interior Design',
-      tags: currentArticle.categories,
+      section: frontmatter.categories[0] || 'Interior Design',
+      tags: frontmatter.categories,
     },
     twitter: {
       card: 'summary_large_image',
-      title: currentArticle.title,
-      description: currentArticle.excerpt,
-      images: [imageUrl],
+      title: frontmatter.title,
+      description: frontmatter.excerpt,
+      images: [frontmatter.coverImageUrl],
     },
   };
 }
 
 /**
  * 生成靜態頁面參數
- * @returns {Promise<Array<{slug: string}>>} 返回所有可能的文章路徑參數
- * 用於靜態生成頁面時預先生成所有可能的文章頁面
  */
 export async function generateStaticParams() {
-  const allArticles = await getAllArticles();
-  return allArticles.map((article) => ({
-    slug: article.id,
-  }));
+  const paths = await getAllArticlePaths();
+  return paths.map(({ slug }) => ({ slug }));
 }
 
 /**
  * 文章詳情頁面組件
- * @param {Object} props - 組件屬性
- * @param {Object} props.params - URL 參數
- * @param {string} props.params.slug - 文章的唯一標識符
- * @returns {JSX.Element} 返回文章頁面的 JSX 元素
  */
-export default async function ArticleDetailPage({ params }: { params: { slug: string } }) {
-  // 1. 獲取文章數據
-  const currentArticle = await getArticle(params.slug);
-
-  // 2. 處理文章不存在的情況
-  if (!currentArticle) {
-    return <div>Article not found</div>;
+export default async function ArticleDetailPage({ params }: PageProps) {
+  const paths = await getAllArticlePaths();
+  const articlePath = paths.find(p => p.slug === params.slug);
+  
+  if (!articlePath) {
+    notFound();
   }
 
-  // 3. 處理文章數據
-  const processedCurrentArticle = {
-    ...currentArticle,  // 展開原文章數據
-    coverImageUrl: getImageUrl(currentArticle.coverImageUrl, 'hero'),  // 處理圖片 URL
-    category: currentArticle.categories[0],  // 獲取第一個分類
+  // 導入文章數據
+  const { default: MDXContent, frontmatter } = await import(
+    `@/content/posts/${articlePath.category}/${params.slug}.mdx`
+  );
+
+  const currentArticle = {
+    title: frontmatter.title,
+    date: frontmatter.date,
+    category: frontmatter.categories[0],
+    coverImageUrl: frontmatter.coverImageUrl,
+    content: MDXContent
   };
 
-  // 4. 渲染頁面
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
         <ArticlePage 
-          currentArticle={processedCurrentArticle}  // 輸入：處理後的當前文章數據
-          relatedArticles={relatedArticles}  // 輸入：相關文章列表
+          currentArticle={currentArticle}
+          relatedArticles={relatedArticles}
         />
         <Sidebar 
-          recommendedArticles={recommendedArticles}  // 輸入：推薦文章列表
+          recommendedArticles={recommendedArticles}
         />
       </div>
     </div>

@@ -1,8 +1,8 @@
 /**
  * 文章管理模塊
  * 
- * 負責處理文章的讀取、解析和管理。
- * 使用文件系統存儲文章，支持 Markdown 格式和 frontmatter 元數據。
+ * 負責處理文章的讀取和管理。
+ * 使用文件系統存儲文章，支持 MDX 格式和 frontmatter 元數據。
  * 
  * 被以下組件使用：
  * 1. app/blog/[slug]/page.tsx - 獲取單篇文章數據
@@ -12,12 +12,10 @@
  * 依賴的外部模塊：
  * - fs: 文件系統操作
  * - path: 路徑處理
- * - gray-matter: Markdown frontmatter 解析
  */
 
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';  // 需要安裝: npm install gray-matter
 import { Article } from '@/app/types/article';
 
 /**
@@ -26,136 +24,72 @@ import { Article } from '@/app/types/article';
 const articlesDirectory = path.join(process.cwd(), 'content/posts');
 
 /**
- * 獲取所有 MDX 文件
+ * 文章路徑類型定義
  */
-async function getAllArticleFiles(dir: string): Promise<string[]> {
-  let results: string[] = [];
-  const items = await fs.promises.readdir(dir);
-
-  for (const item of items) {
-    const fullPath = path.join(dir, item);
-    const stat = await fs.promises.stat(fullPath);
-
-    if (stat.isDirectory()) {
-      results = results.concat(await getAllArticleFiles(fullPath));
-    } else if (item.endsWith('.mdx')) {  // 改為 .mdx
-      results.push(fullPath);
-    }
-  }
-
-  return results;
+export type ArticlePath = {
+  /** 文章的唯一標識符（文件名，不含副檔名） */
+  slug: string;
+  /** 文章所屬分類（目錄名） */
+  category: string;
 }
 
 /**
- * 在所有分類目錄中尋找文章文件
+ * 獲取所有文章路徑（包含分類信息）
+ * 用於生成靜態路徑和導入文章
  */
-async function findArticleFile(id: string): Promise<string | null> {
+export async function getAllArticlePaths(): Promise<ArticlePath[]> {
   try {
-    // 1. 獲取所有分類目錄
+    const paths: ArticlePath[] = [];
     const categories = await fs.promises.readdir(articlesDirectory);
-    
-    // 2. 在每個分類目錄中尋找文件
+
     for (const category of categories) {
       const categoryPath = path.join(articlesDirectory, category);
       const stat = await fs.promises.stat(categoryPath);
       
       // 跳過非目錄
       if (!stat.isDirectory()) continue;
-      
-      const filePath = path.join(categoryPath, `${id}.mdx`);
-      
-      // 檢查文件是否存在
-      if (await fs.promises.access(filePath).then(() => true).catch(() => false)) {
-        return filePath;
-      }
+
+      const files = await fs.promises.readdir(categoryPath);
+      files
+        .filter(file => file.endsWith('.mdx'))
+        .forEach(file => {
+          paths.push({
+            slug: file.replace(/\.mdx$/, ''),
+            category
+          });
+        });
     }
-    
-    return null;
+    return paths;
   } catch (error) {
-    console.error(`Error finding article file ${id}:`, error);
-    return null;
-  }
-}
-
-/**
- * 獲取單篇文章數據
- */
-export async function getArticle(id: string): Promise<Article | null> {
-  try {
-    // 1. 先找到文章文件的完整路徑
-    const filePath = await findArticleFile(id);
-    
-    if (!filePath) {
-      console.warn(`Article file not found: ${id}`);
-      return null;
-    }
-
-    // 2. 從完整路徑中提取分類名稱
-    const categoryName = path.relative(articlesDirectory, path.dirname(filePath));
-    
-    // 3. 使用固定格式的路徑進行動態導入
-    const { default: MDXContent, frontmatter } = await import(
-      `@/content/posts/${categoryName}/${id}.mdx`
-    );
-
-    // 驗證必要字段
-    if (!frontmatter.title || !frontmatter.categories) {
-      console.warn(`Article ${id} is missing required fields`);
-      return null;
-    }
-
-    return {
-      id,
-      title: frontmatter.title,
-      date: frontmatter.date,
-      categories: Array.isArray(frontmatter.categories) ? frontmatter.categories : [frontmatter.category],
-      coverImageUrl: frontmatter.coverImageUrl,
-      excerpt: frontmatter.excerpt,
-      content: MDXContent
-    };
-  } catch (error) {
-    console.error(`Error processing article ${id}:`, error);
-    return null;
+    console.error('Error in getAllArticlePaths:', error);
+    return [];
   }
 }
 
 /**
  * 獲取所有文章數據
+ * 用於文章列表頁面和分類頁面
  */
 export async function getAllArticles(): Promise<Article[]> {
   try {
-    if (!await fs.promises.access(articlesDirectory).then(() => true).catch(() => false)) {
-      console.warn('Articles directory does not exist:', articlesDirectory);
-      return [];
-    }
-
-    const filePaths = await getAllArticleFiles(articlesDirectory);
-    
-    if (!filePaths.length) {
-      console.warn('No articles found in directory:', articlesDirectory);
-      return [];
-    }
+    const paths = await getAllArticlePaths();
     
     const articles = await Promise.all(
-      filePaths.map(async filePath => {
+      paths.map(async ({ slug, category }) => {
         try {
-          // 提取文件名和分類名稱
-          const id = path.basename(filePath, '.mdx');
-          const categoryName = path.relative(articlesDirectory, path.dirname(filePath));
-          
-          // 使用與 getArticle 相同的路徑格式
+          // 使用完整路徑導入 MDX
           const { default: MDXContent, frontmatter } = await import(
-            `@/content/posts/${categoryName}/${id}.mdx`
+            `@/content/posts/${category}/${slug}.mdx`
           );
 
           // 驗證必要字段
           if (!frontmatter.title || !frontmatter.categories) {
-            console.warn(`Article ${id} is missing required fields`);
+            console.warn(`Article ${slug} is missing required fields`);
             return null;
           }
 
           return {
-            id,
+            id: slug,
             title: frontmatter.title,
             date: frontmatter.date,
             categories: Array.isArray(frontmatter.categories) ? frontmatter.categories : [frontmatter.category],
@@ -164,7 +98,7 @@ export async function getAllArticles(): Promise<Article[]> {
             content: MDXContent
           };
         } catch (error) {
-          console.error(`Error processing file ${filePath}:`, error);
+          console.error(`Error processing article ${slug}:`, error);
           return null;
         }
       })
@@ -179,15 +113,6 @@ export async function getAllArticles(): Promise<Article[]> {
   }
 }
 
-/**
- * 獲取特定分類的文章
- */
-export async function getArticlesByCategory(category: string): Promise<Article[]> {
-  const articles = await getAllArticles();
-  return articles.filter(article => 
-    article.categories.includes(category)  // 直接使用 categories 數組
-  );
-}
 
 /**
  * 文件結構說明：
