@@ -90,12 +90,12 @@ export async function getArticle(id: string): Promise<Article | null> {
       return null;
     }
 
-    // 2. 將絕對路徑轉換為相對於 content/posts 的路徑
-    const relativePath = path.relative(articlesDirectory, filePath);
+    // 2. 從完整路徑中提取分類名稱
+    const categoryName = path.relative(articlesDirectory, path.dirname(filePath));
     
-    // 3. 使用動態導入，注意路徑需要從 content/posts 開始
+    // 3. 使用固定格式的路徑進行動態導入
     const { default: MDXContent, frontmatter } = await import(
-      `@/content/posts/${relativePath}`
+      `@/content/posts/${categoryName}/${id}.mdx`
     );
 
     // 驗證必要字段
@@ -139,11 +139,30 @@ export async function getAllArticles(): Promise<Article[]> {
     const articles = await Promise.all(
       filePaths.map(async filePath => {
         try {
-          // 只取文件名，不包含路徑和副檔名
+          // 提取文件名和分類名稱
           const id = path.basename(filePath, '.mdx');
+          const categoryName = path.relative(articlesDirectory, path.dirname(filePath));
           
-          const article = await getArticle(id);
-          return article;
+          // 使用與 getArticle 相同的路徑格式
+          const { default: MDXContent, frontmatter } = await import(
+            `@/content/posts/${categoryName}/${id}.mdx`
+          );
+
+          // 驗證必要字段
+          if (!frontmatter.title || !frontmatter.categories) {
+            console.warn(`Article ${id} is missing required fields`);
+            return null;
+          }
+
+          return {
+            id,
+            title: frontmatter.title,
+            date: frontmatter.date,
+            categories: Array.isArray(frontmatter.categories) ? frontmatter.categories : [frontmatter.category],
+            coverImageUrl: frontmatter.coverImageUrl,
+            excerpt: frontmatter.excerpt,
+            content: MDXContent
+          };
         } catch (error) {
           console.error(`Error processing file ${filePath}:`, error);
           return null;
