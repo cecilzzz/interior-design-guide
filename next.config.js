@@ -34,8 +34,6 @@ const withMDX = createMDX({
   options: {
     remarkPlugins: [remarkGfm],  // 支持 GitHub Flavored Markdown
     rehypePlugins: [],
-    // 這個很重要，用於支持 MDX 中的 React 組件
-    providerImportSource: "@mdx-js/react",
   },
 });
 

@@ -1,3 +1,5 @@
+import { ComponentType } from 'react';
+
 /**
  * 單篇文章的完整數據結構
  * 定義了從 Markdown 文件中解析出的所有必要屬性
@@ -5,8 +7,8 @@
 export interface Article {
   /** 文章唯一標識符，基於文件名生成 */
   id: string;
-  /** Markdown 格式的文章內容 */
-  content: string;
+  /** 文章內容組件 */
+  content: ComponentType;
   /** 文章標題 */
   title: string;
   /** 文章分類列表，支持多分類 */

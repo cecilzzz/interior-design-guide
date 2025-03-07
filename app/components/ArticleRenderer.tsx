@@ -1,13 +1,9 @@
 'use client';
 
+import React from 'react';
 import Image from "next/image";
-import { MDXProvider } from '@mdx-js/react';
-import { getImageUrl } from '@/app/lib/imageUtils';
 import PinterestButton from './PinterestButton';
-import React, { useEffect, useState } from 'react';
 import { Article } from '@/app/types/article';
-import type { HTMLAttributes } from 'react';
-import CategoryPage from "../blog/category/[category]/page";
 
 /**
  * ArticleRenderer 組件
@@ -53,37 +49,14 @@ interface ArticleRendererProps {
  * @param props.currentArticle - 當前文章的完整數據
  */
 export default function ArticleRenderer({ currentArticle }: ArticleRendererProps) {
-  const { category, title, date, coverImageUrl, content } = currentArticle;
+  const { category, title, date, coverImageUrl, content: MDXContent } = currentArticle;
   
-  // 檢查整個 currentArticle 對象
-  console.log('Current Article:', {
-    title,
-    date,
-    category,
-    contentPreview: content.slice(0, 500) // 只顯示前 500 個字符
-  });
-
-  // 檢查 content 的類型
-  console.log('Content type:', typeof content);
-
   // Pinterest 分享功能需要頁面 URL
-  const [pageUrl, setPageUrl] = useState('');
+  const [pageUrl, setPageUrl] = React.useState('');
 
-  useEffect(() => {
+  React.useEffect(() => {
     setPageUrl(window.location.href);
   }, []);
-
-  const createPinData = (media: string, imageAltText: string) => {
-    return {
-      url: pageUrl,
-      media,
-      description: `${title} - ${imageAltText}`,
-    };
-  };
-
-  console.log('MDX Content Type:', typeof content);
-  console.log('MDX Content Preview:', content?.substring(0, 100));
-  console.log('MDX Content Length:', content?.length);
 
   return (
     <article>
@@ -109,14 +82,16 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         {pageUrl && (
           <PinterestButton 
-            {...createPinData(coverImageUrl, 'Cover Image')}
+            url={pageUrl}
+            media={coverImageUrl}
+            description={title}
           />
         )}
       </div>
       
       {/* MDX 內容區域 */}
       <div className="prose max-w-none">
-        {content}
+        <MDXContent />
       </div>
       
       {/* 社交分享區域 */}

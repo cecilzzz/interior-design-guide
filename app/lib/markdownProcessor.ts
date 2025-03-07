@@ -82,31 +82,25 @@ async function findArticleFile(id: string): Promise<string | null> {
  */
 export async function getArticle(id: string): Promise<Article | null> {
   try {
-    // 尋找文章文件
-    const filePath = await findArticleFile(id);
-    
-    if (!filePath) {
-      console.warn(`Article file not found: ${id}`);
-      return null;
-    }
-
-    const fileContents = await fs.promises.readFile(filePath, 'utf8');
-    const { data, content } = matter(fileContents);
+    // 使用動態導入替代文件讀取
+    const { default: MDXContent, frontmatter } = await import(
+      `@/content/posts/${id}.mdx`
+    );
 
     // 驗證必要字段
-    if (!data.title || !data.categories) {
+    if (!frontmatter.title || !frontmatter.categories) {
       console.warn(`Article ${id} is missing required fields`);
       return null;
     }
 
     return {
       id,
-      title: data.title,
-      date: data.date,
-      categories: Array.isArray(data.categories) ? data.categories : [data.category],
-      coverImageUrl: data.coverImageUrl,
-      excerpt: data.excerpt,
-      content
+      title: frontmatter.title,
+      date: frontmatter.date,
+      categories: Array.isArray(frontmatter.categories) ? frontmatter.categories : [frontmatter.category],
+      coverImageUrl: frontmatter.coverImageUrl,
+      excerpt: frontmatter.excerpt,
+      content: MDXContent
     };
   } catch (error) {
     console.error(`Error processing article ${id}:`, error);
