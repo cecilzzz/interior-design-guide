@@ -17,8 +17,15 @@
 import fs from 'fs';
 import path from 'path';
 import { Article } from '@/app/types/article';
-import { ArticlePath } from '@/app/types/articlePath';
 import { ComponentType } from 'react';
+import { getImageUrl } from './imageUtils';
+
+interface AllArticleSlugWithCategory {
+  /** 文章的唯一標識符（文件名，不含副檔名） */
+  slug: string;
+  /** 文章所屬分類（目錄名） */
+  category: string;
+}
 /**
  * 文章存儲目錄的絕對路徑
  */
@@ -28,9 +35,9 @@ const articlesDirectory = path.join(process.cwd(), 'content/posts');
  * 獲取所有文章路徑（包含分類信息）
  * 用於生成靜態路徑和導入文章
  */
-export async function getAllArticlePaths(): Promise<ArticlePath[]> {
+async function getAllArticleSlugWithCategory(): Promise<AllArticleSlugWithCategory[]> {
   try {
-    const paths: ArticlePath[] = [];
+    const allArticleSlugsWithCategory: AllArticleSlugWithCategory[] = [];
     const categories = await fs.promises.readdir(articlesDirectory);
 
     for (const category of categories) {
@@ -44,15 +51,15 @@ export async function getAllArticlePaths(): Promise<ArticlePath[]> {
       files
         .filter(file => file.endsWith('.mdx'))
         .forEach(file => {
-          paths.push({
+          allArticleSlugsWithCategory.push({
             slug: file.replace(/\.mdx$/, ''),
             category
           });
         });
     }
-    return paths;
+    return allArticleSlugsWithCategory;
   } catch (error) {
-    console.error('Error in getAllArticlePaths:', error);
+    console.error('Error in getAllArticleSlugsWithCategory:', error);
     return [];
   }
 }
@@ -63,10 +70,10 @@ export async function getAllArticlePaths(): Promise<ArticlePath[]> {
  */
 export async function getAllArticles(): Promise<Article[]> {
   try {
-    const paths: ArticlePath[] = await getAllArticlePaths();
+    const allArticleSlugsWithCategory: AllArticleSlugWithCategory[] = await getAllArticleSlugWithCategory();
     
     const articles: (Article | null)[] = await Promise.all(
-      paths.map(async ({ slug, category }) => {
+      allArticleSlugsWithCategory.map(async ({ slug, category }) => {
         try {
           // 使用完整路徑導入 MDX
           const { default: MDXContent, frontmatter }: { default: ComponentType; frontmatter: any } = await import(
@@ -84,7 +91,7 @@ export async function getAllArticles(): Promise<Article[]> {
             title: frontmatter.title,
             date: frontmatter.date,
             categories: Array.isArray(frontmatter.categories) ? frontmatter.categories : [frontmatter.category],
-            coverImageUrl: frontmatter.coverImageUrl,
+            coverImageUrl: getImageUrl(frontmatter.coverImageUrl, 'hero'), // 使用 getImageUrl 處理 coverImageUrl
             excerpt: frontmatter.excerpt,
             content: MDXContent
           }as Article; // 確保返回的物件符合 Article 類型

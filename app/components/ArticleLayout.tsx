@@ -28,7 +28,7 @@ import { Article, RelatedArticle } from '@/app/types/article';
 
 interface ArticleLayoutProps {
   /** 當前文章數據 */
-  currentArticle: Omit<Article, 'id' | 'categories' | 'excerpt'> & { category: string };
+  article: Article;
   /** 相關文章列表 */
   relatedArticles: RelatedArticle[];
 }
@@ -40,11 +40,11 @@ interface ArticleLayoutProps {
  * @param props.currentArticle - 當前文章的完整數據
  * @param props.relatedArticles - 相關文章列表
  */
-export default function ArticleLayout({ currentArticle, relatedArticles }: ArticleLayoutProps) {
+export default function ArticleLayout({ article, relatedArticles }: ArticleLayoutProps) {
   return (
     <div className="space-y-16">
       {/* 主要文章內容 */}
-      <ArticleRenderer currentArticle={currentArticle} />
+      <ArticleRenderer article={article} />
       {/* 相關文章列表 */}
       <RelatedPosts posts={relatedArticles} />
     </div>
