@@ -1,8 +1,8 @@
-import { getAllPosts } from '@/app/lib/markdownProcessor';
+import { getAllArticles } from '@/app/lib/markdownProcessor';
 import { getImageUrl } from '@/app/lib/imageUtils';
 import PostGrid from '@/app/components/PostGrid';
 import type { Metadata } from 'next';
-
+import { Article } from '@/app/types/article';
 // 從 Navigation 中提取分類列表
 const navCategories = [
   // Rooms
@@ -63,11 +63,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function CategoryPage({ params }: { params: { category: string } }) {
-  const posts = getAllPosts().map(post => ({
-    ...post,
+export default async function CategoryPage({ params }: { params: { category: string } }) {
+  const articles = (await getAllArticles()).map(article => ({
+    ...article,
     // 使用 hero 類型處理圖片，確保在網格中顯示最佳尺寸
-    coverImageUrl: post.coverImageUrl.startsWith('http') ? post.coverImageUrl : getImageUrl(post.coverImageUrl, 'hero')
+    coverImageUrl: article.coverImageUrl.startsWith('http') ? article.coverImageUrl : getImageUrl(article.coverImageUrl, 'hero')
   }));
   
   // 用於顯示的格式：'Living Room'
@@ -83,18 +83,18 @@ export default function CategoryPage({ params }: { params: { category: string } 
       <div className="text-gray-500 text-center mb-12">
         Articles about {displayCategory.toLowerCase()}
       </div>
-      <PostGrid posts={posts} category={displayCategory} />
+      <PostGrid posts={articles} category={displayCategory} />
     </div>
   );
 }
 
-export function generateStaticParams() {
-  const posts = getAllPosts();
+export async function generateStaticParams() {
+  const allArticles: Article[] = await getAllArticles();
   const categories = new Set<string>(navCategories);
   
   // 添加文章中的分類
-  posts.forEach(post => {
-    post.categories.forEach(category => {
+  allArticles.forEach(article => {
+    article.categories.forEach(category => {
       const urlCategory = category.toLowerCase()
         .replace(/\s*&\s*/g, '-and-')  // 處理 & 符號，包括周圍的空格
         .replace(/\s+/g, '-');         // 其他空格轉換為連字符

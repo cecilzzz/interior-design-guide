@@ -14,8 +14,8 @@
     "@headlessui/react": "1.7.17",
     "@heroicons/react": "2.0.18",
     "@mdx-js/loader": "^2.3.0",
-    "@next/mdx": "^13.5.8",
-    "@next/third-parties": "^15.1.6",
+    "@mdx-js/react": "^2.3.0",
+    "@next/mdx": "13.5.8",
     "@types/mdx": "^2.0.13",
     "cloudinary": "^2.5.1",
     "dotenv": "^16.4.7",
@@ -27,6 +27,7 @@
     "react-markdown": "8.0.7",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
+    "remark-mdx": "^2.3.0",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {

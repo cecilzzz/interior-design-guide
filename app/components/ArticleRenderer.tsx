@@ -37,20 +37,15 @@ import { Article } from '@/app/types/article';
  * - 使用 Tailwind 的 prose 類來美化 Markdown 內容
  */
 
-interface ArticleRendererProps {
-  /** 當前文章數據 */
-  currentArticle: Omit<Article, 'id' | 'categories' | 'excerpt'> & { category: string };
-}
 
 /**
  * 渲染文章內容的主要組件
  * 
  * @param props - 文章相關屬性
- * @param props.currentArticle - 當前文章的完整數據
+ * @param props.article - 當前文章的完整數據
  */
-export default function ArticleRenderer({ currentArticle }: ArticleRendererProps) {
-  const { category, title, date, coverImageUrl, content: MDXContent } = currentArticle;
-  
+export default function ArticleRenderer({article}: {article: Article}) {
+  const { title, date, categories, coverImageUrl, content: MDXContent } = article;
   // Pinterest 分享功能需要頁面 URL
   const [pageUrl, setPageUrl] = React.useState('');
 
@@ -58,6 +53,7 @@ export default function ArticleRenderer({ currentArticle }: ArticleRendererProps
     setPageUrl(window.location.href);
   }, []);
 
+  const category = categories[0];
   return (
     <article>
       {/* 標題區域 */}

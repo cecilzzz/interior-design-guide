@@ -1,8 +1,15 @@
-import { getAllArticlePaths } from '@/app/lib/markdownProcessor';
+import { GetStaticProps } from 'next';
+import { getAllArticlePaths, getAllArticles } from '@/app/lib/markdownProcessor';
 import { notFound } from 'next/navigation';
 import ArticlePage from './ArticlePage';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
+import { ComponentType } from 'react';
+import { Article } from '@/app/types/article';
+import { ArticlePath } from '@/app/types/articlePath';
+import { promises as fs } from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 
 // 靜態數據：相關文章列表
 const relatedArticles = [
@@ -30,12 +37,23 @@ type PageProps = {
   params: { slug: string }
 };
 
+interface MDXImport {
+  default: ComponentType; // MDX 文件的內容作為 React 組件
+  frontmatter: {
+    title: string;
+    date: string;
+    categories: string[];
+    coverImageUrl?: string; // 可選屬性
+    excerpt?: string; // 可選屬性
+  };
+}
+
 /**
  * 生成頁面元數據
  */
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const paths = await getAllArticlePaths();
-  const articlePath = paths.find(p => p.slug === params.slug);
+  const allArticlePaths: ArticlePath[] = await getAllArticlePaths();
+  const articlePath: ArticlePath | undefined = allArticlePaths.find(p => p.slug === params.slug);
   
   if (!articlePath) {
     return {
@@ -45,11 +63,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // 導入文章數據
-  const { frontmatter } = await import(
-    `@/content/posts/${articlePath.category}/${params.slug}.mdx`
-  );
+  // const { frontmatter } = await import(
+  //   `@/content/posts/${articlePath.category}/${params.slug}.mdx`
+  // );
+
+  const filePath = path.join(process.cwd(), 'content/posts', articlePath.category, `${params.slug}.mdx`);
+  const source = await fs.readFile(filePath, 'utf8');
+  const { data: frontmatter } = matter(source);
 
   const canonicalUrl = `https://interior-design-guide.vercel.app/blog/${params.slug}`;
+
+  // 先計算 section 值
+  const section = frontmatter?.categories?.[0] ?? 'Interior Design';
+
 
   return {
     title: frontmatter.title,
@@ -77,8 +103,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: canonicalUrl,
       siteName: 'Interior Design Guide',
       locale: 'en_US',
-      section: frontmatter.categories[0] || 'Interior Design',
-      tags: frontmatter.categories,
+      section: section,
+      tags: frontmatter?.categories ?? [],
     },
     twitter: {
       card: 'summary_large_image',
@@ -93,32 +119,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
  * 生成靜態頁面參數
  */
 export async function generateStaticParams() {
-  const paths = await getAllArticlePaths();
-  return paths.map(({ slug }) => ({ slug }));
+  const allArticlePaths: ArticlePath[] = await getAllArticlePaths();
+  return allArticlePaths.map(({ slug }) => ({ slug }));
 }
 
 /**
  * 文章詳情頁面組件
  */
 export default async function ArticleDetailPage({ params }: PageProps) {
-  const paths = await getAllArticlePaths();
-  const articlePath = paths.find(p => p.slug === params.slug);
-  
-  if (!articlePath) {
-    notFound();
-  }
+  const articles: Article[] = await getAllArticles();
+  const article = articles.find(article => article.id === params.slug);
 
+  if (!article) {
+    notFound(); // 如果找不到文章，返回 404
+  }
   // 導入文章數據
-  const { default: MDXContent, frontmatter } = await import(
-    `@/content/posts/${articlePath.category}/${params.slug}.mdx`
-  );
 
   const currentArticle = {
-    title: frontmatter.title,
-    date: frontmatter.date,
-    category: frontmatter.categories[0],
-    coverImageUrl: frontmatter.coverImageUrl,
-    content: MDXContent
+    title: article.title,
+    date: article.date,
+    category: article.categories[0],
+    coverImageUrl: article.coverImageUrl,
+    content: article.content
   };
 
   return (

@@ -17,21 +17,12 @@
 import fs from 'fs';
 import path from 'path';
 import { Article } from '@/app/types/article';
-
+import { ArticlePath } from '@/app/types/articlePath';
+import { ComponentType } from 'react';
 /**
  * 文章存儲目錄的絕對路徑
  */
 const articlesDirectory = path.join(process.cwd(), 'content/posts');
-
-/**
- * 文章路徑類型定義
- */
-export type ArticlePath = {
-  /** 文章的唯一標識符（文件名，不含副檔名） */
-  slug: string;
-  /** 文章所屬分類（目錄名） */
-  category: string;
-}
 
 /**
  * 獲取所有文章路徑（包含分類信息）
@@ -72,13 +63,13 @@ export async function getAllArticlePaths(): Promise<ArticlePath[]> {
  */
 export async function getAllArticles(): Promise<Article[]> {
   try {
-    const paths = await getAllArticlePaths();
+    const paths: ArticlePath[] = await getAllArticlePaths();
     
-    const articles = await Promise.all(
+    const articles: (Article | null)[] = await Promise.all(
       paths.map(async ({ slug, category }) => {
         try {
           // 使用完整路徑導入 MDX
-          const { default: MDXContent, frontmatter } = await import(
+          const { default: MDXContent, frontmatter }: { default: ComponentType; frontmatter: any } = await import(
             `@/content/posts/${category}/${slug}.mdx`
           );
 
@@ -96,7 +87,7 @@ export async function getAllArticles(): Promise<Article[]> {
             coverImageUrl: frontmatter.coverImageUrl,
             excerpt: frontmatter.excerpt,
             content: MDXContent
-          };
+          }as Article; // 確保返回的物件符合 Article 類型
         } catch (error) {
           console.error(`Error processing article ${slug}:`, error);
           return null;
