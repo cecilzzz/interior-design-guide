@@ -33,7 +33,7 @@ import { Article, RelatedArticle } from '@/app/types/article';
 
 interface ArticlePageProps {
   /** 當前文章數據 */
-  currentArticle: Omit<Article, 'id' | 'categories' | 'excerpt'> & { category: string };
+  article: Article;
   /** 相關文章列表 */
   relatedArticles: RelatedArticle[];
 }
@@ -45,10 +45,10 @@ interface ArticlePageProps {
  * @param props.currentArticle - 當前文章完整數據
  * @param props.relatedArticles - 相關文章列表
  */
-export default function ArticlePage({ currentArticle, relatedArticles }: ArticlePageProps) {
+export default function ArticlePage({ article, relatedArticles }: ArticlePageProps) {
   useEffect(() => {
     // 初始化所有追蹤功能
-    const cleanupArticleRead = trackArticleRead(currentArticle.title);
+    const cleanupArticleRead = trackArticleRead(article.title);
     const cleanupScrollDepth = trackScrollDepth();
     const cleanupTimeOnPage = trackTimeOnPage();
 
@@ -58,9 +58,9 @@ export default function ArticlePage({ currentArticle, relatedArticles }: Article
       cleanupScrollDepth();
       cleanupTimeOnPage();
     };
-  }, [currentArticle.title]);
+  }, [article.title]);
 
-  return <ArticleLayout currentArticle={currentArticle} relatedArticles={relatedArticles} />;
+  return <ArticleLayout article={article} relatedArticles={relatedArticles} />;
 }
 
 /**

@@ -18,7 +18,7 @@ export interface Article {
   /** 文章封面圖片 URL */
   coverImageUrl: string;
   /** 文章摘要，用於列表展示 */
-  excerpt: string;
+  excerpt?: string;
 }
 
 /**

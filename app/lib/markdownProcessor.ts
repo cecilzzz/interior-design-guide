@@ -69,13 +69,14 @@ async function getAllArticleSlugWithCategory(): Promise<AllArticleSlugWithCatego
  * 用於文章列表頁面和分類頁面
  */
 export async function getAllArticles(): Promise<Article[]> {
+  console.log('getAllArticles called'); // 日誌函數被調用
   try {
     const allArticleSlugsWithCategory: AllArticleSlugWithCategory[] = await getAllArticleSlugWithCategory();
-    
+    console.log('All Article Slugs with Category:', allArticleSlugsWithCategory); // 日誌所有文章的 slug 和分類
+
     const articles: (Article | null)[] = await Promise.all(
       allArticleSlugsWithCategory.map(async ({ slug, category }) => {
         try {
-          // 使用完整路徑導入 MDX
           const { default: MDXContent, frontmatter }: { default: ComponentType; frontmatter: any } = await import(
             `@/content/posts/${category}/${slug}.mdx`
           );
@@ -86,15 +87,17 @@ export async function getAllArticles(): Promise<Article[]> {
             return null;
           }
 
+          console.log(`Processing article: ${slug}, Category: ${category}`); // 日誌正在處理的文章
+
           return {
             id: slug,
             title: frontmatter.title,
             date: frontmatter.date,
             categories: Array.isArray(frontmatter.categories) ? frontmatter.categories : [frontmatter.category],
-            coverImageUrl: getImageUrl(frontmatter.coverImageUrl, 'hero'), // 使用 getImageUrl 處理 coverImageUrl
+            coverImageUrl: getImageUrl(frontmatter.coverImageUrl, 'hero'),
             excerpt: frontmatter.excerpt,
             content: MDXContent
-          }as Article; // 確保返回的物件符合 Article 類型
+          } as Article;
         } catch (error) {
           console.error(`Error processing article ${slug}:`, error);
           return null;
@@ -102,9 +105,9 @@ export async function getAllArticles(): Promise<Article[]> {
       })
     );
 
-    return articles
-      .filter((article): article is Article => article !== null)
-      .sort((a, b) => (a.date < b.date ? 1 : -1));
+    console.log('Articles fetched:', articles); // 日誌獲取的所有文章
+    return articles.filter((article): article is Article => article !== null)
+                   .sort((a, b) => (a.date < b.date ? 1 : -1));
   } catch (error) {
     console.error('Error in getAllArticles:', error);
     return [];

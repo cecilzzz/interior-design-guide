@@ -1,5 +1,5 @@
 import { GetStaticProps } from 'next';
-import { getAllArticleSlugWithCategory, getAllArticles } from '@/app/lib/markdownProcessor';
+import { getAllArticles } from '@/app/lib/markdownProcessor';
 import { notFound } from 'next/navigation';
 import ArticlePage from './ArticlePage';
 import Sidebar from '@/app/components/Sidebar';
@@ -104,10 +104,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
  * 生成靜態頁面參數
  */
 export async function generateStaticParams() {
-  const articles = await getAllArticles(); // 獲取所有文章
-  return articles.map(article => ({
-    slug: article.id // 假設 id 是文章的 slug
+  const allArticles = await getAllArticles(); // 獲取所有文章
+  const params = allArticles.map(article => ({
+    slug: article.id, // 確保這裡的 slug 與路由匹配
   }));
+
+  console.log('Generated Static Params:', params); // 日誌生成的靜態參數
+  return params;
 }
 
 /**
