@@ -20,11 +20,11 @@ import { Article } from '@/app/types/article';
 import { ComponentType } from 'react';
 import { getImageUrl } from './imageUtils';
 
-interface AllArticleSlugWithCategory {
+interface AllSlugsWithRelativePath {
   /** 文章的唯一標識符（文件名，不含副檔名） */
   slug: string;
-  /** 文章所屬分類（目錄名） */
-  category: string;
+  /** 文章的相對路徑 */
+  relativePath: string;
 }
 /**
  * 文章存儲目錄的絕對路徑
@@ -35,31 +35,31 @@ const articlesDirectory = path.join(process.cwd(), 'content/posts');
  * 獲取所有文章路徑（包含分類信息）
  * 用於生成靜態路徑和導入文章
  */
-async function getAllArticleSlugWithCategory(): Promise<AllArticleSlugWithCategory[]> {
+async function getAllSlugsWithRelativePath(): Promise<AllSlugsWithRelativePath[]> {
   try {
-    const allArticleSlugsWithCategory: AllArticleSlugWithCategory[] = [];
-    const categories = await fs.promises.readdir(articlesDirectory);
+    const allSlugsWithRelativePath: AllSlugsWithRelativePath[] = [];
+    const allRelativePaths = await fs.promises.readdir(articlesDirectory);
 
-    for (const category of categories) {
-      const categoryPath = path.join(articlesDirectory, category);
-      const stat = await fs.promises.stat(categoryPath);
+    for (const relativePath of allRelativePaths) {
+      const absolutePath = path.join(articlesDirectory, relativePath);
+      const stat = await fs.promises.stat(absolutePath);
       
       // 跳過非目錄
       if (!stat.isDirectory()) continue;
 
-      const files = await fs.promises.readdir(categoryPath);
+      const files = await fs.promises.readdir(absolutePath);
       files
         .filter(file => file.endsWith('.mdx'))
         .forEach(file => {
-          allArticleSlugsWithCategory.push({
+          allSlugsWithRelativePath.push({
             slug: file.replace(/\.mdx$/, ''),
-            category
+            relativePath
           });
         });
     }
-    return allArticleSlugsWithCategory;
+    return allSlugsWithRelativePath;
   } catch (error) {
-    console.error('Error in getAllArticleSlugsWithCategory:', error);
+    console.error('Error in getAllSlugWithRelativePath:', error);
     return [];
   }
 }
@@ -71,14 +71,14 @@ async function getAllArticleSlugWithCategory(): Promise<AllArticleSlugWithCatego
 export async function getAllArticles(): Promise<Article[]> {
   console.log('getAllArticles called'); // 日誌函數被調用
   try {
-    const allArticleSlugsWithCategory: AllArticleSlugWithCategory[] = await getAllArticleSlugWithCategory();
-    console.log('All Article Slugs with Category:', allArticleSlugsWithCategory); // 日誌所有文章的 slug 和分類
+    const allSlugsWithRelativePath: AllSlugsWithRelativePath[] = await getAllSlugsWithRelativePath();
+    console.log('All Article Slugs with Category:', allSlugsWithRelativePath); // 日誌所有文章的 slug 和分類
 
     const articles: (Article | null)[] = await Promise.all(
-      allArticleSlugsWithCategory.map(async ({ slug, category }) => {
+      allSlugsWithRelativePath.map(async ({ slug, relativePath }) => {
         try {
           const { default: MDXContent, frontmatter }: { default: ComponentType; frontmatter: any } = await import(
-            `@/content/posts/${category}/${slug}.mdx`
+            `@/content/posts/${relativePath}/${slug}.mdx`
           );
 
           // 驗證必要字段
@@ -87,7 +87,7 @@ export async function getAllArticles(): Promise<Article[]> {
             return null;
           }
 
-          console.log(`Processing article: ${slug}, Category: ${category}`); // 日誌正在處理的文章
+          console.log(`Processing article: ${slug}, Category: ${relativePath}`); // 日誌正在處理的文章
 
           return {
             id: slug,

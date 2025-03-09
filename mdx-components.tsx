@@ -1,8 +1,5 @@
-'use client';
-
 import type { MDXComponents } from 'mdx/types';
 import { HTMLAttributes } from 'react';
-import { MDXImage } from './components/MDXImage';
 
 // 這個函數是 Next.js 的 MDX 整合所需的
 // 它會自動被用來處理所有 MDX 內容
@@ -39,8 +36,5 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     blockquote: (props: HTMLAttributes<HTMLQuoteElement>) => (
       <blockquote className="border-l-4 border-coral-400 pl-4 italic my-4" {...props} />
     ),
-
-    // 自定義圖片組件
-    MDXImage,
   };
 } 
