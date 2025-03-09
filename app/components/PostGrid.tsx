@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Article } from "@/app/types/article";
+import { Article } from 'contentlayer/generated'
+import { format } from 'date-fns'
 
 /**
  * PostGrid 組件的屬性定義
  */
 interface PostGridProps {
   /** 要顯示的文章列表 */
-  posts: Article[];
+  allArticles: Article[];
   /** 可選的分類過濾器 */
   category?: string;
 }
@@ -30,32 +31,32 @@ interface PostGridProps {
  * - 優雅的懸停效果和過渡動畫
  * 
  * @param props - 組件屬性
- * @param props.posts - 要顯示的文章列表
+ * @param props.allArticles - 要顯示的文章列表
  * @param props.category - 可選的分類過濾器
  */
-export default function PostGrid({ posts, category }: PostGridProps) {
+export default function PostGrid({ allArticles, category }: PostGridProps) {
   // 根據分類過濾文章
-  const filteredPosts = category 
-    ? posts.filter(post => 
-        post.categories.some(cat => 
+  const filteredArticles = category 
+    ? allArticles.filter(article => 
+        article.categories.some(cat => 
           cat.toLowerCase() === category.toLowerCase()
         )
       )
-    : posts;
+    : allArticles;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {filteredPosts.map((post) => (
+      {filteredArticles.map((article) => (
         <Link 
-          key={post.id}
-          href={`/blog/${post.id}`}
+          key={article._id}
+          href={`/blog/${article.slug}`}
           className="group block"
         >
           {/* 文章封面圖片容器 */}
           <div className="relative aspect-[3/2] mb-4 overflow-hidden rounded-lg">
             <Image
-              src={post.coverImageUrl}
-              alt={post.title}
+              src={article.coverImageUrl}
+              alt={article.title}
               fill
               className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"
             />
@@ -66,16 +67,16 @@ export default function PostGrid({ posts, category }: PostGridProps) {
           {/* 文章信息區域 */}
           <div className="text-center">
             <div className="text-coral-400 uppercase tracking-[0.2em] text-xs mb-2">
-              {post.categories.join(" / ")}
+              {article.categories.join(" / ")}
             </div>
             <h2 className="font-playfair text-xl mb-2 group-hover:text-coral-500 transition-colors">
-              {post.title}
+              {article.title}
             </h2>
             <div className="text-gray-500 text-sm mb-3">
-              {post.date}
+              {format(new Date(article.date), 'MMMM dd, yyyy')}
             </div>
             <p className="text-gray-600 text-sm line-clamp-2">
-              {post.excerpt}
+              {article.excerpt}
             </p>
           </div>
         </Link>

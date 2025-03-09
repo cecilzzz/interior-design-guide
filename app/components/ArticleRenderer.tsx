@@ -3,7 +3,9 @@
 import React from 'react';
 import Image from "next/image";
 import PinterestButton from './PinterestButton';
-import { Article } from '@/app/types/article';
+import { Article } from 'contentlayer/generated';
+import { format } from 'date-fns';
+import { MDXContent } from '@/mdx-components';
 
 /**
  * ArticleRenderer 組件
@@ -37,6 +39,9 @@ import { Article } from '@/app/types/article';
  * - 使用 Tailwind 的 prose 類來美化 Markdown 內容
  */
 
+interface ArticleRendererProps {
+  article: Article;
+}
 
 /**
  * 渲染文章內容的主要組件
@@ -44,8 +49,8 @@ import { Article } from '@/app/types/article';
  * @param props - 文章相關屬性
  * @param props.article - 當前文章的完整數據
  */
-export default function ArticleRenderer({article}: {article: Article}) {
-  const { title, date, categories, coverImageUrl, content: MDXContent } = article;
+export default function ArticleRenderer({ article }: ArticleRendererProps) {
+  const { title, date, categories, coverImageUrl, body } = article;
   // Pinterest 分享功能需要頁面 URL
   const [pageUrl, setPageUrl] = React.useState('');
 
@@ -62,7 +67,7 @@ export default function ArticleRenderer({article}: {article: Article}) {
           {category} / <span className="text-gray-500">DESIGN</span>
         </div>
         <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">{title}</h1>
-        <div className="text-gray-400 text-xs sm:text-sm tracking-wider">{date}</div>
+        <div className="text-gray-400 text-xs sm:text-sm tracking-wider">{format(new Date(date), 'MMMM dd, yyyy')}</div>
       </div>
       
       {/* 主圖區域 */}
@@ -86,8 +91,8 @@ export default function ArticleRenderer({article}: {article: Article}) {
       </div>
       
       {/* MDX 內容區域 */}
-      <div className="prose max-w-none">
-        <MDXContent />
+      <div className="prose prose-lg max-w-none">
+        <MDXContent code={body.code} />
       </div>
       
       {/* 社交分享區域 */}

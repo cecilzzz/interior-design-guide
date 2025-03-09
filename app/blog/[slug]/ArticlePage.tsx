@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import ArticleLayout from '@/app/components/ArticleLayout';
 import { trackArticleRead, trackScrollDepth, trackTimeOnPage } from '@/app/utils/analytics';
-import { Article, RelatedArticle } from '@/app/types/article';
+import { Article } from 'contentlayer/generated';
 
 /**
  * ArticlePage 組件
@@ -35,7 +35,7 @@ interface ArticlePageProps {
   /** 當前文章數據 */
   article: Article;
   /** 相關文章列表 */
-  relatedArticles: RelatedArticle[];
+  relatedArticles: Article[];
 }
 
 /**
@@ -60,7 +60,12 @@ export default function ArticlePage({ article, relatedArticles }: ArticlePagePro
     };
   }, [article.title]);
 
-  return <ArticleLayout article={article} relatedArticles={relatedArticles} />;
+  return (
+    <ArticleLayout 
+      article={article} 
+      relatedArticles={relatedArticles}
+    />
+  );
 }
 
 /**

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from "react-icons/fa";
-import { RecommendedArticle } from "@/app/types/article";
+import { Article } from '@/app/types/article';
 
 type SidebarProps = {
-  recommendedArticles: RecommendedArticle[];
+  recommendedArticles: Article[];
 };
 
 export default function Sidebar({ recommendedArticles }: SidebarProps) {

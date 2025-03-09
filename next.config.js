@@ -1,5 +1,6 @@
-import createMDX from '@next/mdx'
-import remarkGfm from 'remark-gfm'
+const createMDX = require('@next/mdx')
+const remarkGfm = require('remark-gfm')
+const { withContentlayer } = require('next-contentlayer')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -38,4 +39,4 @@ const withMDX = createMDX({
 });
 
 // 合併配置
-export default withMDX(nextConfig);
+module.exports = withContentlayer(withMDX(nextConfig));

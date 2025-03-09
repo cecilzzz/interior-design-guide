@@ -1,8 +1,7 @@
-import { getAllArticles } from '@/app/lib/markdownProcessor';
-import { getImageUrl } from '@/app/lib/imageUtils';
+import { allArticles } from 'contentlayer/generated';
 import PostGrid from '@/app/components/PostGrid';
 import type { Metadata } from 'next';
-import { Article } from '@/app/types/article';
+
 // 從 Navigation 中提取分類列表
 const navCategories = [
   // Rooms
@@ -64,12 +63,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CategoryPage({ params }: { params: { category: string } }) {
-  const articles = (await getAllArticles()).map(article => ({
-    ...article,
-    // 使用 hero 類型處理圖片，確保在網格中顯示最佳尺寸
-    coverImageUrl: article.coverImageUrl.startsWith('http') ? article.coverImageUrl : getImageUrl(article.coverImageUrl, 'hero')
-  }));
-  
   // 用於顯示的格式：'Living Room'
   const displayCategory = params.category
     .replace('-and-', ' & ')  // URL 中的 and 轉換回 &
@@ -83,13 +76,12 @@ export default async function CategoryPage({ params }: { params: { category: str
       <div className="text-gray-500 text-center mb-12">
         Articles about {displayCategory.toLowerCase()}
       </div>
-      <PostGrid posts={articles} category={displayCategory} />
+      <PostGrid allArticles={allArticles} category={displayCategory} />
     </div>
   );
 }
 
 export async function generateStaticParams() {
-  const allArticles: Article[] = await getAllArticles();
   const categories = new Set<string>(navCategories);
   
   // 添加文章中的分類
