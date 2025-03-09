@@ -1,7 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from "react-icons/fa";
-import { Article } from '@/app/types/article';
+import { Article } from 'contentlayer/generated';
 
 type SidebarProps = {
   recommendedArticles: Article[];
@@ -36,22 +35,22 @@ export default function Sidebar({ recommendedArticles }: SidebarProps) {
       <div className="text-center">
         <h3 className="text-lg mb-6 font-playfair">FOLLOW ME!</h3>
         <div className="flex justify-center gap-6">
-          <Link href="#" className="text-gray-600 hover:text-gray-900">
+          <span className="text-gray-600 hover:text-gray-900 cursor-pointer">
             <span className="sr-only">Facebook</span>
             <FaFacebook size={20} />
-          </Link>
-          <Link href="#" className="text-gray-600 hover:text-gray-900">
+          </span>
+          <span className="text-gray-600 hover:text-gray-900 cursor-pointer">
             <span className="sr-only">Twitter</span>
             <FaTwitter size={20} />
-          </Link>
-          <Link href="#" className="text-gray-600 hover:text-gray-900">
+          </span>
+          <span className="text-gray-600 hover:text-gray-900 cursor-pointer">
             <span className="sr-only">Instagram</span>
             <FaInstagram size={20} />
-          </Link>
-          <Link href="#" className="text-gray-600 hover:text-gray-900">
+          </span>
+          <span className="text-gray-600 hover:text-gray-900 cursor-pointer">
             <span className="sr-only">Pinterest</span>
             <FaPinterest size={20} />
-          </Link>
+          </span>
         </div>
       </div>
 
@@ -85,10 +84,9 @@ export default function Sidebar({ recommendedArticles }: SidebarProps) {
         </h3>
         <div className="space-y-6">
           {recommendedArticles.map((article, index) => (
-            <Link 
+            <div 
               key={article.title}
-              href={article.link}
-              className="flex items-center gap-4 group transition-all duration-300 hover:bg-gray-50 p-2 rounded-lg"
+              className="flex items-center gap-4 group transition-all duration-300 hover:bg-gray-50 p-2 rounded-lg cursor-pointer"
             >
               <span className="text-2xl font-playfair text-gray-300 transition-colors duration-300 group-hover:text-coral-500">
                 {index + 1}
@@ -104,7 +102,7 @@ export default function Sidebar({ recommendedArticles }: SidebarProps) {
               <h4 className="text-sm font-medium transition-colors duration-300 group-hover:text-coral-500">
                 {article.title}
               </h4>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

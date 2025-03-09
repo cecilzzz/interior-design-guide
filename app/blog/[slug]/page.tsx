@@ -1,10 +1,8 @@
-import { getAllArticles } from '@/app/lib/markdownProcessor';
 import { notFound } from 'next/navigation';
 import ArticlePage from './ArticlePage';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
 import { allArticles } from 'contentlayer/generated'
-import { format } from 'date-fns'
 
 
 
@@ -38,8 +36,7 @@ type PageProps = {
  * 生成頁面元數據
  */
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const allArticles = await getAllArticles(); // 獲取所有文章
-  const article = allArticles.find(p => p.id === params.slug); // 使用find()方法，通過檢查slug和id一致來查找文章
+  const article = allArticles.find(p => p.slug === params.slug); // 使用find()方法，通過檢查slug和id一致來查找文章
   
   if (!article) {
     return {
