@@ -5,7 +5,8 @@ import Image from "next/image";
 import PinterestButton from './PinterestButton';
 import { Article } from 'contentlayer/generated';
 import { format } from 'date-fns';
-import { MDXContent } from '@/mdx-components';
+import { getMDXComponent } from 'next-contentlayer/hooks';
+import { useMDXComponents } from '@/mdx-components';
 
 /**
  * ArticleRenderer 組件
@@ -53,6 +54,7 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
   const { title, date, categories, coverImageUrl, body } = article;
   // Pinterest 分享功能需要頁面 URL
   const [pageUrl, setPageUrl] = React.useState('');
+  const MDXContent = getMDXComponent(article.body.code);
 
   React.useEffect(() => {
     setPageUrl(window.location.href);
@@ -92,7 +94,7 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
       
       {/* MDX 內容區域 */}
       <div className="prose prose-lg max-w-none">
-        <MDXContent code={body.code} />
+        <MDXContent components={useMDXComponents({})} />
       </div>
       
       {/* 社交分享區域 */}

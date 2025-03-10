@@ -1,7 +1,6 @@
 import type { MDXComponents } from 'mdx/types';
 import type { ImageProps } from 'next/image';
 import { HTMLAttributes, AnchorHTMLAttributes } from 'react';
-import { useMDXComponent } from 'next-contentlayer/hooks'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -58,13 +57,3 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
   };
 }
-
-export function MDXContent({ code }: { code: string }) {
-  const MDXComponent = useMDXComponent(code)
-  
-  return (
-    <div className="mdx-content">
-      <MDXComponent components={useMDXComponents({})} />
-    </div>
-  )
-} 

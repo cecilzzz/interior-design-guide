@@ -33,7 +33,7 @@ const nextConfig = {
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkGfm],  // 支持 GitHub Flavored Markdown
+    remarkPlugins: [],
     rehypePlugins: [],
   },
 });
