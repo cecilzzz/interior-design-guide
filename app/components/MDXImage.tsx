@@ -1,25 +1,46 @@
 import Image from 'next/image';
 import PinterestButton from './PinterestButton';
-import { getImageUrl } from '@/app/lib/imageUtils';
-import type { ImageData } from '@/app/types/image';
+import { getImageUrl } from '@/app/utils/imageUtils';
 
-export function MDXImage({ src, seo, pin, className = '' }: ImageData) {
-  const imageUrl = src.startsWith('http') ? src : getImageUrl(src, 'content');
+export type ImageData = {
+  localPath: {
+    originalFileName: string;
+    articleSlug: string;
+  }
+  seo: {
+    seoFileName: string;
+    altText: string;
+  };
+  pin: {
+    title: string;
+    description: string;
+  };
+  className?: string;
+};
+
+export function MDXImage({ 
+  localPath,
+  seo, 
+  pin, 
+  className = '' 
+}: ImageData) {
+  const imageUrl = getImageUrl(seo.seoFileName, 'content');
   
   return (
-    <span className={`block relative group my-8 ${className}`}>
+    <div className={`relative overflow-hidden rounded-lg group my-8 ${className}`}>
       <Image
         src={imageUrl}
         alt={seo.altText}
-        width={800}
-        height={450}
-        className="rounded-lg w-full h-auto"
+        width={1200}
+        height={800}
+        className="w-full h-auto object-cover"
+        sizes="(min-width: 1280px) 1200px, 92vw"
       />
       <PinterestButton 
         description={pin.description}
         media={imageUrl}
-        url={typeof window !== 'undefined' ? window.location.href : ''}
+        url={process.env.NEXT_PUBLIC_SITE_URL || ''}
       />
-    </span>
+    </div>
   );
-} 
+}

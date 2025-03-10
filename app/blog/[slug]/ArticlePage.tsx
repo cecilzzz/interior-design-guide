@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import ArticleLayout from '@/app/components/ArticleLayout';
-import { trackArticleRead, trackScrollDepth, trackTimeOnPage } from '@/app/utils/analytics';
+import { trackArticleRead, trackScrollDepth, trackTimeOnPage } from '@/app/lib/analytics';
 import { Article } from 'contentlayer/generated';
 
 /**

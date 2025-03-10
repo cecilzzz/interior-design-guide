@@ -8,13 +8,13 @@ import type { ImageData } from './markdownProcessor';
  */
 interface CloudinaryUploadConfig {
   /** 本地檔案路徑 */
-  file: string;
+  file: string; // 本地絕對路徑
   /** 資產在 Media Library 中的存放位置 */
-  assetFolder: string;
+  assetFolder: string; // articleSlug
   /** Public ID（簡短的 SEO 友好名稱） */
-  publicId: string;
+  publicId: string; // SEOFileName
   /** 圖片替代文字 */
-  altText: string;
+  altText: string; // SEO專用altText
 }
 
 /**

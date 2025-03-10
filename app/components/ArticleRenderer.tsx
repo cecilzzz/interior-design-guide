@@ -51,7 +51,6 @@ interface ArticleRendererProps {
  * @param props.article - 當前文章的完整數據
  */
 export default function ArticleRenderer({ article }: ArticleRendererProps) {
-  const { title, date, categories, coverImageUrl, body } = article;
   // Pinterest 分享功能需要頁面 URL
   const [pageUrl, setPageUrl] = React.useState('');
   const MDXContent = getMDXComponent(article.body.code);
@@ -60,23 +59,22 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
     setPageUrl(window.location.href);
   }, []);
 
-  const category = categories[0];
   return (
     <article>
       {/* 標題區域 */}
       <div className="text-center mb-12">
         <div className="text-coral-400 uppercase tracking-[0.2em] text-xs sm:text-sm mb-4 sm:mb-6 font-light">
-          {category} / <span className="text-gray-500">DESIGN</span>
+          {article.categories[0]} / <span className="text-gray-500">DESIGN</span>
         </div>
-        <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">{title}</h1>
-        <div className="text-gray-400 text-xs sm:text-sm tracking-wider">{format(new Date(date), 'MMMM dd, yyyy')}</div>
+        <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">{article.title}</h1>
+        <div className="text-gray-400 text-xs sm:text-sm tracking-wider">{format(new Date(article.date), 'MMMM dd, yyyy')}</div>
       </div>
       
       {/* 主圖區域 */}
       <div className="mb-8 relative aspect-[16/9] overflow-hidden rounded-lg group">
         <Image
-          src={coverImageUrl}
-          alt={title}
+          src={article.coverImageUrl}
+          alt={article.title}
           fill
           className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"
           sizes="(min-width: 1024px) 65vw, (min-width: 768px) 75vw, 100vw"
@@ -86,8 +84,8 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
         {pageUrl && (
           <PinterestButton 
             url={pageUrl}
-            media={coverImageUrl}
-            description={title}
+            media={article.coverImageUrl}
+            description={article.title}
           />
         )}
       </div>

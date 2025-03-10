@@ -1,59 +1,51 @@
 import type { MDXComponents } from 'mdx/types';
-import type { ImageProps } from 'next/image';
-import { HTMLAttributes, AnchorHTMLAttributes } from 'react';
-import Image from 'next/image'
-import Link from 'next/link'
+import { HTMLAttributes } from 'react';
+import { MDXImage } from './app/components/MDXImage';
+import type { ImageData } from './app/components/MDXImage';
 
 // 這個函數是 Next.js 的 MDX 整合所需的
 // 它會自動被用來處理所有 MDX 內容
+
+// `useMDXComponents` 函數的主要作用是定義如何將 MDX 文件中的標籤轉換為實際的 React 組件。
+// 這樣可以讓開發者在撰寫 MDX 內容時，使用自定義的樣式和行為。
+
+// 具體來說：
+// - 將 `h1`、`h2` 和 `h3` 標籤轉換為具有特定樣式的 React 組件，使用 Tailwind CSS 類名來設置字體、大小和邊距。
+// - 將 `p` 標籤轉換為一個 `span` 元素，並且可以接受 `children` 和其他屬性，確保段落內容正確顯示。
+// - 整合自定義的 `MDXImage` 組件，這樣在 MDX 文件中使用 `<MDXImage />` 時，會使用自定義的圖片組件來處理圖片的顯示和行為。
+
+
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     // 使用傳入的自定義組件
     ...components,
 
     // 標題樣式
-    h1: (props: HTMLAttributes<HTMLHeadingElement>) => (
-      <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6" {...props} />
+    h1: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+      <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6" {...props}>
+        {children}
+      </h1>
     ),
-    h2: (props: HTMLAttributes<HTMLHeadingElement>) => (
-      <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl mb-4" {...props} />
+    h2: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+      <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl mb-4" {...props}>
+        {children}
+      </h2>
     ),
-    h3: (props: HTMLAttributes<HTMLHeadingElement>) => (
-      <h3 className="font-playfair text-xl sm:text-2xl md:text-3xl mb-3" {...props} />
+    h3: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+      <h3 className="font-playfair text-xl sm:text-2xl md:text-3xl mb-3" {...props}>
+        {children}
+      </h3>
     ),
 
     // 段落樣式
     p: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
-      <span className="block mb-4" {...props}>{children}</span>
+      <span className="font-montserrat block mb-4" {...props}>
+        {children}
+      </span>
     ),
 
-    // 列表樣式
-    ul: (props: HTMLAttributes<HTMLUListElement>) => (
-      <ul className="list-disc list-inside mb-4 space-y-2" {...props} />
-    ),
-    ol: (props: HTMLAttributes<HTMLOListElement>) => (
-      <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />
-    ),
-
-    // 引用樣式
-    blockquote: (props: HTMLAttributes<HTMLQuoteElement>) => (
-      <blockquote className="border-l-4 border-coral-400 pl-4 italic my-4" {...props} />
-    ),
-
-    Image: ({ className, ...props }: ImageProps) => (
-      <Image
-        {...props}
-        width={800}
-        height={400}
-        className={`rounded-lg ${className || ''}`}
-      />
-    ),
-    a: ({ className, href, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => (
-      <Link 
-        href={href || '#'} 
-        className={`text-coral-500 hover:text-coral-600 transition-colors ${className || ''}`} 
-        {...props}
-      />
+    MDXImage: (props: ImageData) => (
+      <MDXImage {...props} />
     ),
   };
 }

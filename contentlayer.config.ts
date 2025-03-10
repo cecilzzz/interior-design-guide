@@ -1,4 +1,5 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
+import { getImageUrl } from '@/app/utils/imageUtils';
 
 export const Article = defineDocumentType(() => ({
   name: 'Article',
@@ -15,10 +16,7 @@ export const Article = defineDocumentType(() => ({
     slug: {
       type: 'string',
       resolve: (doc) => {
-        // 只取最後一個路徑部分（文件名）
-        const fileName = doc._raw.sourceFileName
-          .replace(/\.mdx$/, '');
-        return fileName;
+        return doc._raw.sourceFileName.replace(/\.mdx$/, '');
       }
     }
   }
