@@ -8,7 +8,8 @@
     "start": "serve out",
     "preview": "serve out",
     "lint": "next lint",
-    "process-images": "ts-node scripts/process-images.ts"
+    "upload-images": "node --import ./scripts/register.mjs scripts/image-processor/index.mts",
+    "upload-images:test": "node --import ./scripts/register.mjs scripts/image-processor/index.mts content/posts/japandi/40-japandi-living-room-ideas.mdx"
   },
   "dependencies": {
     "@headlessui/react": "1.7.17",
