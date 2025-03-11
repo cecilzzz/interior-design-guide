@@ -1,6 +1,5 @@
-import { remark } from 'remark';
-import { visit } from 'unist-util-visit';
-import type { Root, Image, Heading, Text } from 'mdast';
+import type { ImageData } from '@/app/components/MDXImage';
+import { compileMDX } from 'next-mdx-remote/rsc';
 
 /**
  * Markdown 文件中的 SEO 注釋格式說明
@@ -59,140 +58,37 @@ export interface ImageData {
   }
 }
 
-// 內部介面：處理後的圖片資訊
-interface ProcessedImage {
-  imageData: ImageData;
-  sectionId: string;
-  markdown: {
-    before: string;
-    after: string;
-  }
+interface CollectedImage {
+  props: ImageData;
 }
 
 /**
- * 從 markdown 內容中提取圖片和相關的段落 ID
- * @internal 僅在 markdownProcessor.ts 內部使用
- */
-const extractImagesWithSections = async (content: string): Promise<ProcessedImage[]> => {
-  const images: ProcessedImage[] = [];
-  let currentSectionId = '';
-  const processedUrls = new Set<string>();  // 用於追蹤已處理的圖片 URL
-
-  // 1. 找出所有圖片
-  const allImages: { node: Image; sectionId: string }[] = [];
-  
-  const processor = remark()
-    .use(() => (tree: Root) => {
-      visit(tree, (node) => {
-        // 從標題文本生成 ID
-        if (node.type === 'heading') {
-          const headingNode = node as Heading;
-          const textNode = headingNode.children[0] as Text;
-          if (textNode?.value) {
-            currentSectionId = textNode.value
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/^-+|-+$/g, '');
-          }
-        }
-
-        // 收集圖片節點
-        if (node.type === 'image') {
-          const imageNode = node as Image;
-          if (imageNode.position && !processedUrls.has(imageNode.url)) {
-            allImages.push({ node: imageNode, sectionId: currentSectionId });
-          }
-        }
-      });
-    });
-
-  await processor.process(content);
-  console.log(`找到 ${allImages.length} 張圖片`);
-
-  // 2. 處理每張圖片的 SEO 注釋
-  for (const { node: imageNode, sectionId } of allImages) {
-    // 如果圖片已經處理過，跳過
-    if (processedUrls.has(imageNode.url)) {
-      continue;
-    }
-
-    const beforeContent = content.slice(0, imageNode.position!.start.offset);
-    const seoCommentRegex = /\[\/\/\]: # \(SEO\s*(\{[\s\S]*?\})\s*\)[\s\n]*$/;
-    const match = beforeContent.match(seoCommentRegex);
-
-    if (!match) {
-      console.warn(`圖片缺少 SEO 注釋: ${imageNode.url}`);
-      continue;
-    }
-
-    try {
-      // 清理 JSON 字符串：移除額外的空格和換行符
-      const jsonStr = match[1]
-        .replace(/\s+$/gm, '')        // 移除每行末尾的空格
-        .replace(/,\s*([\]}])/g, '$1') // 移除對象和數組結尾的逗號
-        .trim();                       // 移除開頭和結尾的空格
-
-      const seoData = JSON.parse(jsonStr);
-
-      // 驗證必要欄位
-      if (!seoData.originalName || !seoData.localRelativePath || 
-          !seoData.seoFileName || !seoData.altText || 
-          !seoData.pin) {
-        console.warn(`圖片的 SEO 注釋缺少必要欄位: ${imageNode.url}`);
-        continue;
-      }
-
-      // 處理 articleSlug
-      let articleSlug = seoData.articleSlug?.trim();  // 確保移除空格
-      if (!articleSlug) {
-        const pathParts = seoData.localRelativePath.split('/');
-        articleSlug = pathParts[pathParts.length - 1];
-        
-        if (!articleSlug) {
-          console.warn(`無法從 localRelativePath 提取 articleSlug: ${seoData.localRelativePath}`);
-          continue;
-        }
-      }
-
-      const imageData: ImageData = {
-        originalName: seoData.originalName.trim(),
-        localRelativePath: seoData.localRelativePath.trim(),
-        seoFileName: seoData.seoFileName.trim(),
-        articleSlug: articleSlug,
-        sectionId: sectionId,
-        altText: seoData.altText.trim(),
-        pin: {
-          title: seoData.pin.title.trim(),
-          description: seoData.pin.description.trim()
-        }
-      };
-
-      images.push({
-        imageData,
-        sectionId: sectionId,
-        markdown: { before: beforeContent, after: '' }
-      });
-
-      // 標記圖片已處理
-      processedUrls.add(imageNode.url);
-    } catch (error) {
-      console.warn(`解析圖片 SEO 注釋失敗: ${imageNode.url}`, error);
-      continue;
-    }
-  }
-
-  console.log(`成功處理 ${images.length} 張帶有完整 SEO 注釋的圖片`);
-  return images;
-};
-
-/**
- * 處理 Markdown 文件中的圖片
+ * 處理 MDX 文件中的圖片組件
  * 提取所有圖片資訊，包含 SEO 數據和相關內容
  * 
- * @param content - Markdown 文件內容
+ * @param content - MDX 文件內容
  * @returns 圖片資訊陣列，每個元素包含圖片的完整資訊
  */
 export const processMarkdown = async (content: string): Promise<ImageData[]> => {
-  const processedImages = await extractImagesWithSections(content);
-  return processedImages.map(image => image.imageData);
+  const collectedImages: CollectedImage[] = [];
+  
+  // 自定義 MDXImage 組件用於收集圖片資訊
+  const ImageCollector = (props: ImageData) => {
+    collectedImages.push({ props });
+    return null;
+  };
+
+  // 使用 next-mdx-remote 編譯 MDX
+  await compileMDX({
+    source: content,
+    components: {
+      MDXImage: ImageCollector
+    },
+    options: {
+      parseFrontmatter: true,
+    }
+  });
+
+  // 返回收集到的圖片資訊
+  return collectedImages.map(img => img.props);
 };

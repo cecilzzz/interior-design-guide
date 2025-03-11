@@ -1,5 +1,4 @@
-import type { ImageData } from './markdownProcessor';
-
+import type { ImageData } from '../../app/types/image';
 /**
  * 路徑相關參數的完整結構
  * 
