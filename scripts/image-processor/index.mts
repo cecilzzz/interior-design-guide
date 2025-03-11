@@ -3,11 +3,17 @@ import { createPin } from './pinterestPublisher.mts';
 import { getCollectedImages } from './imageCollector.mts';
 import { readFileSync } from 'fs';
 import { config } from 'dotenv';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import type { ImageData } from "../../app/types/image.ts";
 
+// 獲取專案根目錄
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const projectRoot = resolve(__dirname, '../..');
+
 // 載入環境變數
-config({ path: resolve(process.cwd(), '.env.local') });
+config({ path: resolve(projectRoot, '.env.local') });
 
 async function main() {
   const startTime = Date.now();
