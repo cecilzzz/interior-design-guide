@@ -1,10 +1,10 @@
-import { uploadToCloudinary } from './cloudinaryUploader';
-import { createPin } from './pinterestPublisher';
-import { getCollectedImages } from './imageCollector';
+import { uploadToCloudinary } from './cloudinaryUploader.ts';
+import { createPin } from './pinterestPublisher.ts';
+import { getCollectedImages } from './imageCollector.mts';
 import { readFileSync } from 'fs';
 import { config } from 'dotenv';
 import { resolve } from 'path';
-import type { ImageData } from "../../app/types/image";
+import type { ImageData } from "../../app/types/image.ts";
 
 // 載入環境變數
 config({ path: resolve(process.cwd(), '.env.local') });

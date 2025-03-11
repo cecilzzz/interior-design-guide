@@ -28,6 +28,6 @@
       "./types"
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types/**/*.d.ts", ".contentlayer/generated"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types/**/*.d.ts", ".contentlayer/generated", "scripts/image-processor/imageCollector.mts"],
   "exclude": ["node_modules"]
 }

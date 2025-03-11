@@ -1,14 +1,18 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "module": "node16",
+    "moduleResolution": "node16",
+    "outDir": "./dist",
+    "rootDir": "..",
+    "noEmit": true,  // 不生成文件
+    "allowImportingTsExtensions": true,  // 允許 .ts 擴展名
+    "moduleDetection": "force"
   },
-  "include": ["./**/*.ts"],
+  "include": [
+    "./**/*.ts",
+    "./**/*.mts",
+    "../app/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
-} 
+}

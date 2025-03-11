@@ -1,6 +1,6 @@
 import { compile } from '@mdx-js/mdx';
 import * as runtime from 'react/jsx-runtime';
-import type { ImageData } from '../../app/types/image';
+import type { ImageData } from '../../app/types/image.ts';
 import { visit as unistVisit } from 'unist-util-visit';
 import type { Root } from 'mdast';
 import type { MdxJsxFlowElement, MdxJsxAttribute, MdxJsxExpressionAttribute } from 'mdast-util-mdx-jsx';
