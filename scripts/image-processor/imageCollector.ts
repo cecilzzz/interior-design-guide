@@ -1,11 +1,5 @@
 import type { ImageData } from '../../app/types/image';
-import { compile } from '@mdx-js/mdx';
-import * as runtime from 'react/jsx-runtime';
-import { visit } from 'unist-util-visit';
-import * as acorn from 'acorn';
-
-// 定義 ImageData 的有效鍵類型
-type ImageDataKey = keyof ImageData;
+import { compileMDX } from 'next-mdx-remote/rsc';
 
 /**
  * 處理 MDX 文件中的圖片組件
@@ -17,91 +11,22 @@ type ImageDataKey = keyof ImageData;
 export const getCollectedImages = async (content: string): Promise<ImageData[]> => {
   const collectedImages: ImageData[] = [];
   
-  try {
-    console.log('開始解析 MDX 內容...');
-    
-    const result = await compile(content, {
-      jsx: true,
-      jsxRuntime: 'classic',
-      jsxImportSource: 'react',
-      development: true,
-      // @ts-ignore
-      providerImportSource: '@mdx-js/react',
-      remarkPlugins: [
-        () => (tree) => {
-          visit(tree, 'mdxJsxFlowElement', (node: any) => {
-            if (node.name === 'MDXImage') {
-              console.log('找到 MDXImage 組件:', node.attributes);
-              const imageData: ImageData = {
-                localPath: {
-                  originalFileName: '',
-                  articleSlug: ''
-                },
-                seo: {
-                  seoFileName: '',
-                  altText: ''
-                },
-                pin: {
-                  title: '',
-                  description: ''
-                }
-              };
-              
-              node.attributes.forEach((attr: any) => {
-                if (attr.type === 'mdxJsxAttribute') {
-                  const value = attr.value;
-                  if (value.type === 'mdxJsxAttributeValueExpression') {
-                    try {
-                      // 使用 acorn 解析 JavaScript 表達式
-                      const ast = acorn.parse(`(${value.value})`, {
-                        ecmaVersion: 2020,
-                        sourceType: 'module'
-                      });
-                      
-                      // 從 AST 中提取物件字面量的值
-                      const objectExpr = (ast as any).body[0].expression;
-                      const extracted = extractObjectFromAST(objectExpr);
-                      
-                      const attrName = attr.name as ImageDataKey;
-                      if (attrName === 'localPath' || attrName === 'seo' || attrName === 'pin') {
-                        imageData[attrName] = extracted;
-                      }
-                    } catch (e) {
-                      console.warn(`無法解析屬性 ${attr.name}:`, e);
-                      console.warn('原始值:', value.value);
-                    }
-                  }
-                }
-              });
-              
-              collectedImages.push(imageData);
-            }
-          });
-        }
-      ]
-    });
-    
-    console.log(`找到 ${collectedImages.length} 個 MDXImage 組件`);
-    
-  } catch (error) {
-    console.error('解析 MDX 時發生錯誤:', error);
-  }
+  // 使用 next-mdx-remote 編譯 MDX
+  await compileMDX({
+    source: content,
+    components: {
+      MDXImage: (props: any) => {  // 暫時改為 any 類型來查看實際收到的內容
+        console.log('MDXImage 組件被調用');
+        console.log('收到的 props:', JSON.stringify(props, null, 2));
+        collectedImages.push(props);  // 直接推入 props
+        return null;
+      }
+    },
+    options: {
+      parseFrontmatter: true,
+    }
+  });
 
+  // 直接返回收集到的圖片資訊
   return collectedImages;
 };
-
-// 從 AST 中提取物件字面量的值
-function extractObjectFromAST(node: any): any {
-  if (node.type === 'ObjectExpression') {
-    const result: any = {};
-    for (const prop of node.properties) {
-      const key = prop.key.name;
-      const value = extractObjectFromAST(prop.value);
-      result[key] = value;
-    }
-    return result;
-  } else if (node.type === 'Literal') {
-    return node.value;
-  }
-  return null;
-}

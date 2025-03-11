@@ -5,7 +5,7 @@ import type { ImageData } from '../../app/types/image';
 /**
  * Cloudinary 上傳所需的配置和路徑資訊
  */
-type CloudinaryUploadConfig = {
+type CloudinaryUploadConfig ={
   /** 本地檔案路徑 */
   localPath: string; // 本地絕對路徑
   /** 資產在 Media Library 中的存放位置 */
@@ -30,6 +30,7 @@ const getCloudinaryUploadConfig = (imageData: ImageData): CloudinaryUploadConfig
   };
 }
 
+
 /**
  * 上傳圖片到 Cloudinary
  * @param imageData - 圖片相關資料
@@ -41,7 +42,7 @@ export const uploadToCloudinary = async (imageData: ImageData): Promise<{ secure
     'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME': process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     'CLOUDINARY_API_KEY': process.env.CLOUDINARY_API_KEY,
     'CLOUDINARY_API_SECRET': process.env.CLOUDINARY_API_SECRET
-  } as const;
+  }as const;
 
   for (const [name, value] of Object.entries(requiredEnvVars)) {
     if (!value) throw new Error(`缺少 ${name} 環境變數`);
