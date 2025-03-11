@@ -33,7 +33,7 @@ const getCloudinaryUploadConfig = (imageData: ImageData): CloudinaryUploadConfig
   }
 
   const config = {
-    localPath: [process.env.IMAGES_ROOT_DIR, 'public', imageData.localPath.articleSlug, imageData.localPath.originalFileName].join('/'),
+    localPath: [process.env.IMAGES_ROOT_DIR, 'content/images', imageData.localPath.articleSlug, imageData.localPath.originalFileName].join('/'),
     assetFolder: [process.env.CLOUDINARY_BASE_PATH, imageData.localPath.articleSlug].join('/'),
     publicID: imageData.seo.seoFileName,
     altText: imageData.seo.altText
@@ -94,11 +94,12 @@ export const uploadToCloudinary = async (imageData: ImageData): Promise<{ secure
   let lastError: Error | null = null;
   let uploadOptions: any = null;
 
+  // 核心上傳設定！！
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
       uploadOptions = {
         public_id: cloudinaryUploadconfig.publicID,
-        folder: cloudinaryUploadconfig.assetFolder,
+        asset_folder: cloudinaryUploadconfig.assetFolder,
         use_filename: false,
         unique_filename: false,
         overwrite: true,

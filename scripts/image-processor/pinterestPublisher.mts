@@ -1,4 +1,4 @@
-import type { ImageData } from '../../app/types/image';
+import type { ImageData } from '../../app/types/image.js';
 
 /**
  * Pinterest API 所需的數據結構
