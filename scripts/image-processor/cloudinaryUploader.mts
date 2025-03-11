@@ -33,7 +33,7 @@ const getCloudinaryUploadConfig = (imageData: ImageData): CloudinaryUploadConfig
   }
 
   const config = {
-    localPath: [process.env.IMAGES_ROOT_DIR, imageData.localPath.articleSlug, imageData.localPath.originalFileName].join('/'),
+    localPath: [process.env.IMAGES_ROOT_DIR, 'public', imageData.localPath.articleSlug, imageData.localPath.originalFileName].join('/'),
     assetFolder: [process.env.CLOUDINARY_BASE_PATH, imageData.localPath.articleSlug].join('/'),
     publicID: imageData.seo.seoFileName,
     altText: imageData.seo.altText
