@@ -1,4 +1,4 @@
-import type { ImageData } from './markdownProcessor';
+import type { ImageData } from '../../app/types/image';
 
 /**
  * Pinterest API 所需的數據結構

@@ -1,22 +1,7 @@
 import Image from 'next/image';
 import PinterestButton from './PinterestButton';
 import { getImageUrl } from '@/app/utils/imageUtils';
-
-export type ImageData = {
-  localPath: {
-    originalFileName: string;
-    articleSlug: string;
-  }
-  seo: {
-    seoFileName: string;
-    altText: string;
-  };
-  pin: {
-    title: string;
-    description: string;
-  };
-  className?: string;
-};
+import type { ImageData } from '../../app/types/image';
 
 export function MDXImage({ 
   localPath,
