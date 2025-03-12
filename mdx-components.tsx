@@ -1,7 +1,7 @@
 import type { MDXComponents } from 'mdx/types';
 import { HTMLAttributes } from 'react';
 import { MDXImage } from './app/components/MDXImage';
-import type { ImageData } from './app/components/MDXImage';
+import type { ImageData } from './app/types/image';
 
 // 這個函數是 Next.js 的 MDX 整合所需的
 // 它會自動被用來處理所有 MDX 內容
