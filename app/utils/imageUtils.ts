@@ -79,7 +79,7 @@ export function getImageUrl(path: string, type: ImageType = 'default'): string {
   const cleanPath = path.replace(/^\//, '');
   
   // 返回完整的 Cloudinary URL
-  return `${CLOUDINARY_BASE}/${params}/${cleanPath}`;
+  return `${CLOUDINARY_BASE}/${params}/${cleanPath}.png`;
 }
 
 /**

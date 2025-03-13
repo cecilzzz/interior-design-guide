@@ -1,8 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from "next/image";
-import PinterestButton from './PinterestButton';
 import { Article } from 'contentlayer/generated';
 import { format } from 'date-fns';
 import { getMDXComponent } from 'next-contentlayer/hooks';
@@ -67,33 +65,13 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
           {article.categories[0]} / <span className="text-gray-500">DESIGN</span>
         </div>
         <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">{article.title}</h1>
-        <div className="text-gray-400 text-xs sm:text-sm tracking-wider">{format(new Date(article.date), 'MMMM dd, yyyy')}</div>
-      </div>
-      
-      {/* 主圖區域 */}
-      <div className="mb-8 relative aspect-[16/9] overflow-hidden rounded-lg group">
-        <Image
-          src={article.coverImageUrl}
-          alt={article.title}
-          fill
-          className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"
-          sizes="(min-width: 1024px) 65vw, (min-width: 768px) 75vw, 100vw"
-          quality={85}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {pageUrl && (
-          <PinterestButton 
-            url={pageUrl}
-            media={article.coverImageUrl}
-            description={article.title}
-          />
-        )}
+        <div className="text-gray-400 text-xs sm:text-sm tracking-wider">
+          {format(new Date(article.date), 'MMMM dd, yyyy')}
+        </div>
       </div>
       
       {/* MDX 內容區域 */}
-      <div className="prose prose-lg max-w-none">
-        <MDXContent components={useMDXComponents({})} />
-      </div>
+      <MDXContent components={useMDXComponents({})} />
       
       {/* 社交分享區域 */}
       <div className="flex justify-center space-x-4 mt-8">
@@ -105,4 +83,4 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
       </div>
     </article>
   );
-} 
+}
