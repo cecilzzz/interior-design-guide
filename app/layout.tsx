@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Montserrat } from "next/font/google";
+import localFont from 'next/font/local';
 import Script from "next/script";
 import "./globals.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
-// 配置 Playfair Display 字體
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-playfair",
+// 配置 Playfair Display 字體（本地可變字體文件）
+const playfair = localFont({
+  src: '../public/fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf',
+  display: 'swap',
+  variable: '--font-playfair',
 });
 
-// 配置 Montserrat 字體
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-montserrat",
+// 配置 Montserrat 字體（本地可變字體文件）
+const montserrat = localFont({
+  src: '../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf',
+  display: 'swap',
+  variable: '--font-montserrat',
 });
 
 export const metadata: Metadata = {
