@@ -1,8 +1,4 @@
-import type { ReactNode } from 'react';
-import type { MDXComponentProps, MDXFrontmatter } from './mdx';
-
-// 全局 Window 介面擴展
-interface Window {
+declare interface Window {
   gtag: (
     command: 'event' | 'config' | 'set' | 'js',
     eventName: string,
@@ -11,4 +7,4 @@ interface Window {
     }
   ) => void;
   dataLayer: any[];
-}
+} 
