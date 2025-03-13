@@ -17,7 +17,6 @@ export default function ArticleLayout({ article, relatedArticles }: ArticleLayou
       {/* 相關文章 */}
       {relatedArticles.length > 0 && (
         <div className="mt-16 pt-16 border-t border-gray-100">
-          <h2 className="font-playfair text-2xl mb-8">相關文章</h2>
           <RelatedArticles articles={relatedArticles} />
         </div>
       )}
