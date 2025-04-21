@@ -41,7 +41,8 @@ const navItems: NavItem[] = [
       { title: "Farmhouse", link: "/blog/category/farmhouse" },
       { title: "Boho", link: "/blog/category/boho" },
       { title: "Mid-century Modern", link: "/blog/category/mid-century-modern" },
-      { title: "French", link: "/blog/category/french" }
+      { title: "French", link: "/blog/category/french" },
+      { title: "Dark", link: "/blog/category/dark" }
     ],
   },
   {

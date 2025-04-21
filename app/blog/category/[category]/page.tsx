@@ -26,6 +26,7 @@ const navCategories = [
   "boho",
   "mid-century-modern",
   "french",
+  "dark",
   
   // Framework
   "design-principles",
