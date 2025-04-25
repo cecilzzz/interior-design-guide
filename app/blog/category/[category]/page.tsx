@@ -27,6 +27,7 @@ const navCategories = [
   "mid-century-modern",
   "french",
   "dark",
+  "earthy",
   
   // Framework
   "design-principles",
