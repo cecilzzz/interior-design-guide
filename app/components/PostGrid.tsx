@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Article } from 'contentlayer/generated'
 import { format } from 'date-fns'
+import { getImageUrl } from '@/app/utils/imageUtils';
 
 /**
  * PostGrid 組件的屬性定義
@@ -55,7 +56,7 @@ export default function PostGrid({ allArticles, category }: PostGridProps) {
           {/* 文章封面圖片容器 */}
           <div className="relative aspect-[3/2] mb-4 overflow-hidden rounded-lg">
             <Image
-              src={article.coverImageUrl}
+              src={getImageUrl(article.coverImageUrl, 'hero')}
               alt={article.title}
               fill
               className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"
