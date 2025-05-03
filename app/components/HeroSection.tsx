@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getImageUrl } from '@/app/utils/imageUtils';
 
 type HeroProps = {
   category: string;
@@ -13,7 +14,7 @@ export default function HeroSection({ category, title, date, coverImageUrl }: He
       {/* 背景圖片容器 - 全寬 */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
-          src={coverImageUrl}
+          src={getImageUrl(coverImageUrl, 'hero')}
           alt={title}
           fill
           className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 brightness-[0.85]"

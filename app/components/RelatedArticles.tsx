@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Article } from 'contentlayer/generated';
+import { getImageUrl } from '@/app/utils/imageUtils';
 
 type RelatedArticlesProps = {
   articles: Article[];
@@ -19,7 +20,7 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
           >
             <div className="relative aspect-[3/2] mb-3 sm:mb-4 overflow-hidden rounded-lg">
               <Image
-                src={article.coverImageUrl}
+                src={getImageUrl(article.coverImageUrl, 'hero')}
                 alt={article.title}
                 fill
                 className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"

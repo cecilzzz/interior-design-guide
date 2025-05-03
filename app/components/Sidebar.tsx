@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from "react-icons/fa";
 import { Article } from 'contentlayer/generated';
+import { getImageUrl } from '@/app/utils/imageUtils';
 
 type SidebarProps = {
   recommendedArticles: Article[];
@@ -93,7 +94,7 @@ export default function Sidebar({ recommendedArticles }: SidebarProps) {
               </span>
               <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-md">
                 <Image
-                  src={article.coverImageUrl}
+                  src={getImageUrl(article.coverImageUrl, 'hero')}
                   alt={article.title}
                   fill
                   className="object-cover transition-all duration-500 group-hover:scale-105"
