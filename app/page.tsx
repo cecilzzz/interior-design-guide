@@ -38,9 +38,9 @@ export default function Home() {
           coverImageUrl={featuredArticle.coverImageUrl}
         />
         
-        <div className="py-12 md:py-16">
+       {/* <div className="py-12 md:py-16">
           <FeaturedCards />
-        </div>
+        </div> */}
       </div>
       
       {/* Blog section */}
