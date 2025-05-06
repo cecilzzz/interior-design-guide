@@ -20,6 +20,7 @@ const navCategories = [
   "japandi",
   "industrial",
   "contemporary",
+  "mediterranean",
   "coastal",
   "rustic",
   "farmhouse",

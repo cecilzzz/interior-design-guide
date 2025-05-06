@@ -35,6 +35,7 @@ const navItems: NavItem[] = [
       { title: "Japandi", link: "/blog/category/japandi" },
       { title: "Industrial", link: "/blog/category/industrial" },
       { title: "Contemporary", link: "/blog/category/contemporary" },
+      { title: "Mediterranean", link: "/blog/category/mediterranean" },
       // Secondary Styles
       { title: "Coastal", link: "/blog/category/coastal" },
       { title: "Rustic", link: "/blog/category/rustic" },
