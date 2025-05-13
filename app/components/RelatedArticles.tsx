@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Article } from 'contentlayer/generated';
 import { getImageUrl } from '@/app/utils/imageUtils';
 
@@ -14,8 +15,9 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
         {articles.map((article) => (
-          <div 
+          <Link 
             key={article._id}
+            href={`/blog/${article.slug}`}
             className="group block overflow-hidden"
           >
             <div className="relative aspect-[3/2] mb-3 sm:mb-4 overflow-hidden rounded-lg">
@@ -36,7 +38,7 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
                 {article.title}
               </h3>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
