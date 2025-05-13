@@ -2,6 +2,7 @@
 module.exports = {
   siteUrl: 'https://interior-design-guide.vercel.app',
   generateRobotsTxt: true,
+  outDir: './public',
   robotsTxtOptions: {
     policies: [
       {
