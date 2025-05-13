@@ -11,6 +11,9 @@ type HeroProps = {
 };
 
 export default function HeroSection({ category, title, date, coverImageUrl, slug }: HeroProps) {
+  // 格式化日期，只保留年月日
+  const formattedDate = date.split('T')[0];
+
   return (
     <Link href={`/blog/${slug}`} className="block">
       <div className="relative aspect-[16/9] group">
@@ -38,7 +41,7 @@ export default function HeroSection({ category, title, date, coverImageUrl, slug
                 {title}
               </h1>
               <div className="text-xs sm:text-sm tracking-widest font-montserrat text-gray-100/80 uppercase">
-                {date}
+                {formattedDate}
               </div>
             </div>
           </div>
