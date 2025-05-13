@@ -4,29 +4,6 @@ import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
 import { allArticles } from 'contentlayer/generated'
 
-
-
-// 靜態數據：相關文章列表
-const relatedArticles = [
-  {
-    category: "Interior Design",
-    title: "How to Choose the Perfect Color Palette",
-    coverImageUrl: "https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?auto=format&fit=crop&q=80&w=800",
-    link: "/blog/color-palette",
-  },
-  // ... 其他相關文章
-];
-
-// 靜態數據：推薦文章列表
-const recommendedArticles = [
-  {
-    title: "Essential Steps to Design Your Perfect Living Room",
-    coverImageUrl: "https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=200",
-    link: "/blog/perfect-living-room",
-  },
-  // ... 其他推薦文章
-];
-
 // 定義頁面參數類型
 type PageProps = {
   params: { slug: string }
@@ -119,8 +96,8 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
     .slice(0, 5);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
         <ArticlePage 
           article={article}
           relatedArticles={relatedArticles}
