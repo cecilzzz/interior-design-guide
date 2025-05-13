@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from "react-icons/fa";
 import { Article } from 'contentlayer/generated';
 import { getImageUrl } from '@/app/utils/imageUtils';
@@ -85,8 +86,9 @@ export default function Sidebar({ recommendedArticles }: SidebarProps) {
         </h3>
         <div className="space-y-6">
           {recommendedArticles.map((article, index) => (
-            <div 
+            <Link 
               key={article.title}
+              href={`/blog/${article.slug}`}
               className="flex items-center gap-4 group transition-all duration-300 hover:bg-gray-50 p-2 rounded-lg cursor-pointer"
             >
               <span className="text-2xl font-playfair text-gray-300 transition-colors duration-300 group-hover:text-coral-500">
@@ -103,7 +105,7 @@ export default function Sidebar({ recommendedArticles }: SidebarProps) {
               <h4 className="text-sm font-medium transition-colors duration-300 group-hover:text-coral-500">
                 {article.title}
               </h4>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
