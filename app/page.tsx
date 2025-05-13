@@ -36,6 +36,7 @@ export default function Home() {
           title={featuredArticle.title}
           date={featuredArticle.date}
           coverImageUrl={featuredArticle.coverImageUrl}
+          slug={featuredArticle.slug}
         />
         
        {/* <div className="py-12 md:py-16">

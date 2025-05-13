@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getImageUrl } from '@/app/utils/imageUtils';
 
 type HeroProps = {
@@ -6,40 +7,43 @@ type HeroProps = {
   title: string;
   date: string;
   coverImageUrl: string;
+  slug: string;
 };
 
-export default function HeroSection({ category, title, date, coverImageUrl }: HeroProps) {
+export default function HeroSection({ category, title, date, coverImageUrl, slug }: HeroProps) {
   return (
-    <div className="relative aspect-[16/9] group">
-      {/* 背景圖片容器 - 全寬 */}
-      <div className="absolute inset-0 overflow-hidden">
-        <Image
-          src={getImageUrl(coverImageUrl, 'hero')}
-          alt={title}
-          fill
-          className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 brightness-[0.85]"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/10" />
-      </div>
-      
-      {/* 內容容器 */}
-      <div className="relative h-full flex items-center">
-        <div className="w-full text-center text-white">
-          <div className="max-w-4xl mx-auto px-4">
-            <div className="text-xs sm:text-sm tracking-widest mb-4 sm:mb-6 font-montserrat text-gray-100/90 uppercase">
-              {category}
-            </div>
-            <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6 leading-tight">
-              {title}
-            </h1>
-            <div className="text-xs sm:text-sm tracking-widest font-montserrat text-gray-100/80 uppercase">
-              {date}
+    <Link href={`/blog/${slug}`} className="block">
+      <div className="relative aspect-[16/9] group">
+        {/* 背景圖片容器 - 全寬 */}
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src={getImageUrl(coverImageUrl, 'hero')}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 brightness-[0.85]"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/10" />
+        </div>
+        
+        {/* 內容容器 */}
+        <div className="relative h-full flex items-center">
+          <div className="w-full text-center text-white">
+            <div className="max-w-4xl mx-auto px-4">
+              <div className="text-xs sm:text-sm tracking-widest mb-4 sm:mb-6 font-montserrat text-gray-100/90 uppercase">
+                {category}
+              </div>
+              <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6 leading-tight">
+                {title}
+              </h1>
+              <div className="text-xs sm:text-sm tracking-widest font-montserrat text-gray-100/80 uppercase">
+                {date}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 } 
