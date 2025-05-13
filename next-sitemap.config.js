@@ -18,7 +18,7 @@ module.exports = {
       'https://interior-design-guide.vercel.app/sitemap.xml'
     ],
   },
-  exclude: ['/api/*', '/static/*'],
+  exclude: ['/api/*', '/static/*', '/_next/*'],
   generateIndexSitemap: false,
   changefreq: 'weekly',
   priority: 0.7,
