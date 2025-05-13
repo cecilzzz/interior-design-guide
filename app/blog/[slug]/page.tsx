@@ -81,18 +81,40 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
     notFound();
   }
 
-  // 獲取相關文章（保持原有邏輯）
+  // 優化相關文章的選擇邏輯
   const relatedArticles = allArticles
-    .filter(a => 
-      a.slug !== article.slug && 
-      a.categories.some(cat => article.categories.includes(cat))
-    )
+    .filter(a => {
+      // 排除當前文章
+      if (a.slug === article.slug) return false;
+      
+      // 優先選擇同分類的文章
+      const hasCommonCategory = a.categories.some(cat => 
+        article.categories.includes(cat)
+      );
+      
+      // 如果沒有足夠的同分類文章，也考慮其他文章
+      return hasCommonCategory || allArticles.length < 10;
+    })
+    .sort((a, b) => {
+      // 優先排序同分類文章
+      const aCommonCats = a.categories.filter(cat => 
+        article.categories.includes(cat)
+      ).length;
+      const bCommonCats = b.categories.filter(cat => 
+        article.categories.includes(cat)
+      ).length;
+      
+      return bCommonCats - aCommonCats;
+    })
     .slice(0, 3);
 
-  // 獲取推薦文章（保持原有邏輯）
+  // 優化推薦文章的選擇邏輯
   const recommendedArticles = allArticles
     .filter(a => a.slug !== article.slug)
-    .sort(() => Math.random() - 0.5)
+    .sort((a, b) => {
+      // 按發布日期排序
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })
     .slice(0, 5);
 
   return (

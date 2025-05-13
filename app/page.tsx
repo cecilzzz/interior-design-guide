@@ -2,7 +2,7 @@ import { allArticles } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import HeroSection from "./components/HeroSection";
 import FeaturedCards from "./components/FeaturedCards";
-import ArticleLayout from "./components/ArticleLayout";
+import ArticlePage from "./blog/[slug]/ArticlePage";
 import Sidebar from "./components/Sidebar";
 
 export default function Home() {
@@ -45,17 +45,17 @@ export default function Home() {
       </div>
       
       {/* Blog section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
-          <ArticleLayout 
-            article={featuredArticle}
-            relatedArticles={relatedArticles}
-          />
-          <Sidebar 
-            recommendedArticles={recommendedArticles}
-          />
-        </div>
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
+        <ArticlePage 
+          article={featuredArticle}
+          relatedArticles={relatedArticles}
+        />
+        <Sidebar 
+          recommendedArticles={recommendedArticles}
+        />
       </div>
+    </div>
     </div>
   );
 }
