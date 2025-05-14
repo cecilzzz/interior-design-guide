@@ -15,7 +15,7 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
   // 文章 schema
   const articleSchema = article ? {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     "headline": article.title,
     "description": article.excerpt,
     "image": [article.coverImageUrl],
@@ -34,7 +34,11 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
       }
     },
     "keywords": article.categories.join(','),
-    "articleSection": article.categories[0]
+    "articleSection": article.categories[0],
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${siteUrl}/blog/${article.slug}`
+    }
   } : null;
 
   // 麵包屑導航 schema
