@@ -50,7 +50,7 @@ export default function PostGrid({ allArticles, category }: PostGridProps) {
       {filteredArticles.map((article) => (
         <Link 
           key={article._id}
-          href={`/blog/${article.slug}`}
+          href={`/${article.slug}`}
           className="group block"
         >
           {/* 文章封面圖片容器 */}

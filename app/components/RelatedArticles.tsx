@@ -17,7 +17,7 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
         {articles.map((article) => (
           <Link 
             key={article._id}
-            href={`/blog/${article.slug}`}
+            href={`/${article.slug}`}
             className="group block overflow-hidden"
           >
             <div className="relative aspect-[3/2] mb-3 sm:mb-4 overflow-hidden rounded-lg">

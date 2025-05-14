@@ -33,15 +33,17 @@ module.exports = {
       priority = 1.0;
       changefreq = 'daily';
     }
-    // 文章頁面
-    else if (path.startsWith('/blog/') && !path.startsWith('/blog/category/')) {
+    // 文章頁面 - 直接在根路徑下
+    else if (!path.startsWith('/category/') && 
+             path !== '/' && 
+             !path.startsWith('/api/') && 
+             !path.startsWith('/static/') &&
+             !path.startsWith('/_next/')) {
       priority = 0.8;
       changefreq = 'monthly';
     }
     // 分類頁面
-    else if (path.startsWith('/blog/category/')) {
-      // 這裡可以添加邏輯來檢查分類是否有文章
-      // 暫時統一設置為較低優先級
+    else if (path.startsWith('/category/')) {
       priority = 0.5;
       changefreq = 'weekly';
     }

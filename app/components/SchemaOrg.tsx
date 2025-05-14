@@ -37,7 +37,7 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
     "articleSection": article.categories[0],
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `${siteUrl}/blog/${article.slug}`
+      "@id": `${siteUrl}/${article.slug}`
     }
   } : null;
 
@@ -58,7 +58,7 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
           "@type": "ListItem",
           "position": 2,
           "name": category,
-          "item": `${siteUrl}/blog/category/${category.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
+          "item": `${siteUrl}/category/${category.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
         }
       ] : []),
       // 如果是文章頁面：Home > Dark > 40 Dark Bedroom Ideas
@@ -67,13 +67,13 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
           "@type": "ListItem",
           "position": 2,
           "name": article.categories[0],
-          "item": `${siteUrl}/blog/category/${article.categories[0].toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
+          "item": `${siteUrl}/category/${article.categories[0].toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": article.title,
-          "item": `${siteUrl}/blog/${article.slug}`
+          "item": `${siteUrl}/${article.slug}`
         }
       ] : [])
     ]

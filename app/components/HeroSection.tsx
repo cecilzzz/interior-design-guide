@@ -15,7 +15,7 @@ export default function HeroSection({ category, title, date, coverImageUrl, slug
   const formattedDate = date.split('T')[0];
 
   return (
-    <Link href={`/blog/${slug}`} className="block">
+    <Link href={`/${slug}`} className="block">
       <div className="relative aspect-[16/9] group">
         {/* 背景圖片容器 - 全寬 */}
         <div className="absolute inset-0 overflow-hidden">

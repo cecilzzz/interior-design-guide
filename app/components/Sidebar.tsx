@@ -88,7 +88,7 @@ export default function Sidebar({ recommendedArticles }: SidebarProps) {
           {recommendedArticles.map((article, index) => (
             <Link 
               key={article.title}
-              href={`/blog/${article.slug}`}
+              href={`/${article.slug}`}
               className="flex items-center gap-4 group transition-all duration-300 hover:bg-gray-50 p-2 rounded-lg cursor-pointer"
             >
               <span className="text-2xl font-playfair text-gray-300 transition-colors duration-300 group-hover:text-coral-500">
