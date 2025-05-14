@@ -1,16 +1,19 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/blog",
-      "destination": "/"
+      "destination": "/",
+      "permanent": true
     },
     {
       "source": "/blog/:slug",
-      "destination": "/:slug"
+      "destination": "/:slug",
+      "permanent": true
     },
     {
       "source": "/blog/category/:category",
-      "destination": "/category/:category"
+      "destination": "/category/:category",
+      "permanent": true
     }
   ]
 } 
