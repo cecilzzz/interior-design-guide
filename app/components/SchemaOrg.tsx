@@ -7,14 +7,20 @@ type SchemaOrgProps = {
 };
 
 export function SchemaOrg({ article, category }: SchemaOrgProps) {
+  // 為環境變量設置默認值
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://interior-design-guide.vercel.app';
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Interior Design Guide';
+  const siteDescription = process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'Interior Design Ideas and Inspiration';
+  const siteAuthor = process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Interior Design Guide';
+
   // 基本網站信息 - 這個 schema 總是會被創建
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": process.env.NEXT_PUBLIC_SITE_NAME,
-    "url": process.env.NEXT_PUBLIC_SITE_URL,
-    "description": process.env.NEXT_PUBLIC_SITE_DESCRIPTION,
-    "author": process.env.NEXT_PUBLIC_SITE_AUTHOR
+    "name": siteName,
+    "url": siteUrl,
+    "description": siteDescription,
+    "author": siteAuthor
   };
 
   // 文章 schema 的創建邏輯：
@@ -31,14 +37,14 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
     "dateModified": article.date,
     "author": {
       "@type": "Person",
-      "name": process.env.NEXT_PUBLIC_SITE_AUTHOR
+      "name": siteAuthor
     },
     "publisher": {
       "@type": "Organization",
-      "name": process.env.NEXT_PUBLIC_SITE_NAME,
+      "name": siteName,
       "logo": {
         "@type": "ImageObject",
-        "url": `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`
+        "url": `${siteUrl}/logo.png`
       }
     },
     "keywords": article.categories.join(','),
@@ -54,7 +60,7 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": process.env.NEXT_PUBLIC_SITE_URL
+        "item": siteUrl
       },
       // 如果是分類頁面：Home > Dark
       ...(category ? [
@@ -62,7 +68,7 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
           "@type": "ListItem",
           "position": 2,
           "name": category,
-          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${category.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
+          "item": `${siteUrl}/blog/category/${category.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
         }
       ] : []),
       // 如果是文章頁面：Home > Dark > 40 Dark Bedroom Ideas
@@ -71,13 +77,13 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
           "@type": "ListItem",
           "position": 2,
           "name": article.categories[0],
-          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${article.categories[0].toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
+          "item": `${siteUrl}/blog/category/${article.categories[0].toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": article.title,
-          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${article.slug}`
+          "item": `${siteUrl}/blog/${article.slug}`
         }
       ] : [])
     ]
