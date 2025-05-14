@@ -2,7 +2,7 @@ import { allArticles } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import HeroSection from "./components/HeroSection";
 import FeaturedCards from "./components/FeaturedCards";
-import ArticlePage from "./blog/[slug]/ArticlePage";
+import ArticlePage from "./[slug]/ArticlePage";
 import Sidebar from "./components/Sidebar";
 import RelatedArticles from './components/RelatedArticles';
 

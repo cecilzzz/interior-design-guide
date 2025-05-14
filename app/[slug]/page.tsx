@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const canonicalUrl = `https://interior-design-guide.vercel.app/blog/${params.slug}`;
+  const canonicalUrl = `https://interior-design-guide.vercel.app/${params.slug}`;
 
   return {
     title: article.title,
