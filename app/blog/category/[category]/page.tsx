@@ -1,6 +1,8 @@
+import { notFound } from 'next/navigation';
 import { allArticles } from 'contentlayer/generated';
 import PostGrid from '@/app/components/PostGrid';
 import type { Metadata } from 'next';
+import { SchemaOrg } from '@/app/components/SchemaOrg';
 
 // 從 Navigation 中提取分類列表
 const navCategories = [
@@ -65,7 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function CategoryPage({ params }: { params: { category: string } }) {
+export default function CategoryPage({ params }: { params: { category: string } }) {
   // 用於顯示的格式：'Living Room'
   const displayCategory = params.category
     .replace('-and-', ' & ')  // URL 中的 and 轉換回 &
@@ -73,14 +75,25 @@ export default async function CategoryPage({ params }: { params: { category: str
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
+  const articles = allArticles.filter(article =>
+    article.categories.includes(displayCategory)
+  );
+
+  if (articles.length === 0) {
+    notFound();
+  }
+
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-4xl font-playfair text-center mb-4">{displayCategory}</h1>
-      <div className="text-gray-500 text-center mb-12">
-        Articles about {displayCategory.toLowerCase()}
+    <>
+      <SchemaOrg />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 className="text-4xl font-playfair text-center mb-4">{displayCategory}</h1>
+        <div className="text-gray-500 text-center mb-12">
+          Articles about {displayCategory.toLowerCase()}
+        </div>
+        <PostGrid allArticles={articles} category={displayCategory} />
       </div>
-      <PostGrid allArticles={allArticles} category={displayCategory} />
-    </div>
+    </>
   );
 }
 
