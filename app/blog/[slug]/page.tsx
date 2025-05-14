@@ -3,6 +3,7 @@ import ArticlePage from './ArticlePage';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
 import { allArticles } from 'contentlayer/generated'
+import { SchemaOrg } from '@/app/components/SchemaOrg';
 
 // 定義頁面參數類型
 type PageProps = {
@@ -75,7 +76,7 @@ export async function generateStaticParams() {
  * 文章詳情頁面組件
  */
 export default function ArticleDetailPage({ params }: { params: { slug: string } }) {
-  const article = allArticles.find((article) => article.slug === params.slug)
+  const article = allArticles.find((article) => article.slug === params.slug);
 
   if (!article) {
     notFound();
@@ -118,16 +119,19 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
     .slice(0, 5);
 
   return (
-    <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
-        <ArticlePage 
-          article={article}
-          relatedArticles={relatedArticles}
-        />
-        <Sidebar 
-          recommendedArticles={recommendedArticles}
-        />
+    <>
+      <SchemaOrg article={article} />
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
+          <ArticlePage 
+            article={article}
+            relatedArticles={relatedArticles}
+          />
+          <Sidebar 
+            recommendedArticles={recommendedArticles}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 } 

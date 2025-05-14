@@ -16,38 +16,36 @@ const navItems: NavItem[] = [
   {
     title: "ROOMS",
     subItems: [
-      { title: "Small Space", link: "/blog/category/small-space" },
+      //{ title: "Small Space", link: "/blog/category/small-space" },
       { title: "Living Room", link: "/blog/category/living-room" },
       { title: "Bedroom", link: "/blog/category/bedroom" },
       { title: "Kitchen & Dining", link: "/blog/category/kitchen-and-dining" },
       { title: "Bathroom", link: "/blog/category/bathroom" },
-      { title: "Storage & Organization", link: "/blog/category/storage-and-organization" },
-      { title: "Rental & Budget", link: "/blog/category/rental-and-budget" }
+      //{ title: "Storage & Organization", link: "/blog/category/storage-and-organization" },
+      //{ title: "Rental & Budget", link: "/blog/category/rental-and-budget" }
     ],
   },
   {
     title: "STYLES",
     subItems: [
-      // Primary Styles
-      { title: "Modern", link: "/blog/category/modern" },
-      { title: "Minimalist", link: "/blog/category/minimalist" },
-      { title: "Scandinavian", link: "/blog/category/scandinavian" },
+      //{ title: "Modern", link: "/blog/category/modern" },
+      //{ title: "Minimalist", link: "/blog/category/minimalist" },
+      //{ title: "Scandinavian", link: "/blog/category/scandinavian" },
       { title: "Japandi", link: "/blog/category/japandi" },
       { title: "Industrial", link: "/blog/category/industrial" },
-      { title: "Contemporary", link: "/blog/category/contemporary" },
+      //{ title: "Contemporary", link: "/blog/category/contemporary" },
       { title: "Mediterranean", link: "/blog/category/mediterranean" },
-      // Secondary Styles
-      { title: "Coastal", link: "/blog/category/coastal" },
+      //{ title: "Coastal", link: "/blog/category/coastal" },
       { title: "Rustic", link: "/blog/category/rustic" },
-      { title: "Farmhouse", link: "/blog/category/farmhouse" },
-      { title: "Boho", link: "/blog/category/boho" },
-      { title: "Mid-century Modern", link: "/blog/category/mid-century-modern" },
+      //{ title: "Farmhouse", link: "/blog/category/farmhouse" },
+      //{ title: "Boho", link: "/blog/category/boho" },
+      //{ title: "Mid-century Modern", link: "/blog/category/mid-century-modern" },
       { title: "French", link: "/blog/category/french" },
       { title: "Dark", link: "/blog/category/dark" },
-      { title: "Earthy", link: "/blog/category/earthy" }
+      //{ title: "Earthy", link: "/blog/category/earthy" }
     ],
   },
-  {
+  /* {
     title: "THE FRAMEWORK",
     subItems: [
       { title: "Design Principles", link: "/blog/category/design-principles" },
@@ -56,7 +54,7 @@ const navItems: NavItem[] = [
       { title: "Colors & Palettes", link: "/blog/category/colors-and-palettes" },
       { title: "Materials & Textures", link: "/blog/category/materials-and-textures" }
     ],
-  },
+  }, */
   {
     title: "ABOUT",
   },
