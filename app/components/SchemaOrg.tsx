@@ -54,7 +54,11 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": process.env.NEXT_PUBLIC_SITE_URL
+        "item": {
+          "@type": "Thing",
+          "@id": process.env.NEXT_PUBLIC_SITE_URL,
+          "name": "Home"
+        }
       },
       // 如果是分類頁面：Home > Dark
       ...(category ? [
@@ -62,7 +66,11 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
           "@type": "ListItem",
           "position": 2,
           "name": category,
-          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${category.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
+          "item": {
+            "@type": "Thing",
+            "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${category.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`,
+            "name": category
+          }
         }
       ] : []),
       // 如果是文章頁面：Home > Dark > 40 Dark Bedroom Ideas
@@ -71,13 +79,21 @@ export function SchemaOrg({ article, category }: SchemaOrgProps) {
           "@type": "ListItem",
           "position": 2,
           "name": article.categories[0],
-          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${article.categories[0].toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
+          "item": {
+            "@type": "Thing",
+            "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${article.categories[0].toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`,
+            "name": article.categories[0]
+          }
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": article.title,
-          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${article.slug}`
+          "item": {
+            "@type": "Thing",
+            "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${article.slug}`,
+            "name": article.title
+          }
         }
       ] : [])
     ]
