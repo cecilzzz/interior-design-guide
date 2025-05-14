@@ -3,9 +3,10 @@ import { Article } from 'contentlayer/generated';
 // 定義組件的參數類型
 type SchemaOrgProps = {
   article?: Article;  // 使用 ? 表示這是可選參數，可以是 Article 類型或是 undefined
+  category?: string;  // 如果是分類頁面才需要
 };
 
-export function SchemaOrg({ article }: SchemaOrgProps) {
+export function SchemaOrg({ article, category }: SchemaOrgProps) {
   // 基本網站信息 - 這個 schema 總是會被創建
   const websiteSchema = {
     "@context": "https://schema.org",
@@ -45,8 +46,6 @@ export function SchemaOrg({ article }: SchemaOrgProps) {
   } : null;
 
   // 麵包屑導航 schema
-  // 基本結構總是包含首頁
-  // 如果是文章頁面（article 存在），則添加分類和文章標題到導航中
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -57,15 +56,22 @@ export function SchemaOrg({ article }: SchemaOrgProps) {
         "name": "Home",
         "item": process.env.NEXT_PUBLIC_SITE_URL
       },
-      // ...(article ? [...] : []) 是展開運算符
-      // 如果 article 存在，就添加分類和文章的麵包屑
-      // 如果 article 不存在，就添加空陣列（即不添加額外的麵包屑）
+      // 如果是分類頁面：Home > Dark
+      ...(category ? [
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": category,
+          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${category.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
+        }
+      ] : []),
+      // 如果是文章頁面：Home > Dark > 40 Dark Bedroom Ideas
       ...(article ? [
         {
           "@type": "ListItem",
           "position": 2,
           "name": article.categories[0],
-          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/category/${article.categories[0]}`
+          "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/category/${article.categories[0].toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`
         },
         {
           "@type": "ListItem",

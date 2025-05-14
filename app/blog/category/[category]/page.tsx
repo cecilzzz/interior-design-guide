@@ -85,7 +85,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
 
   return (
     <>
-      <SchemaOrg />
+      <SchemaOrg category={displayCategory} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-4xl font-playfair text-center mb-4">{displayCategory}</h1>
         <div className="text-gray-500 text-center mb-12">
