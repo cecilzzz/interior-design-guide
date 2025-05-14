@@ -26,23 +26,23 @@ const nextConfig = {
   },
   // 確保靜態生成時正確處理動態路由
   trailingSlash: true,
-  // 添加重定向配置
+  // 使用明確的狀態碼進行重定向
   async redirects() {
     return [
       {
         source: '/blog',
         destination: '/',
-        permanent: true,
+        statusCode: 301
       },
       {
         source: '/blog/:slug',
         destination: '/:slug',
-        permanent: true,
+        statusCode: 301
       },
       {
         source: '/blog/category/:category',
         destination: '/category/:category',
-        permanent: true,
+        statusCode: 301
       },
     ];
   },
