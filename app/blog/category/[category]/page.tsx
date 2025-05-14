@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation';
 import { allArticles } from 'contentlayer/generated';
 import PostGrid from '@/app/components/PostGrid';
 import type { Metadata } from 'next';
@@ -68,20 +67,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function CategoryPage({ params }: { params: { category: string } }) {
-  // 用於顯示的格式：'Living Room'
+  // 從 URL 參數中獲取分類名稱（例如：'living-room'）並賦值給 displayCategory
   const displayCategory = params.category
-    .replace('-and-', ' & ')  // URL 中的 and 轉換回 &
+    // 1. 將 URL 中的 '-and-' 替換為 ' & '
+    // 例如：'kitchen-and-dining' -> 'kitchen & dining'
+    .replace('-and-', ' & ')
+
+    // 2. 用連字符（-）分割字符串成數組
+    // 例如：'living-room' -> ['living', 'room']
     .split('-')
+
+    // 3. 將數組中的每個單詞首字母大寫
+    // 例如：['living', 'room'] -> ['Living', 'Room']
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+
+    // 4. 將數組中的單詞用空格連接成一個字符串
+    // 例如：['Living', 'Room'] -> 'Living Room'
     .join(' ');
-
-  const articles = allArticles.filter(article =>
-    article.categories.includes(displayCategory)
-  );
-
-  if (articles.length === 0) {
-    notFound();
-  }
 
   return (
     <>
@@ -91,7 +93,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
         <div className="text-gray-500 text-center mb-12">
           Articles about {displayCategory.toLowerCase()}
         </div>
-        <PostGrid allArticles={articles} category={displayCategory} />
+        <PostGrid allArticles={allArticles} category={displayCategory} />
       </div>
     </>
   );
