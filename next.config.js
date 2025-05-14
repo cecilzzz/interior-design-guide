@@ -26,6 +26,26 @@ const nextConfig = {
   },
   // 確保靜態生成時正確處理動態路由
   trailingSlash: true,
+  // 添加重定向配置
+  async redirects() {
+    return [
+      {
+        source: '/blog',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug',
+        destination: '/:slug',
+        permanent: true,
+      },
+      {
+        source: '/blog/category/:category',
+        destination: '/category/:category',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 // 配置 MDX
