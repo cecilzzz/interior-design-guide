@@ -67,7 +67,7 @@ export default function Navigation() {
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-[#424144] z-50">
-      <div className="max-w-[120rem] mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
+      <div className="max-w-[1440px] mx-auto px-8 md:px-12">
         <div className="flex items-center justify-between h-[100px]">
           {/* Logo container */}
           <Link 
@@ -87,7 +87,7 @@ export default function Navigation() {
           </Link>
 
           {/* Primary menu container */}
-          <nav className="hidden md:flex items-center h-full">
+          <nav className="hidden lg:flex items-center h-full">
             <ul className="flex space-x-6 lg:space-x-10 font-montserrat text-sm lg:text-base tracking-widest ml-8 lg:ml-12">
               {navItems.map((item) => (
                 <li 
@@ -135,7 +135,7 @@ export default function Navigation() {
           {/* Mobile menu button */}
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-white hover:text-gray-300 transition-colors"
+            className="lg:hidden p-2 text-white hover:text-gray-300 transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? (

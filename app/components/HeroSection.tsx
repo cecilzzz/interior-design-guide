@@ -16,33 +16,31 @@ export default function HeroSection({ category, title, date, coverImageUrl, slug
 
   return (
     <Link href={`/${slug}`} className="block">
-      <div className="relative aspect-[16/9] group">
-        {/* 背景圖片容器 - 全寬 */}
-        <div className="absolute inset-0 overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-8 pt-8 md:px-12">
+        <div className="relative aspect-[16/9] group overflow-hidden rounded-lg">
+          {/* 背景圖片容器 - 全寬 */}
           <Image
             src={getImageUrl(coverImageUrl, 'hero')}
             alt={title}
             fill
-            className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 brightness-[0.85]"
+            className="object-cover transition-transform duration-700 ease-in-out group-hover:brightness-[0.85]"
             priority
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/10" />
-        </div>
-        
-        {/* 內容容器 */}
-        <div className="relative h-full flex items-center">
-          <div className="w-full text-center text-white">
-            <div className="max-w-4xl mx-auto px-4">
-              <div className="text-xs sm:text-sm tracking-widest mb-4 sm:mb-6 font-montserrat text-gray-100/90 uppercase">
+          
+          {/* 內容容器 */}
+          <div className="absolute inset-0 flex items-center justify-center text-center text-white px-4">
+            <div className="max-w-4xl space-y-4 sm:space-y-6">
+              <p className="text-xs sm:text-sm tracking-widest font-montserrat text-gray-100/90 uppercase">
                 {category}
-              </div>
-              <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6 leading-tight">
+              </p>
+              <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight">
                 {title}
               </h1>
-              <div className="text-xs sm:text-sm tracking-widest font-montserrat text-gray-100/80 uppercase">
+              <p className="text-xs sm:text-sm tracking-widest font-montserrat text-gray-100/80 uppercase">
                 {formattedDate}
-              </div>
+              </p>
             </div>
           </div>
         </div>

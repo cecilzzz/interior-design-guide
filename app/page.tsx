@@ -29,15 +29,13 @@ export default function Home() {
     <main>
       <div>
         {/* Hero section */}
-        <div className="max-w-[120rem] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-8">
-          <HeroSection
-            category={featuredArticle.categories[0]}
-            title={featuredArticle.title}
-            date={featuredArticle.date}
-            coverImageUrl={featuredArticle.coverImageUrl}
-            slug={featuredArticle.slug}
-          />
-        </div>
+        <HeroSection
+          category={featuredArticle.categories[0]}
+          title={featuredArticle.title}
+          date={featuredArticle.date}
+          coverImageUrl={featuredArticle.coverImageUrl}
+          slug={featuredArticle.slug}
+        />
         
         {/* Blog section */}
         <ArticleLayout 
