@@ -10,6 +10,7 @@ type NavItem = {
     title: string;
     link: string;
   }[];
+  link?: string;
 };
 
 const navItems: NavItem[] = [
@@ -56,7 +57,8 @@ const navItems: NavItem[] = [
     ],
   }, */
   {
-    title: "ABOUT",
+    title: "ABOUT", 
+    link: "/about"
   },
 ];
 
@@ -92,30 +94,38 @@ export default function Navigation() {
                   key={item.title}
                   className="relative group"
                 >
-                  {/* Primary menu item */}
-                  <a
-                    href="#"
-                    className="block py-1 text-white hover:text-gray-300 whitespace-nowrap"
-                  >
-                    {item.title}
-                  </a>
-                  
-                  {item.subItems && (
-                    // Submenu positioning container
-                    <div className="absolute left-0 top-full invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      {/* Submenu content container */}
-                      <div className="bg-[#3C3C3C] shadow-lg rounded-sm py-2 w-[250px] lg:w-[300px]">
-                        {item.subItems.map((subItem) => (
-                          <a
-                            key={subItem.title}
-                            href={subItem.link}
-                            className="block px-5 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-montserrat"
-                          >
-                            {subItem.title}
-                          </a>
-                        ))}
+                  {/* 如果有子菜單，顯示下拉菜單 */}
+                  {item.subItems ? (
+                    <>
+                      <a
+                        href="#"
+                        className="block py-1 text-white hover:text-gray-300 whitespace-nowrap"
+                      >
+                        {item.title}
+                      </a>
+                      
+                      <div className="absolute left-0 top-full invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <div className="bg-[#3C3C3C] shadow-lg rounded-sm py-2 w-[250px] lg:w-[300px]">
+                          {item.subItems.map((subItem) => (
+                            <Link
+                              key={subItem.title}
+                              href={subItem.link}
+                              className="block px-5 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-montserrat"
+                            >
+                              {subItem.title}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    </>
+                  ) : (
+                    // 如果是直接鏈接，使用 Link 組件
+                    <Link
+                      href={item.link || '#'}
+                      className="block py-1 text-white hover:text-gray-300 whitespace-nowrap"
+                    >
+                      {item.title}
+                    </Link>
                   )}
                 </li>
               ))}
@@ -149,24 +159,34 @@ export default function Navigation() {
               {navItems.map((item) => (
                 <div key={item.title}>
                   {/* Mobile primary menu item */}
-                  <div className="text-white py-2 border-b border-gray-600">
-                    {item.title}
-                  </div>
-                  
-                  {/* Mobile submenu items */}
-                  {item.subItems && (
-                    <div className="ml-4 mt-2 space-y-2">
-                      {item.subItems.map((subItem) => (
-                        <Link
-                          key={subItem.title}
-                          href={subItem.link}
-                          className="block py-2 text-sm text-gray-300 hover:text-white"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {subItem.title}
-                        </Link>
-                      ))}
-                    </div>
+                  {item.subItems ? (
+                    <>
+                      <div className="text-white py-2 border-b border-gray-600">
+                        {item.title}
+                      </div>
+                      
+                      {/* Mobile submenu items */}
+                      <div className="ml-4 mt-2 space-y-2">
+                        {item.subItems.map((subItem) => (
+                          <Link
+                            key={subItem.title}
+                            href={subItem.link}
+                            className="block py-2 text-sm text-gray-300 hover:text-white"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            {subItem.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.link || '#'}
+                      className="block py-2 text-white border-b border-gray-600 hover:text-gray-300"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.title}
+                    </Link>
                   )}
                 </div>
               ))}

@@ -26,26 +26,6 @@ const nextConfig = {
   },
   // 確保靜態生成時正確處理動態路由
   trailingSlash: true,
-  // 使用明確的狀態碼進行重定向
-  async redirects() {
-    return [
-      {
-        source: '/blog',
-        destination: '/',
-        statusCode: 301
-      },
-      {
-        source: '/blog/:slug',
-        destination: '/:slug',
-        statusCode: 301
-      },
-      {
-        source: '/blog/category/:category',
-        destination: '/category/:category',
-        statusCode: 301
-      },
-    ];
-  },
 };
 
 // 配置 MDX
