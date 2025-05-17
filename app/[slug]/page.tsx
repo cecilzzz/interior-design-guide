@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import ArticlePage from './ArticlePage';
-import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
 import { allArticles } from 'contentlayer/generated'
 import { SchemaOrg } from '@/app/components/SchemaOrg';
@@ -121,17 +120,11 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
   return (
     <>
       <SchemaOrg article={article} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
-          <ArticlePage 
-            article={article}
-            relatedArticles={relatedArticles}
-          />
-          <Sidebar 
-            recommendedArticles={recommendedArticles}
-          />
-        </div>
-      </div>
+      <ArticlePage 
+        article={article}
+        relatedArticles={relatedArticles}
+        recommendedArticles={recommendedArticles}
+      />
     </>
   );
 } 

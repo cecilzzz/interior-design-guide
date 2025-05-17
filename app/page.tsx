@@ -1,10 +1,7 @@
 import { allArticles } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import HeroSection from "./components/HeroSection";
-import FeaturedCards from "./components/FeaturedCards";
-import ArticlePage from "./[slug]/ArticlePage";
-import Sidebar from "./components/Sidebar";
-import RelatedArticles from './components/RelatedArticles';
+import ArticleLayout from "./components/ArticleLayout";
 
 export default function Home() {
   // 獲取最新的文章作為特色文章
@@ -40,24 +37,14 @@ export default function Home() {
             coverImageUrl={featuredArticle.coverImageUrl}
             slug={featuredArticle.slug}
           />
-          
-         {/* <div className="py-12 md:py-16">
-            <FeaturedCards />
-          </div> */}
         </div>
         
         {/* Blog section */}
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 pt-12">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
-            <ArticlePage 
-              article={featuredArticle}
-              relatedArticles={relatedArticles}
-            />
-            <Sidebar 
-              recommendedArticles={recommendedArticles}
-            />
-          </div>
-        </div>
+        <ArticleLayout 
+          article={featuredArticle}
+          relatedArticles={relatedArticles}
+          recommendedArticles={recommendedArticles}
+        />
       </div>
     </main>
   );

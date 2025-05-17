@@ -36,6 +36,8 @@ interface ArticlePageProps {
   article: Article;
   /** 相關文章列表 */
   relatedArticles: Article[];
+  /** 推薦文章列表 */
+  recommendedArticles: Article[];
 }
 
 /**
@@ -44,8 +46,13 @@ interface ArticlePageProps {
  * @param props - 組件屬性
  * @param props.currentArticle - 當前文章完整數據
  * @param props.relatedArticles - 相關文章列表
+ * @param props.recommendedArticles - 推薦文章列表
  */
-export default function ArticlePage({ article, relatedArticles }: ArticlePageProps) {
+export default function ArticlePage({ 
+  article, 
+  relatedArticles, 
+  recommendedArticles 
+}: ArticlePageProps) {
   useEffect(() => {
     // 初始化所有追蹤功能
     const cleanupArticleRead = trackArticleRead(article.title);
@@ -64,6 +71,7 @@ export default function ArticlePage({ article, relatedArticles }: ArticlePagePro
     <ArticleLayout 
       article={article} 
       relatedArticles={relatedArticles}
+      recommendedArticles={recommendedArticles}
     />
   );
 }
