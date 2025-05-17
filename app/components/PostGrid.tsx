@@ -54,7 +54,7 @@ export default function PostGrid({ allArticles, category }: PostGridProps) {
           className="group block"
         >
           {/* 文章封面圖片容器 */}
-          <div className="relative w-full mb-4 overflow-hidden rounded-lg">
+          <div className="relative w-full mb-4 overflow-hidden">
             <Image
               src={getImageUrl(article.coverImageUrl, 'sidebar')}
               alt={article.title}

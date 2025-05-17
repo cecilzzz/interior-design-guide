@@ -104,7 +104,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
   return (
     <>
       <SchemaOrg category={displayCategory} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 pt-12 grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,_0.4fr)] gap-8 md:gap-24">
+      <div className="max-w-[1440px] mx-auto px-8 md:px-12 pt-12 grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,_0.4fr)] gap-8 md:gap-24">
         <div>
           <h1 className="text-4xl font-playfair text-center mb-4">{displayCategory}</h1>
           <div className="text-gray-500 text-center mb-12">
