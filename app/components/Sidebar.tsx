@@ -15,9 +15,6 @@ export default function Sidebar({ recommendedArticles = [] }: SidebarProps) {
   return (
     <aside className="space-y-8">
       <div>
-        <h3 className="section-title text-lg font-playfair mb-8 text-center">
-          <span>MUST READ ARTICLES</span>
-        </h3>
         <div className="grid grid-cols-1 gap-6">
           {recommendedArticles.map((article) => (
             <Link 
