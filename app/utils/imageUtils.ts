@@ -40,12 +40,15 @@ const TRANSFORM_PARAMS = {
   // 文章內容圖：適中寬度，保持原比例
   content: 'w_800,c_fit,q_auto,f_auto',
   
+  // 側邊欄圖片：較窄寬度，保持原比例
+  sidebar: 'w_400,c_fit,q_auto,f_auto',
+  
   // 預設參數：基本優化
   default: 'f_auto,q_auto'
 };
 
 /** 圖片類型定義 */
-type ImageType = 'hero' | 'content' | 'default';
+type ImageType = 'hero' | 'content' | 'sidebar' | 'default';
 
 /**
  * 獲取優化後的圖片 URL
