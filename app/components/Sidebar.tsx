@@ -25,7 +25,7 @@ export default function Sidebar({ recommendedArticles = [] }: SidebarProps) {
               href={`/${article.slug}`}
               className="group"
             >
-              <div className="relative w-full mb-4 overflow-hidden rounded-lg">
+              <div className="relative w-full mb-4 overflow-hidden">
                 <Image
                   src={getImageUrl(article.coverImageUrl, 'sidebar')}
                   alt={article.title}

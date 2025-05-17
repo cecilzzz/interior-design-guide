@@ -46,7 +46,7 @@ export default function PostGrid({ allArticles, category }: PostGridProps) {
     : allArticles;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-2 gap-8">
       {filteredArticles.map((article) => (
         <Link 
           key={article._id}
@@ -54,12 +54,13 @@ export default function PostGrid({ allArticles, category }: PostGridProps) {
           className="group block"
         >
           {/* 文章封面圖片容器 */}
-          <div className="relative aspect-[3/2] mb-4 overflow-hidden rounded-lg">
+          <div className="relative w-full mb-4 overflow-hidden rounded-lg">
             <Image
-              src={getImageUrl(article.coverImageUrl, 'hero')}
+              src={getImageUrl(article.coverImageUrl, 'sidebar')}
               alt={article.title}
-              fill
-              className="object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"
+              width={0}
+              height={0}
+              className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"
             />
             {/* 懸停時的漸變遮罩 */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -76,9 +77,6 @@ export default function PostGrid({ allArticles, category }: PostGridProps) {
             <div className="text-gray-500 text-sm mb-3">
               {format(new Date(article.date), 'MMMM dd, yyyy')}
             </div>
-            <p className="text-gray-600 text-sm line-clamp-2">
-              {article.excerpt}
-            </p>
           </div>
         </Link>
       ))}

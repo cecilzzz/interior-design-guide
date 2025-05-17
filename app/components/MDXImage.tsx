@@ -29,7 +29,7 @@ export function MDXImage({
   return (
     <figure className={`
       relative w-full
-      overflow-hidden rounded-lg
+      overflow-hidden
       ${className}
     `}>
       <Image

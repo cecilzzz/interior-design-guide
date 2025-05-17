@@ -64,7 +64,7 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
         <div className="text-coral-400 uppercase tracking-[0.2em] text-xs sm:text-sm mb-4 sm:mb-6 font-light">
           {article.categories[0]} / <span className="text-gray-500">DESIGN</span>
         </div>
-        <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6">{article.title}</h1>
+        <h1 className="font-playfair text-3xl md:text-4xl mb-4 sm:mb-6">{article.title}</h1>
         <div className="text-gray-400 text-xs sm:text-sm tracking-wider">
           {format(new Date(article.date), 'MMMM dd, yyyy')}
         </div>

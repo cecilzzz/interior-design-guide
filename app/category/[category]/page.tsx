@@ -1,5 +1,6 @@
 import { allArticles } from 'contentlayer/generated';
 import PostGrid from '@/app/components/PostGrid';
+import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
 import { SchemaOrg } from '@/app/components/SchemaOrg';
 
@@ -85,15 +86,33 @@ export default function CategoryPage({ params }: { params: { category: string } 
     // 例如：['Living', 'Room'] -> 'Living Room'
     .join(' ');
 
+  // 篩選推薦文章，優先選擇同類別文章
+  const recommendedArticles = allArticles
+    .filter(article => article.categories.some(cat => 
+      cat.toLowerCase() === displayCategory.toLowerCase()
+    ))
+    .slice(0, 3);
+
+  // 如果同類別文章不足，從所有文章中補充
+  if (recommendedArticles.length < 3) {
+    const additionalArticles = allArticles
+      .filter(article => !recommendedArticles.includes(article))
+      .slice(0, 3 - recommendedArticles.length);
+    recommendedArticles.push(...additionalArticles);
+  }
+
   return (
     <>
       <SchemaOrg category={displayCategory} />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-playfair text-center mb-4">{displayCategory}</h1>
-        <div className="text-gray-500 text-center mb-12">
-          Articles about {displayCategory.toLowerCase()}
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 pt-12 grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,_0.4fr)] gap-8 md:gap-24">
+        <div>
+          <h1 className="text-4xl font-playfair text-center mb-4">{displayCategory}</h1>
+          <div className="text-gray-500 text-center mb-12">
+            Articles about {displayCategory.toLowerCase()}
+          </div>
+          <PostGrid allArticles={allArticles} category={displayCategory} />
         </div>
-        <PostGrid allArticles={allArticles} category={displayCategory} />
+        <Sidebar recommendedArticles={recommendedArticles} />
       </div>
     </>
   );
