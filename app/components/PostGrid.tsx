@@ -9,22 +9,19 @@ import { getImageUrl } from '@/app/utils/imageUtils';
  */
 interface PostGridProps {
   /** 要顯示的文章列表 */
-  allArticles: Article[];
-  /** 可選的分類過濾器 */
-  category?: string;
+  displayedArticles: Article[];
 }
 
 /**
  * PostGrid 組件
  * 
- * 負責以網格形式展示文章列表，支持分類過濾。
- * 這是一個展示型組件，處理文章的佈局和交互效果。
+ * 負責以網格形式展示文章列表。
+ * 這是一個純展示型組件，處理文章的佈局和交互效果。
  * 
  * 功能：
  * 1. 以響應式網格佈局展示文章
- * 2. 支持按分類過濾文章
- * 3. 提供豐富的懸停效果
- * 4. 優化圖片加載和展示
+ * 2. 提供豐富的懸停效果
+ * 3. 優化圖片加載和展示
  * 
  * 佈局特點：
  * - 響應式網格：1列(移動端) -> 2列(平板) -> 3列(桌面)
@@ -33,21 +30,11 @@ interface PostGridProps {
  * 
  * @param props - 組件屬性
  * @param props.allArticles - 要顯示的文章列表
- * @param props.category - 可選的分類過濾器
  */
-export default function PostGrid({ allArticles, category }: PostGridProps) {
-  // 根據分類過濾文章
-  const filteredArticles = category 
-    ? allArticles.filter(article => 
-        article.categories.some(cat => 
-          cat.toLowerCase() === category.toLowerCase()
-        )
-      )
-    : allArticles;
-
+export default function PostGrid({ displayedArticles }: PostGridProps) {
   return (
     <div className="grid grid-cols-2 gap-8">
-      {filteredArticles.map((article) => (
+      {displayedArticles.map((article) => (
         <Link 
           key={article._id}
           href={`/${article.slug}`}
@@ -87,12 +74,9 @@ export default function PostGrid({ allArticles, category }: PostGridProps) {
 /**
  * 組件職責說明：
  * 1. 展示文章列表的網格視圖
- * 2. 處理文章的過濾和排序
- * 3. 提供文章卡片的交互效果
+ * 2. 提供文章卡片的交互效果
  * 
  * 注意事項：
  * - 使用 Next.js Image 組件優化圖片加載
- * - 使用 line-clamp-2 限制摘要顯示行數
- * - 分類過濾不區分大小寫
- * - 支持多分類的文章展示
+ * - 分類過濾已移至頁面級別
  */ 

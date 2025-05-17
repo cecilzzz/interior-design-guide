@@ -70,36 +70,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function CategoryPage({ params }: { params: { category: string } }) {
   // 從 URL 參數中獲取分類名稱（例如：'living-room'）並賦值給 displayCategory
   const displayCategory = params.category
-    // 1. 將 URL 中的 '-and-' 替換為 ' & '
-    // 例如：'kitchen-and-dining' -> 'kitchen & dining'
     .replace('-and-', ' & ')
-
-    // 2. 用連字符（-）分割字符串成數組
-    // 例如：'living-room' -> ['living', 'room']
     .split('-')
-
-    // 3. 將數組中的每個單詞首字母大寫
-    // 例如：['living', 'room'] -> ['Living', 'Room']
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-
-    // 4. 將數組中的單詞用空格連接成一個字符串
-    // 例如：['Living', 'Room'] -> 'Living Room'
     .join(' ');
 
-  // 篩選推薦文章，優先選擇同類別文章
-  const recommendedArticles = allArticles
-    .filter(article => article.categories.some(cat => 
+  // 篩選文章：根據分類過濾文章
+  const categorizedArticles = allArticles.filter(article => 
+    article.categories.some(cat => 
       cat.toLowerCase() === displayCategory.toLowerCase()
-    ))
-    .slice(0, 3);
+    )
+  );
 
-  // 如果同類別文章不足，從所有文章中補充
-  if (recommendedArticles.length < 3) {
-    const additionalArticles = allArticles
-      .filter(article => !recommendedArticles.includes(article))
-      .slice(0, 3 - recommendedArticles.length);
-    recommendedArticles.push(...additionalArticles);
-  }
+  // 篩選推薦文章，排除當前分類的文章
+  const recommendedArticles = allArticles
+    .filter(article => 
+      !article.categories.some(cat => 
+        cat.toLowerCase() === displayCategory.toLowerCase()
+      )
+    )
+    .sort(() => 0.5 - Math.random()) // 隨機排序
+    .slice(0, 3);
 
   return (
     <>
@@ -110,7 +101,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
           <div className="text-gray-500 text-center mb-12">
             Articles about {displayCategory.toLowerCase()}
           </div>
-          <PostGrid allArticles={allArticles} category={displayCategory} />
+          <PostGrid displayedArticles={categorizedArticles} />
         </div>
         <Sidebar recommendedArticles={recommendedArticles} />
       </div>
