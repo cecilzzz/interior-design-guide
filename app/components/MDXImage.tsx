@@ -28,7 +28,11 @@ export function MDXImage({
   
   return (
     <figure className={`
-      relative w-full
+      relative
+      w-[calc(100%_+_4rem)]
+      -mx-8
+      md:w-full
+      md:mx-0
       overflow-hidden
       ${className}
     `}>
