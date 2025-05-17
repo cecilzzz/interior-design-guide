@@ -21,6 +21,21 @@ export default function ArticleLayout({
         <div>
           {/* 文章渲染器 */}
           <ArticleRenderer article={article} />
+
+          {/* 作者介紹 */}
+          <div className="mt-16 pt-8 border-t border-gray-100">
+            <div className="bg-white p-16 border border-gray-200 shadow-sm">
+              <div className="text-coral-400 text-2xl font-playfair font-semibold mb-8">Akio Hasegawa</div>
+              <div className="prose lg:prose-lg text-gray-700">
+                <p>
+                  Akio Hasegawa, M.Arch, is an interior design strategist with a multidisciplinary approach to architectural research and visual design. His work explores the intersections of spatial theory, cultural aesthetics, and contemporary design practices.
+                </p>
+                <p>
+                  With advanced training from Harvard Graduate School of Design and recognition from the International Interior Design Association, Hasegawa brings a sophisticated perspective to the exploration of interior design and architectural spaces.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* 側邊欄 */}
