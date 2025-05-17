@@ -76,8 +76,8 @@ export default function Navigation() {
           >
             <div className="relative w-[320px] md:w-[360px] lg:w-[400px] h-[76.8px] md:h-[86.4px] lg:h-[96px]">
               <Image
-                src="/logo-no-padding.png"
-                alt="Interior Design Guide"
+                src="/akio-hasegawa-dark.png"
+                alt="Akio Hasegawa"
                 fill
                 priority
                 className="object-contain"

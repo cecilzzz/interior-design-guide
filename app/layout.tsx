@@ -20,13 +20,13 @@ const montserrat = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://interior-design-guide.vercel.app'),
+  metadataBase: new URL('https://akio-hasegawa.design'),
   title: {
-    default: "Interior Design Guide | Your Complete Resource for Home Design",
-    template: "%s | Interior Design Guide"
+    default: "Interior Design Journal | Akio Hasegawa's Design Perspectives",
+    template: "%s | Interior Design Journal"
   },
-  description: "Discover expert tips, inspiration, and practical solutions for creating beautiful and functional living spaces. Your comprehensive guide to interior design.",
-  keywords: "interior design, home decor, living spaces, design tips, home improvement",
+  description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
+  keywords: "interior design, spatial theory, architectural research, cultural aesthetics, design perspectives, Akio Hasegawa",
   
   // Google Search Console Verification
   verification: {
@@ -40,29 +40,29 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Interior Design Guide",
-    title: "Interior Design Guide",
-    description: "Your comprehensive resource for interior design inspiration and guidance",
+    siteName: "Interior Design Journal",
+    title: "Interior Design Journal | Akio Hasegawa",
+    description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
     images: [
       {
         url: "og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "Interior Design Guide",
+        alt: "Interior Design Journal by Akio Hasegawa",
         type: 'image/jpeg',
       }
     ],
-    url: 'https://interior-design-guide.vercel.app',
+    url: 'https://akio-hasegawa.design',
   },
   
   // Twitter
   twitter: {
     card: "summary_large_image",
-    title: "Interior Design Guide",
-    description: "Your comprehensive resource for interior design inspiration and guidance",
+    title: "Interior Design Journal | Akio Hasegawa",
+    description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
     images: ["og-default.jpg"],
-    site: "@interiorguide",
-    creator: "@interiorguide",
+    site: "@akiohasegawa",
+    creator: "@akiohasegawa",
   },
   
   // Robots
@@ -84,9 +84,10 @@ export const metadata: Metadata = {
   
   // 添加額外的 meta tags
   other: {
-    'og:site_name': 'Interior Design Guide',
+    'og:site_name': 'Interior Design Journal',
     'og:type': 'website',
-    'article:publisher': 'https://www.pinterest.com/interiorguide/',
+    'article:author': 'Akio Hasegawa',
+    'article:publisher': 'https://www.pinterest.com/akiohasegawa/',
   }
 };
 
