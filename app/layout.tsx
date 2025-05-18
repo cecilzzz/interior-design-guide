@@ -45,6 +45,18 @@ const montserrat = localFont({
 //                        // }
 // }
 //
+//
+// 🤔 關於命名的吐槽：
+// - .variable 這個名字完全沒有表達它的真正作用
+// - 它不是變量本身，而是一個用來定義變量的類名
+// - 這個命名可能導致開發者誤解其用途
+// - 更好的命名建議：
+//   * cssVarDefinitionClass
+//   * fontVarInjector
+//   * fontVariableContainer
+//   * cssVarScope
+//   這些名字都能更好地表達"這是一個用來注入 CSS 變量的容器類"的概念
+
 // 使用方式：
 // 1. className 方式：直接應用字體
 //    <div className={playfair.className}>直接使用字體</div>
@@ -138,13 +150,7 @@ export default function RootLayout({
 }) {
   return (
     <html 
-      lang="zh-TW" 
-      // 可选：直接设置字体变量（通常不需要）
-      style={{
-        // 使用 .style.fontFamily 获取实际字体名称
-        '--font-montserrat': montserrat.style.fontFamily,
-        '--font-playfair': playfair.style.fontFamily
-      } as React.CSSProperties}
+      lang="en" 
     >
       <head>
         <Script
@@ -178,7 +184,7 @@ export default function RootLayout({
           font-montserrat          // 默认使用 Montserrat 字体
           
           # 导航栏高度的 padding
-          pt-[100px]
+          pt-[80px]
           
           # 其他全局样式
           antialiased               // 平滑字体渲染

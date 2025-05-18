@@ -68,7 +68,7 @@ export default function Navigation() {
   return (
     <header className="fixed top-0 left-0 right-0 bg-[#424144] z-50">
       <div className="max-w-[1440px] mx-auto px-8 md:px-12">
-        <div className="flex items-center justify-between h-[100px]">
+        <div className="flex items-center justify-between h-[80px]">
           {/* Logo container */}
           <Link 
             href="/"

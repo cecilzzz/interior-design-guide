@@ -7,14 +7,3 @@
   --background-rgb: 250, 249, 246;
   --nav-background: #3C3C3C;
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
-  font-family: var(--font-montserrat);
-  padding-top: 100px; /* 與導航欄高度相同 */
-}
-
-.heading {
-  font-family: var(--font-playfair);
-}
