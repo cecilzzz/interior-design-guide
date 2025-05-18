@@ -26,16 +26,38 @@ const montserrat = localFont({
   variable: '--font-montserrat',
 });
 
-// localFont 输出对象的详细解构：
+// localFont 輸出對象的詳細解構：
 // playfair = {
-//   className: 'playfair__unique_hash',  // 包含字体设置的唯一类名
+//   className: string,     // 一個唯一的類名，使用這個類可以直接應用字體
+//                         // 例如：className="class_hash123"
+//                         // 生成的 CSS：
+//                         // .class_hash123 {
+//                         //   font-family: 'Playfair Display';
+//                         // }
 //   style: {
-//     fontFamily: 'playfair__unique_hash',  // 生成的字体族名称
-//     fontWeight: 'variable',  // 对于可变字体
-//     fontStyle: 'normal',
+//     fontFamily: string,  // 字體的實際名稱，例如 'Playfair Display'
 //   },
-//   variable: '--font-playfair',  // 可在 CSS 中使用的变量名
+//   variable: string      // 一個唯一的類名，用於注入 CSS 變量
+//                        // 例如：className="variable_hash456"
+//                        // 生成的 CSS：
+//                        // .variable_hash456 {
+//                        //   --font-playfair: 'Playfair Display';
+//                        // }
 // }
+//
+// 使用方式：
+// 1. className 方式：直接應用字體
+//    <div className={playfair.className}>直接使用字體</div>
+//    結果：這個 div 會直接使用 Playfair Display 字體
+//    
+// 2. variable 方式：通過 CSS 變量使用，更靈活
+//    <div className={playfair.variable}>
+//      <h1 className="font-playfair">使用 CSS 變量</h1>
+//    </div>
+//    結果：
+//    - div 獲得 CSS 變量定義
+//    - h1 通過 Tailwind 的 font-playfair 類使用該變量
+//    - Tailwind 中定義：.font-playfair { font-family: var(--font-playfair) }
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://akio-hasegawa.design'),
