@@ -40,37 +40,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </div>
     ),
 
-    // 標題系列
-    h1: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-      <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-6" {...props}>
-        {children}
-      </h1>
-    ),
-    h2: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-      <h2 className="font-playfair text-2xl sm:text-3xl mb-4 mt-8" {...props}>
-        {children}
-      </h2>
-    ),
-    h3: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-      <h3 className="font-playfair text-xl sm:text-2xl mb-3 mt-6" {...props}>
-        {children}
-      </h3>
-    ),
-
-    // 文本元素
-    p: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
-      <p className="text-gray-600 mb-4 leading-relaxed" {...props}>
-        {children}
-      </p>
-    ),
-
-    // 鏈接
-    a: ({ children, ...props }: HTMLAttributes<HTMLAnchorElement>) => (
-      <a className="text-coral-500 hover:text-coral-600 no-underline" {...props}>
-        {children}
-      </a>
-    ),
-
     // 自定義組件
     MDXImage: (props: ImageData) => (
       <div className="my-8">

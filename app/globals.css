@@ -18,32 +18,3 @@ body {
 .heading {
   font-family: var(--font-playfair);
 }
-
-@layer utilities {
-  .transition-smooth {
-    @apply transition-all duration-300 ease-in-out;
-  }
-  
-  .hover-lift {
-    @apply transition-transform duration-300 hover:-translate-y-1;
-  }
-  
-  .hover-shadow {
-    @apply transition-shadow duration-300 hover:shadow-lg;
-  }
-}
-
-@layer components {
-  .section-title {
-    @apply relative text-center w-full block;
-  }
-  
-  .section-title::before {
-    content: '';
-    @apply absolute top-1/2 left-0 right-0 h-[1px] bg-gray-200 -z-10;
-  }
-  
-  .section-title span {
-    @apply bg-[rgb(var(--background-rgb))] px-8;
-  }
-}
