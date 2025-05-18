@@ -5,19 +5,37 @@ import "./globals.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
-// 配置 Playfair Display 字體（本地可變字體文件）
 const playfair = localFont({
+  // 字体文件路径（相对于项目根目录）
   src: '../public/fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf',
+  
+  // 字体加载策略
+  // - 'swap': 立即使用后备字体，字体加载完成后替换
+  // - 'block': 等待字体加载，可能导致短暂白屏
+  // - 'fallback': 介于 'swap' 和 'block' 之间的策略
   display: 'swap',
+  
+  // 定义 CSS 变量名，用于在 CSS 和 Tailwind 中引用
   variable: '--font-playfair',
 });
 
-// 配置 Montserrat 字體（本地可變字體文件）
+
 const montserrat = localFont({
   src: '../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf',
   display: 'swap',
   variable: '--font-montserrat',
 });
+
+// localFont 输出对象的详细解构：
+// playfair = {
+//   className: 'playfair__unique_hash',  // 包含字体设置的唯一类名
+//   style: {
+//     fontFamily: 'playfair__unique_hash',  // 生成的字体族名称
+//     fontWeight: 'variable',  // 对于可变字体
+//     fontStyle: 'normal',
+//   },
+//   variable: '--font-playfair',  // 可在 CSS 中使用的变量名
+// }
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://akio-hasegawa.design'),
@@ -97,7 +115,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html 
+      lang="zh-TW" 
+      // 可选：直接设置字体变量（通常不需要）
+      style={{
+        // 使用 .style.fontFamily 获取实际字体名称
+        '--font-montserrat': montserrat.style.fontFamily,
+        '--font-playfair': playfair.style.fontFamily
+      } as React.CSSProperties}
+    >
       <head>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-PGBK5E7000"
@@ -116,9 +142,31 @@ export default function RootLayout({
         </Script>
         <meta name="p:domain_verify" content="b23e59bbecfac7fc71535e2c969afc73" />
       </head>
-      <body className={`${playfair.variable} ${montserrat.variable}`}>
+      
+      <body 
+        // 使用 .variable 注入 CSS 变量
+        // 这是推荐的字体应用方式
+        className={`
+          ${playfair.variable}    // 注入 --font-playfair 变量
+          ${montserrat.variable}  // 注入 --font-montserrat 变量
+          
+          # 全局样式设置
+          text-[rgb(0,0,0)]        // 文字颜色
+          bg-[rgb(250,249,246)]    // 背景颜色
+          font-montserrat          // 默认使用 Montserrat 字体
+          
+          # 导航栏高度的 padding
+          pt-[100px]
+          
+          # 其他全局样式
+          antialiased               // 平滑字体渲染
+          scroll-smooth             // 平滑滚动
+        `}
+      >
         <Navigation />
+        
         <main>{children}</main>
+        
         <Footer />
       </body>
     </html>
