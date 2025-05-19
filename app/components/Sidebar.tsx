@@ -13,7 +13,7 @@ export default function Sidebar({ recommendedArticles = [] }: SidebarProps) {
   }
 
   return (
-    <aside className="space-y-8">
+    <aside className="hidden lg:block space-y-8">
       <div>
         <div className="grid grid-cols-1 gap-6">
           {recommendedArticles.map((article) => (
