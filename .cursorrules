@@ -1,0 +1,61 @@
+# Interior Inspiration Website Tech Stack and Project Structure
+
+## Project Type
+- Static Website (SSG - Static Site Generation)
+- Important Notes:
+  - All pages are pre-rendered at build time
+  - No server-side operations after deployment
+  - Content updates require rebuild and redeploy
+  - Build output is in /out directory
+
+## Tech Stack
+- Framework: Next.js 13.5.8 (App Router)
+- Language: TypeScript
+- Styling: Tailwind CSS 3.3.6
+- Content Management: 
+  - MDX (with @mdx-js)
+  - Contentlayer
+  - next-mdx-remote
+- UI Components:
+  - @headlessui/react
+  - @heroicons/react
+  - react-icons
+- Image Processing: Cloudinary
+- Development Tools:
+  - ESLint
+  - PostCSS
+  - TypeScript
+  - ts-node
+
+## Typography
+- Font Implementation:
+  - Using next/font/local for optimal performance
+  - Fonts are locally hosted in /public/fonts/
+  - Default font settings are configured in app/layout.tsx body tag
+  - Font loading strategy: 'swap' for better performance
+
+## Project Structure
+/
+├── app/                    # Next.js app router pages and components
+├── content/               # MDX content files
+├── .contentlayer/         # Generated content layer files
+├── public/               # Static assets
+├── scripts/              # Utility scripts (image processing etc.)
+├── types/                # TypeScript type definitions
+└── components/           # Reusable React components
+
+## Configuration Files
+- next.config.js          # Next.js configuration
+- contentlayer.config.ts  # Content layer configuration
+- tailwind.config.ts     # Tailwind CSS configuration
+- tsconfig.json          # TypeScript configuration
+- postcss.config.js      # PostCSS configuration
+- eslint.config.mjs      # ESLint configuration
+
+## Build and Development
+- Development: `npm run dev`
+- Production Build: `npm run build` (Generates static files in /out)
+- Preview: `npm run preview` (Serves static files from /out)
+- Content Tools: 
+  - Image Upload: `npm run upload-images`
+  - Image Upload Test: `npm run upload-images:test` 
