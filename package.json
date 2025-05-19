@@ -1,6 +1,6 @@
 {
-  "name": "interior-design-guide",
-  "version": "0.4.0",
+  "name": "akio-hasegawa",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
