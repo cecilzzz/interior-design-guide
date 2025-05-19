@@ -7,37 +7,37 @@ import { SchemaOrg } from '@/app/components/SchemaOrg';
 // 從 Navigation 中提取分類列表
 const navCategories = [
   // Rooms
-  "small-space",
+  // "small-space",
   "living-room",
   "bedroom",
   "kitchen-and-dining",
   "bathroom",
-  "storage-and-organization",
-  "rental-and-budget",
+  // "storage-and-organization",
+  // "rental-and-budget",
   
   // Styles
-  "modern",
-  "minimalist",
-  "scandinavian",
+  // "modern",
+  // "minimalist",
+  // "scandinavian",
   "japandi",
   "industrial",
-  "contemporary",
+  // "contemporary",
   "mediterranean",
-  "coastal",
+  // "coastal",
   "rustic",
-  "farmhouse",
-  "boho",
-  "mid-century-modern",
+  // "farmhouse",
+  // "boho",
+  // "mid-century-modern",
   "french",
   "dark",
-  "earthy",
+  // "earthy",
   
   // Framework
-  "design-principles",
-  "space-planning",
-  "colors-and-palettes",
-  "lighting",
-  "materials-and-textures"
+  // "design-principles",
+  // "space-planning",
+  // "colors-and-palettes",
+  // "lighting",
+  // "materials-and-textures"
 ];
 
 type Props = {
