@@ -19,6 +19,11 @@ const playfair = localFont({
   variable: '--font-playfair',
 });
 
+const lora = localFont({
+  src: '../public/fonts/Lora/Lora-VariableFont_wght.ttf',
+  display: 'swap',
+  variable: '--font-lora',
+});
 
 const montserrat = localFont({
   src: '../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf',
@@ -177,11 +182,12 @@ export default function RootLayout({
         className={`
           ${playfair.variable}    // 注入 --font-playfair 变量
           ${montserrat.variable}  // 注入 --font-montserrat 变量
+          ${lora.variable}  // 注入 --font-lora 变量
           
           # 全局样式设置
           text-[rgb(0,0,0)]        // 文字颜色
           bg-[rgb(250,249,246)]    // 背景颜色
-          font-montserrat          // 默认使用 Montserrat 字体
+          font-lora          // 默认使用 Lora 字体
           
           # 导航栏高度的 padding
           pt-[80px]

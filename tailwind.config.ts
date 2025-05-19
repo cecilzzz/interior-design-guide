@@ -14,6 +14,7 @@ const config: Config = {
       fontFamily: {
         "playfair": ["var(--font-playfair)"],
         "montserrat": ["var(--font-montserrat)"],
+        "lora": ["var(--font-lora)"],
       },
       colors: {
         gray: {
