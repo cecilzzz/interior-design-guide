@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -64,9 +64,56 @@ const navItems: NavItem[] = [
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+      
+      // 只在滾動超過一定距離時才觸發隱藏
+      if (currentScrollY < 100) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY) {
+        // 向下滾動
+        setIsVisible(false);
+      } else {
+        // 向上滾動
+        setIsVisible(true);
+      }
+
+      // 更新最後滾動位置
+      setLastScrollY(currentScrollY);
+    };
+
+    // 使用 requestAnimationFrame 優化滾動事件
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          controlNavbar();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [lastScrollY]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-[#424144] z-50">
+    <header 
+      className={`
+        fixed top-0 left-0 right-0 z-50 
+        bg-[#424144]
+        transition-transform duration-300 ease-in-out
+        ${isVisible ? 'translate-y-0' : '-translate-y-full'}
+      `}
+    >
       <div className="max-w-[1440px] mx-auto px-8 md:px-12">
         <div className="flex items-center justify-between h-[80px]">
           {/* Logo container */}
