@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://interior-design-guide.vercel.app',
+  siteUrl: 'https://akio-hasegawa.design',
   generateRobotsTxt: true,
   outDir: './public',
   robotsTxtOptions: {
@@ -16,7 +16,7 @@ module.exports = {
       }
     ],
     additionalSitemaps: [
-      'https://interior-design-guide.vercel.app/sitemap.xml'
+      'https://akio-hasegawa.design/sitemap.xml'
     ],
   },
   exclude: ['/api/*', '/static/*', '/_next/*'],

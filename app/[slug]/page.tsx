@@ -22,12 +22,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const canonicalUrl = `https://interior-design-guide.vercel.app/${params.slug}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://akio-hasegawa.design';
+  const canonicalUrl = `${siteUrl}/${params.slug}`;
 
   return {
     title: article.title,
     description: article.excerpt,
-    metadataBase: new URL('https://interior-design-guide.vercel.app'),
+    metadataBase: new URL(siteUrl || 'https://akio-hasegawa.design'),
     alternates: {
       canonical: canonicalUrl,
     },

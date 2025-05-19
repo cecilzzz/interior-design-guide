@@ -6,7 +6,7 @@ Disallow: /api/
 Disallow: /static/
 
 # Host
-Host: https://interior-design-guide.vercel.app
+Host: https://akio-hasegawa.design
 
 # Sitemaps
-Sitemap: https://interior-design-guide.vercel.app/sitemap.xml
+Sitemap: https://akio-hasegawa.design/sitemap.xml

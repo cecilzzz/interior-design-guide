@@ -9,8 +9,8 @@ type SchemaOrgProps = {
 
 export function SchemaOrg({ article, category, isAboutPage }: SchemaOrgProps) {
   // 為環境變量設置默認值
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://interior-design-guide.vercel.app';
-  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Interior Design Guide';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://akio-hasegawa.design';
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Akio Hasegawa';
   const siteAuthor = process.env.NEXT_PUBLIC_SITE_AUTHOR || 'Akio Hasegawa';
 
   // 文章 schema
