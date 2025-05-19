@@ -38,9 +38,6 @@ export default function HeroSection({ category, title, date, coverImageUrl, slug
               <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight">
                 {title}
               </h1>
-              <p className="text-xs sm:text-sm tracking-widest font-montserrat text-gray-100/80 uppercase">
-                {formattedDate}
-              </p>
             </div>
           </div>
         </div>
