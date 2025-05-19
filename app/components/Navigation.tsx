@@ -149,7 +149,7 @@ export default function Navigation() {
         {/* Mobile menu panel */}
         <div 
           className={`
-            md:hidden fixed inset-0 top-[100px] bg-[#424144] 
+            font-montserrat lg:hidden fixed inset-0 top-[80px] bg-[#424144] 
             transition-transform duration-300 ease-in-out
             ${isOpen ? 'translate-x-0' : 'translate-x-full'}
           `}
