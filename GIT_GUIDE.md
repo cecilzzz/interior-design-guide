@@ -44,11 +44,73 @@ git restore src/*.ts      # 只丟棄 src 目錄下的 ts 文件的更改
 
 ## 日常工作流程
 
-最常用的工作流程是：
-1. 查看當前狀態：`git status`
-2. 添加更改到暫存區：`git add .`
-3. 提交更改：`git commit -m "提交信息"`
-4. 推送到遠程：`git push`
+### 基本工作流程
+```bash
+git status                   # 查看當前狀態
+git add .                    # 添加更改到暫存區
+git commit -m "提交信息"      # 提交更改
+git push                     # 推送到遠程
+```
+
+### 分支合併工作流程
+
+1. **正常的分支合併**（如 develop 合併到 main）：
+```bash
+# 1. 切換到目標分支（如 main）
+git checkout main
+
+# 2. 合併源分支（如 develop）
+git merge develop           # 快速合併
+# 或
+git merge develop --no-ff   # 保留合併歷史
+
+# 3. 推送到遠程
+git push origin main
+```
+
+2. **處理提交歷史混亂的合併**（完全同步到目標分支）：
+```bash
+# 假設要讓 main 完全與 develop 一致
+git checkout main          # 切換到目標分支
+git reset --hard develop   # 強制指向與 develop 相同的提交
+git push --force origin main  # 強制推送（謹慎使用）
+```
+
+### 分支管理最佳實踐
+
+1. **開發新功能**：
+```bash
+git checkout -b feature/xxx develop  # 從 develop 創建功能分支
+# 開發完成後
+git checkout develop                 # 切回 develop
+git merge feature/xxx               # 合併功能分支
+```
+
+2. **緊急修復**：
+```bash
+git stash                   # 保存當前工作
+git checkout -b hotfix/xxx  # 創建修復分支
+# 修復完成後
+git checkout main          # 切換到主分支
+git merge hotfix/xxx       # 合併修復
+git checkout develop       # 切換回開發分支
+git merge hotfix/xxx       # 同步修復到開發分支
+git stash pop              # 恢復之前的工作
+```
+
+3. **保持分支同步**：
+```bash
+# 在功能分支上同步 develop 的更新
+git checkout feature/xxx    # 切換到功能分支
+git merge develop          # 合併 develop 的更新
+```
+
+### 注意事項
+1. 合併前先確保本地分支是最新的
+2. 大的功能改動建議使用 `--no-ff` 保留合併歷史
+3. 使用 `--force` 推送時要特別小心，確保不會影響他人的工作
+4. 合併後記得測試，確保功能正常
+5. 養成經常性合併主分支更新的習慣，避免後期大量衝突
 
 ## 暫存區操作
 
@@ -117,6 +179,40 @@ git merge <分支名>          # 合併指定分支到當前分支
 git merge --no-ff <分支名>  # 強制創建合併提交
 git merge --abort          # 取消正在進行的合併
 ```
+
+#### Fast-forward（快進）合併與 --no-ff 的區別
+
+1. **Fast-forward 合併（預設行為）**：
+```
+      A---B---C (feature)
+     /
+D---E (main)
+```
+合併後：
+```
+D---E---A---B---C (main, feature)
+```
+- 當 main 分支沒有新的提交時，Git 直接將 main 指向 feature 的最新提交
+- 不會創建新的合併提交
+- 提交歷史是線性的
+- 看不出來這些提交是來自哪個分支
+
+2. **--no-ff（禁止快進）合併**：
+```
+      A---B---C (feature)
+     /         \
+D---E-----------M (main)
+```
+- 即使可以快進，也強制創建一個新的合併提交（M）
+- 保留了分支的歷史記錄
+- 可以清楚地看到哪些提交是來自特性分支
+- 方便回滾整個特性分支的改動
+
+使用建議：
+1. 對於重要的特性分支開發，建議使用 `--no-ff`
+2. 對於臨時性的 bugfix，使用預設的 fast-forward 即可
+3. 在團隊開發中，`--no-ff` 有助於理解代碼的來源和歷史
+4. 如果想保持清晰的 Git 歷史結構，建議在合併特性分支時總是使用 `--no-ff`
 
 ## 回滾和復原
 
