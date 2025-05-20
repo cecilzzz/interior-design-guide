@@ -5,6 +5,7 @@ import "./globals.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ScrollToTop from '@/app/components/ScrollToTop';
+import { Analytics } from '@vercel/analytics/react';
 
 const playfair = localFont({
   // 字体文件路径（相对于项目根目录）
@@ -204,6 +205,7 @@ export default function RootLayout({
         
         <Footer />
         <ScrollToTop />
+        <Analytics />
       </body>
     </html>
   );
