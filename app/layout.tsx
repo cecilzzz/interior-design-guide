@@ -104,11 +104,11 @@ export const metadata: Metadata = {
     description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
     images: [
       {
-        url: "og-default.jpg",
-        width: 1200,
-        height: 630,
+        url: "akio-hasegawa-light.png",
+        width: 500,
+        height: 120,
         alt: "Interior Design Journal by Akio Hasegawa",
-        type: 'image/jpeg',
+        type: 'image/png',
       }
     ],
     url: 'https://akio-hasegawa.design',
@@ -119,7 +119,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Interior Design Journal | Akio Hasegawa",
     description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
-    images: ["og-default.jpg"],
+    images: ["akio-hasegawa-light.png"],
     site: "@akiohasegawa",
     creator: "@akiohasegawa",
   },
