@@ -19,7 +19,7 @@ export default function Footer() {
             <h3 className="font-playfair text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/blog" className="text-gray-600 hover:text-coral-500">
+                <Link href="/" className="text-gray-600 hover:text-coral-500">
                   Blog
                 </Link>
               </li>
@@ -29,7 +29,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-600 hover:text-coral-500">
+                <Link href="/" className="text-gray-600 hover:text-coral-500">
                   Contact
                 </Link>
               </li>
