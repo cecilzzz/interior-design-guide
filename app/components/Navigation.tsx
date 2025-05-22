@@ -29,19 +29,19 @@ const navItems: NavItem[] = [
   {
     title: "STYLES",
     subItems: [
+      { title: "French", link: "/category/french" },
+      { title: "Mediterranean", link: "/category/mediterranean" },
       //{ title: "Modern", link: "/category/modern" },
       //{ title: "Minimalist", link: "/category/minimalist" },
       //{ title: "Scandinavian", link: "/category/scandinavian" },
       { title: "Japandi", link: "/category/japandi" },
       { title: "Industrial", link: "/category/industrial" },
       //{ title: "Contemporary", link: "/category/contemporary" },
-      { title: "Mediterranean", link: "/category/mediterranean" },
       //{ title: "Coastal", link: "/category/coastal" },
       { title: "Rustic", link: "/category/rustic" },
       //{ title: "Farmhouse", link: "/category/farmhouse" },
       //{ title: "Boho", link: "/category/boho" },
       //{ title: "Mid-century Modern", link: "/category/mid-century-modern" },
-      { title: "French", link: "/category/french" },
       { title: "Dark", link: "/category/dark" },
       //{ title: "Earthy", link: "/category/earthy" }
     ],
