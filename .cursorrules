@@ -58,4 +58,108 @@
 - Preview: `npm run preview` (Serves static files from /out)
 - Content Tools: 
   - Image Upload: `npm run upload-images`
-  - Image Upload Test: `npm run upload-images:test` 
+  - Image Upload Test: `npm run upload-images:test`
+  - Generate Image Sitemap: `npm run generate-image-sitemap`
+
+## Node.js 腳本運行環境詳解
+
+### 背景：原始圖片處理系統
+你原本建立這個 Node.js 環境是為了運行圖片批量上傳到 Cloudinary 的腳本：
+- `npm run upload-images` - 批量上傳所有圖片
+- `npm run upload-images:test` - 測試單一文章的圖片上傳
+
+### 1. 為什麼需要特殊的 Node.js 設定？
+
+**問題**：你的圖片處理腳本是用 TypeScript 寫的（`.mts` 檔案），但 Node.js 原生不支援直接執行 TypeScript。
+
+**解決方案**：建立一個特殊的執行環境，讓 Node.js 可以直接運行 TypeScript 檔案。
+
+### 2. 設定檔案解析
+
+#### `scripts/package.json`
+```json
+{
+  "type": "module",
+  "private": true
+}
+```
+- **作用**：告訴 Node.js 這個目錄下的所有 `.js` 檔案都是 ES Module 格式
+- **為什麼需要**：現代 JavaScript 語法，支援 `import/export`
+
+#### `scripts/register.mjs`
+```javascript
+import { register } from 'node:module';
+import { pathToFileURL } from 'node:url';
+
+register('ts-node/esm', pathToFileURL('./'));
+```
+- **作用**：這是一個「載入器註冊器」
+- **功能**：告訴 Node.js 如何處理 TypeScript 檔案
+- **結果**：Node.js 現在可以直接執行 `.ts` 和 `.mts` 檔案
+
+### 3. 執行命令解析
+
+#### 原始圖片上傳命令
+```bash
+node --import ./scripts/register.mjs scripts/image-processor/index.mts
+```
+
+#### 新的 sitemap 生成命令
+```bash
+node --import ./scripts/register.mjs scripts/generate-image-sitemap.js
+```
+
+**執行流程**：
+1. `node` 啟動
+2. `--import ./scripts/register.mjs` 載入 TypeScript 支援
+3. 執行主腳本（可以是 `.mts` 或 `.js`）
+
+### 4. 圖片處理腳本架構
+
+你的原始 `scripts/image-processor/` 包含：
+- `index.mts` - 主要執行檔案
+- `cloudinaryUploader.mts` - Cloudinary 上傳邏輯
+- `imageCollector.mts` - MDX 圖片解析器
+- `pinterestPublisher.mts` - Pinterest 發布功能
+
+### 5. 新腳本如何重用現有基礎設施
+
+新的 `generate-image-sitemap.js` 腳本：
+- **重用相同的執行環境**：使用同樣的 `register.mjs` 載入器
+- **重用現有模組**：動態導入 `imageCollector.mts` 來解析 MDX 圖片
+- **重用圖片工具**：導入 `app/utils/imageUtils.ts` 來生成 URL
+
+### 6. 動態導入的必要性
+
+```javascript
+// 為什麼不能直接 import？
+// import { getCollectedImages } from './image-processor/imageCollector.mts'; // ❌ 會有路徑問題
+
+// 為什麼要用動態導入？
+async function importImageCollector() {
+  const { getCollectedImages } = await import('./image-processor/imageCollector.mts'); // ✅ 運行時解析
+  return { getCollectedImages };
+}
+```
+
+### 7. 實際運作流程
+
+當你執行 `npm run generate-image-sitemap` 時：
+
+1. **Node.js 啟動** + 載入 TypeScript 支援
+2. **執行 sitemap 腳本**
+3. **動態導入圖片解析器**（重用你的原始工具）
+4. **動態導入圖片 URL 工具**（重用 app 目錄的工具）
+5. **讀取 Contentlayer 資料**（避免語法衝突）
+6. **生成 sitemap XML**
+
+### 8. 為什麼這樣設計？
+
+- **重用現有投資**：不需要重寫圖片處理邏輯
+- **保持一致性**：使用相同的 Cloudinary 設定和 URL 格式
+- **避免重複**：一套 TypeScript 執行環境服務多個腳本
+- **模組化設計**：每個腳本專注自己的功能，但可以共享工具
+
+### 9. 簡單總結
+
+你原本為了上傳圖片到 Cloudinary 建立了一個「Node.js 可以執行 TypeScript」的環境。現在新的 sitemap 生成腳本就像是一個新房客，搬進了同一個已經裝修好的房子，重用了相同的基礎設施和工具。 

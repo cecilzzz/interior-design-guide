@@ -10,3 +10,4 @@ Host: https://akio-hasegawa.design
 
 # Sitemaps
 Sitemap: https://akio-hasegawa.design/sitemap.xml
+Sitemap: https://akio-hasegawa.design/image-sitemap.xml

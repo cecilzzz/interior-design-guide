@@ -16,7 +16,8 @@ module.exports = {
       }
     ],
     additionalSitemaps: [
-      'https://akio-hasegawa.design/sitemap.xml'
+      'https://akio-hasegawa.design/sitemap.xml',
+      'https://akio-hasegawa.design/image-sitemap.xml'
     ],
   },
   exclude: ['/api/*', '/static/*', '/_next/*'],
