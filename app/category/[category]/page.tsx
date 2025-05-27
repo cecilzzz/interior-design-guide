@@ -23,7 +23,7 @@ const navCategories = [
   "industrial",
   // "contemporary",
   "mediterranean",
-  // "coastal",
+  "coastal",
   "rustic",
   // "farmhouse",
   // "boho",
