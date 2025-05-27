@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next-sitemap && npm run generate-image-sitemap && cp -r public/sitemap*.xml public/robots.txt public/image-sitemap.xml out/",
+    "build": "next build && next-sitemap && npm run generate-image-sitemap:vercel && cp -r public/sitemap*.xml public/robots.txt public/image-sitemap.xml out/",
     "start": "serve out",
     "preview": "serve out",
     "lint": "next lint",
     "upload-images": "node --import ./scripts/register.mjs scripts/image-processor/index.mts",
     "upload-images:test": "node --import ./scripts/register.mjs scripts/image-processor/index.mts content/posts/japandi/40-japandi-living-room-ideas.mdx",
-    "generate-image-sitemap": "node --import ./scripts/register.mjs scripts/generate-image-sitemap.js"
+    "generate-image-sitemap": "node --import ./scripts/register.mjs scripts/generate-image-sitemap.js",
+    "generate-image-sitemap:vercel": "node scripts/generate-image-sitemap-vercel.js"
   },
   "dependencies": {
     "@headlessui/react": "1.7.17",
