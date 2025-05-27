@@ -12,6 +12,7 @@ import type { ImageData } from '../../app/types/image';
  * - 保持原始寬高比
  * - Pinterest 分享功能
  * - 圖片優化和加載
+ * - 結構化數據支持
  * 
  * 注意事項：
  * - 使用 figure 標籤來符合語義化
@@ -25,6 +26,27 @@ export function MDXImage({
   className = '' 
 }: ImageData) {
   const imageUrl = getImageUrl(seo.seoFileName, 'content');
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://akio-hasegawa.design';
+  
+  // 結構化數據 for Google Images
+  const imageStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    "url": imageUrl,
+    "name": seo.altText,
+    "description": pin.description,
+    "contentUrl": imageUrl,
+    "acquireLicensePage": `${siteUrl}/${localPath.articleSlug}`,
+    "creditText": "Akio Hasegawa Design",
+    "creator": {
+      "@type": "Person",
+      "name": "Akio Hasegawa"
+    },
+    "copyrightHolder": {
+      "@type": "Person", 
+      "name": "Akio Hasegawa"
+    }
+  };
   
   return (
     <figure className={`
@@ -36,6 +58,14 @@ export function MDXImage({
       overflow-hidden
       ${className}
     `}>
+      {/* 結構化數據 */}
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ 
+          __html: JSON.stringify(imageStructuredData) 
+        }} 
+      />
+      
       <Image
         src={imageUrl}
         alt={seo.altText}
@@ -44,11 +74,13 @@ export function MDXImage({
         className="w-full h-auto object-cover"
         sizes="(min-width: 1280px) 1200px, 92vw"
         quality={85}
+        priority={false}
+        loading="lazy"
       />
       <PinterestButton 
         description={pin.description}
         media={imageUrl}
-        url={process.env.NEXT_PUBLIC_SITE_URL || ''}
+        url={`${siteUrl}/${localPath.articleSlug}`}
       />
     </figure>
   );
