@@ -2,6 +2,8 @@ import { allArticles } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import HeroSection from "./components/HeroSection";
 import ArticleLayout from "./components/ArticleLayout";
+import PostGrid from "./components/PostGrid";
+import Sidebar from "./components/Sidebar";
 
 export default function Home() {
   // 獲取最新的文章作為特色文章
@@ -27,22 +29,9 @@ export default function Home() {
 
   return (
     <main>
-      <div>
-        {/* Hero section */}
-        <HeroSection
-          category={featuredArticle.categories[0]}
-          title={featuredArticle.title}
-          date={featuredArticle.date}
-          coverImageUrl={featuredArticle.coverImageUrl}
-          slug={featuredArticle.slug}
-        />
-        
-        {/* Blog section */}
-        <ArticleLayout 
-          article={featuredArticle}
-          relatedArticles={relatedArticles}
-          recommendedArticles={recommendedArticles}
-        />
+      <div className="max-w-[1440px] mx-auto px-8 md:px-12 pt-12 grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,_0.4fr)] gap-8 md:gap-24">
+        <PostGrid displayedArticles={allArticles} />
+        <Sidebar recommendedArticles={recommendedArticles} />
       </div>
     </main>
   );
