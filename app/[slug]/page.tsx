@@ -112,10 +112,7 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
   // 優化推薦文章的選擇邏輯
   const recommendedArticles = allArticles
     .filter(a => a.slug !== article.slug)
-    .sort((a, b) => {
-      // 按發布日期排序
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    })
+    .sort(() => 0.5 - Math.random()) // 隨機排序
     .slice(0, 5);
 
   return (
