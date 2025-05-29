@@ -3,21 +3,22 @@ import path from 'path';
 
 // 簡化的圖片 URL 生成函數（不依賴外部模組）
 function getImageUrl(imagePath, variant = 'content') {
-  const baseUrl = 'https://res.cloudinary.com/dcbryptkx/image/upload';
+  const baseUrl = 'https://res.cloudinary.com/dwobltbzw/image/upload';
   
   // 移除開頭的 /posts/content/ 如果存在
   const cleanPath = imagePath.replace(/^\/posts\/content\//, '');
   
   // 根據變體設定不同的轉換參數
   const transformations = {
-    hero: 'c_fill,w_1200,h_630,f_auto,q_auto',
-    content: 'c_fill,w_800,h_600,f_auto,q_auto',
-    thumbnail: 'c_fill,w_400,h_300,f_auto,q_auto'
+    hero: 'w_1200,c_fit,q_auto,f_auto',
+    content: 'w_800,c_fit,q_auto,f_auto',
+    thumbnail: 'w_400,c_fit,q_auto,f_auto'
   };
   
   const transform = transformations[variant] || transformations.content;
   
-  return `${baseUrl}/${transform}/posts/content/${cleanPath}`;
+  // 直接使用清理後的路徑，不再添加 /posts/content/
+  return `${baseUrl}/${transform}/${cleanPath}`;
 }
 
 // 簡化的 MDX 圖片提取函數

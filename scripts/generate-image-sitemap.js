@@ -36,8 +36,8 @@ async function generateImageSitemap() {
       
       // 添加封面圖片
       if (article.coverImageUrl) {
-        // 使用 imageUtils 處理封面圖片 URL
-        const imageUrl = getImageUrl(`/posts/content/${article.coverImageUrl}`, 'hero');
+        // 使用 imageUtils 處理封面圖片 URL，直接使用檔名
+        const imageUrl = getImageUrl(article.coverImageUrl, 'hero');
         
         images.push({
           url: imageUrl,
@@ -50,8 +50,8 @@ async function generateImageSitemap() {
         const collectedImages = await getCollectedImages(article.body.raw);
         
         for (const imageData of collectedImages) {
-          // 使用 imageUtils 構建 Cloudinary URL
-          const imageUrl = getImageUrl(`/posts/content/${imageData.seo.seoFileName}`, 'content');
+          // 使用 imageUtils 構建 Cloudinary URL，直接使用 seoFileName
+          const imageUrl = getImageUrl(imageData.seo.seoFileName, 'content');
           
           images.push({
             url: imageUrl,
