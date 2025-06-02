@@ -24,7 +24,7 @@ export default function Sidebar({ recommendedArticles = [] }: SidebarProps) {
             >
               <div className="relative w-full mb-4 overflow-hidden">
                 <Image
-                  src={getImageUrl(article.coverImage, 'sidebar')}
+                  src={getImageUrl(article.coverImage, 'thumbnail')}
                   alt={article.coverImageAlt || article.title}
                   width={0}
                   height={0}
