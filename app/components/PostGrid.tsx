@@ -33,7 +33,7 @@ interface PostGridProps {
  */
 export default function PostGrid({ displayedArticles }: PostGridProps) {
   return (
-    <div className="grid grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
       {displayedArticles.map((article) => (
         <Link 
           key={article._id}
