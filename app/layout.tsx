@@ -176,6 +176,9 @@ export default function RootLayout({
           `}
         </Script>
         <meta name="p:domain_verify" content="b23e59bbecfac7fc71535e2c969afc73" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/akio-hasegawa-light.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/akio-hasegawa-light.png" />
       </head>
       
       <body 

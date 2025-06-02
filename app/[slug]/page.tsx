@@ -68,7 +68,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export async function generateStaticParams() {
   return allArticles.map((article) => ({
     slug: article.slug,
-  }))
+  })).filter(({ slug }) => {
+    // 過濾掉非文章路徑，如 favicon.ico, robots.txt 等
+    return !slug.includes('.') && !slug.startsWith('_') && slug.length > 0;
+  });
 }
 
 
