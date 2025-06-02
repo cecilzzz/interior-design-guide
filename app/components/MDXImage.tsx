@@ -80,7 +80,7 @@ export function MDXImage({
       <PinterestButton 
         description={pin.description}
         media={imageUrl}
-        url={`${siteUrl}/${localPath.articleSlug}`}
+        url={`${siteUrl}/${localPath.articleSlug}/`}
       />
     </figure>
   );

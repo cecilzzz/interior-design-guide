@@ -5,8 +5,7 @@ import { Article } from 'contentlayer/generated';
 import { format } from 'date-fns';
 import { getMDXComponent } from 'next-contentlayer/hooks';
 import { useMDXComponents } from '@/mdx-components';
-import { getImageUrl } from '@/app/utils/imageUtils';
-import Image from 'next/image';
+import { MDXImage } from './MDXImage';
 
 /**
  * ArticleRenderer 組件
@@ -24,20 +23,19 @@ import Image from 'next/image';
  * - ArticleLayout (app/components/ArticleLayout.tsx) - 作為主要內容渲染器
  * 
  * 依賴的組件和工具：
- * - next/image: 圖片優化組件
- * - react-markdown: Markdown 渲染
- * - @/app/lib/imageUtils: 圖片 URL 處理
+ * - MDXImage: 統一的圖片渲染組件，包含結構化數據和 Pinterest 分享
+ * - next-contentlayer: MDX 內容處理
  * 
  * 功能：
  * 1. 渲染文章標題區（類別、標題、日期）
- * 2. 顯示文章主圖，帶有懸停效果
- * 3. 將 Markdown 內容轉換為 HTML
- * 4. 優化文章中的圖片，使用 Next.js Image 組件
+ * 2. 顯示文章封面圖片，使用 MDXImage 組件保持一致性
+ * 3. 將 MDX 內容轉換為 HTML
+ * 4. 提供統一的圖片處理和 SEO 優化
  * 
  * 注意事項：
- * - 主圖使用 fill 模式，需要父元素設置尺寸
- * - Markdown 中的圖片會被轉換為優化後的 Image 組件
- * - 使用 Tailwind 的 prose 類來美化 Markdown 內容
+ * - 封面圖片使用 MDXImage 組件，確保與內容圖片的一致性
+ * - 包含結構化數據和 Pinterest 分享功能
+ * - 使用 Tailwind 的 prose 類來美化 MDX 內容
  */
 
 interface ArticleRendererProps {
@@ -59,6 +57,22 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
     setPageUrl(window.location.href);
   }, []);
 
+  // 構造封面圖片的 MDXImage 參數
+  const coverImageData = article.coverImage ? {
+    localPath: {
+      originalFileName: `${article.coverImage}.png`, // 添加副檔名以符合 originalFileName 格式
+      articleSlug: article.slug
+    },
+    seo: {
+      seoFileName: article.coverImage, // 這裡是不帶副檔名的 seoFileName
+      altText: article.coverImageAlt || article.title
+    },
+    pin: {
+      title: article.title,
+      description: article.excerpt
+    }
+  } : null;
+
   return (
     <article>
       {/* 標題區域 */}
@@ -72,18 +86,10 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
         </div>
       </div>
       
-      {/* 封面圖片區域 */}
-      {article.coverImage && (
-        <div className="relative w-full mb-8 overflow-hidden">
-          <Image
-            src={getImageUrl(article.coverImage, 'content')}
-            alt={article.coverImageAlt || article.title}
-            width={0}
-            height={0}
-            className="w-full h-auto object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-            priority
-          />
+      {/* 封面圖片區域 - 使用 MDXImage 組件保持一致性 */}
+      {coverImageData && (
+        <div className="mb-8">
+          <MDXImage {...coverImageData} />
         </div>
       )}
       
