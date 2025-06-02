@@ -137,7 +137,7 @@ export default function Navigation() {
               href="/"
               className="flex-shrink-0 h-full hover:opacity-80 transition-opacity flex items-center"
             >
-              <div className="relative w-[320px] md:w-[360px] lg:w-[400px] h-[76.8px] md:h-[86.4px] lg:h-[96px]">
+              <div className="relative w-[250px] sm:w-[320px] md:w-[360px] lg:w-[400px] h-[60px] sm:h-[76.8px] md:h-[86.4px] lg:h-[96px]">
                 <Image
                   src="/akio-hasegawa-dark.png"
                   alt="Akio Hasegawa"
@@ -198,7 +198,7 @@ export default function Navigation() {
             {/* Mobile menu button */}
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-white hover:text-gray-300 transition-colors"
+              className="md:hidden text-white hover:text-gray-300 transition-colors border-0 bg-transparent outline-none focus:outline-none"
               aria-label="Toggle menu"
             >
               {isOpen ? (
