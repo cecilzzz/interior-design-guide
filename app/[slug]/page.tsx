@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://akio-hasegawa.design';
-  const canonicalUrl = `${siteUrl}/${params.slug}`;
+  const canonicalUrl = `${siteUrl}/${params.slug}/`;
 
   return {
     title: article.title,

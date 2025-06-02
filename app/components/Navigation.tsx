@@ -29,36 +29,36 @@ const navItems: NavItem[] = [
   {
     title: "STYLES",
     subItems: [
-      { title: "French", link: "/category/french" },
-      { title: "Mediterranean", link: "/category/mediterranean" },
-      { title: "Coastal", link: "/category/coastal" },
-      //{ title: "Modern", link: "/category/modern" },
-      //{ title: "Minimalist", link: "/category/minimalist" },
-      //{ title: "Scandinavian", link: "/category/scandinavian" },
-      { title: "Japandi", link: "/category/japandi" },
-      { title: "Industrial", link: "/category/industrial" },
-      //{ title: "Contemporary", link: "/category/contemporary" },
-      { title: "Rustic", link: "/category/rustic" },
-      //{ title: "Farmhouse", link: "/category/farmhouse" },
-      //{ title: "Boho", link: "/category/boho" },
-      //{ title: "Mid-century Modern", link: "/category/mid-century-modern" },
-      { title: "Dark", link: "/category/dark" },
-      //{ title: "Earthy", link: "/category/earthy" }
+      { title: "French", link: "/category/french/" },
+      { title: "Mediterranean", link: "/category/mediterranean/" },
+      { title: "Coastal", link: "/category/coastal/" },
+      //{ title: "Modern", link: "/category/modern/" },
+      //{ title: "Minimalist", link: "/category/minimalist/" },
+      //{ title: "Scandinavian", link: "/category/scandinavian/" },
+      { title: "Japandi", link: "/category/japandi/" },
+      { title: "Industrial", link: "/category/industrial/" },
+      //{ title: "Contemporary", link: "/category/contemporary/" },
+      { title: "Rustic", link: "/category/rustic/" },
+      //{ title: "Farmhouse", link: "/category/farmhouse/" },
+      //{ title: "Boho", link: "/category/boho/" },
+      //{ title: "Mid-century Modern", link: "/category/mid-century-modern/" },
+      { title: "Dark", link: "/category/dark/" },
+      //{ title: "Earthy", link: "/category/earthy/" }
     ],
   },
   /* {
     title: "THE FRAMEWORK",
     subItems: [
-      { title: "Design Principles", link: "/category/design-principles" },
-      { title: "Space Planning", link: "/category/space-planning" },
-      { title: "Lighting", link: "/category/lighting" },
-      { title: "Colors & Palettes", link: "/category/colors-and-palettes" },
-      { title: "Materials & Textures", link: "/category/materials-and-textures" }
+      { title: "Design Principles", link: "/category/design-principles/" },
+      { title: "Space Planning", link: "/category/space-planning/" },
+      { title: "Lighting", link: "/category/lighting/" },
+      { title: "Colors & Palettes", link: "/category/colors-and-palettes/" },
+      { title: "Materials & Textures", link: "/category/materials-and-textures/" }
     ],
   }, */
   {
     title: "ABOUT", 
-    link: "/about"
+    link: "/about/"
   },
 ];
 

@@ -37,7 +37,7 @@ export default function PostGrid({ displayedArticles }: PostGridProps) {
       {displayedArticles.map((article) => (
         <Link 
           key={article._id}
-          href={`/${article.slug}`}
+          href={`/${article.slug}/`}
           className="group block"
         >
           {/* 文章封面圖片容器 */}

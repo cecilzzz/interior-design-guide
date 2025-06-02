@@ -19,7 +19,7 @@ export default function Sidebar({ recommendedArticles = [] }: SidebarProps) {
           {recommendedArticles.map((article) => (
             <Link 
               key={article.title}
-              href={`/${article.slug}`}
+              href={`/${article.slug}/`}
               className="group"
             >
               <div className="relative w-full mb-4 overflow-hidden">

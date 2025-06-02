@@ -38,7 +38,7 @@ export function SchemaOrg({ article, category, isAboutPage }: SchemaOrgProps) {
     "articleSection": article.categories[0],
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `${siteUrl}/${article.slug}`
+      "@id": `${siteUrl}/${article.slug}/`
     }
   } : null;
 
@@ -119,7 +119,7 @@ export function SchemaOrg({ article, category, isAboutPage }: SchemaOrgProps) {
           "@type": "ListItem",
           "position": 3,
           "name": article.title,
-          "item": `${siteUrl}/${article.slug}`
+          "item": `${siteUrl}/${article.slug}/`
         }
       ] : []),
       // 如果是 About 頁面
