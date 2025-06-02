@@ -1,5 +1,4 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
-import { getImageUrl } from '@/app/utils/imageUtils';
 
 export const Article = defineDocumentType(() => ({
   name: 'Article',

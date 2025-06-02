@@ -15,10 +15,6 @@
  *    - 優化文章列表中的縮略圖
  * 4. PostGrid (app/components/PostGrid.tsx)
  *    - 處理文章卡片的封面圖片
- * 5. Sidebar (app/components/Sidebar.tsx)
- *    - 處理側邊欄文章縮略圖
- * 6. RelatedArticles (app/components/RelatedArticles.tsx)
- *    - 處理相關文章縮略圖
  * 
  * 主要功能：
  * 1. 自動處理圖片路徑
@@ -35,7 +31,6 @@ const CLOUDINARY_BASE = 'https://res.cloudinary.com/dwobltbzw/image/upload';
  * 
  * hero: 用於文章主圖和大型橫幅
  * content: 用於文章內容中的圖片
- * thumbnail: 用於文章縮略圖（PostGrid、Sidebar、RelatedArticles）
  * default: 基本優化參數
  */
 const TRANSFORM_PARAMS = {
@@ -45,15 +40,15 @@ const TRANSFORM_PARAMS = {
   // 文章內容圖：適中寬度，保持原比例
   content: 'w_800,c_fit,q_auto,f_auto',
   
-  // 縮略圖：較小尺寸，用於文章卡片、側邊欄、相關文章等
-  thumbnail: 'w_400,c_fit,q_auto,f_auto',
+  // 側邊欄圖片：較窄寬度，保持原比例
+  sidebar: 'w_400,c_fit,q_auto,f_auto',
   
   // 預設參數：基本優化
   default: 'f_auto,q_auto'
 };
 
 /** 圖片類型定義 */
-type ImageType = 'hero' | 'content' | 'thumbnail' | 'default';
+type ImageType = 'hero' | 'content' | 'sidebar' | 'default';
 
 /**
  * 獲取優化後的圖片 URL
@@ -69,10 +64,6 @@ type ImageType = 'hero' | 'content' | 'thumbnail' | 'default';
  * @example
  * // 處理文章內容圖片
  * getImageUrl('/posts/content.jpg', 'content')
- * 
- * @example
- * // 處理縮略圖
- * getImageUrl('/posts/thumbnail.jpg', 'thumbnail')
  * 
  * @example
  * // 處理外部圖片（保持不變）
@@ -124,10 +115,6 @@ export function getImageUrl(path: string, type: ImageType = 'default'): string {
  * 文章內容圖:
  * getImageUrl('/posts/japanese-living-room/detail-1.jpg', 'content')
  * → https://res.cloudinary.com/dwobltbzw/image/upload/w_800,c_fit,q_auto,f_auto/posts/japanese-living-room/detail-1.jpg
- * 
- * 縮略圖:
- * getImageUrl('/posts/japanese-living-room/thumb.jpg', 'thumbnail')
- * → https://res.cloudinary.com/dwobltbzw/image/upload/w_400,c_fit,q_auto,f_auto/posts/japanese-living-room/thumb.jpg
  * 
  * Unsplash 圖片:
  * getImageUrl('https://images.unsplash.com/photo-123456789')

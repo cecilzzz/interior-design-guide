@@ -39,18 +39,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       publishedTime: article.date,
       modifiedTime: article.date,
-      authors: ['Interior Design Guide'],
+      authors: ['Akio Hasegawa'],
       images: [
         {
           url: getImageUrl(article.coverImage, 'hero'),
           width: 1200,
           height: 630,
-          alt: article.title, //待修改
+          alt: article.coverImageAlt || article.title,
           type: 'image/jpeg',
         },
       ],
       url: canonicalUrl,
-      siteName: 'Interior Design Guide',
+      siteName: 'Akio Hasegawa',
       locale: 'en_US',
       tags: article.categories ?? [],
     },
