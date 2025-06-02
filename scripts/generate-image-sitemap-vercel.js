@@ -70,8 +70,8 @@ async function generateImageSitemap() {
       console.log(`處理文章: ${article.title}`);
       
       // 添加封面圖片
-      if (article.coverImageUrl) {
-        const imageUrl = getImageUrl(`/posts/content/${article.coverImageUrl}`, 'hero');
+      if (article.coverImage) {
+        const imageUrl = getImageUrl(article.coverImage, 'hero');
         images.push({
           url: imageUrl,
           location: `${siteUrl}/${article.slug}`

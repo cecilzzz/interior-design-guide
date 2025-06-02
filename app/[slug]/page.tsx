@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import ArticlePage from './ArticlePage';
 import type { Metadata } from 'next';
 import { allArticles } from 'contentlayer/generated'
-import { SchemaOrg } from '@/app/components/SchemaOrg';
+import SchemaOrg from '@/app/components/SchemaOrg';
+import { getImageUrl } from '@/app/utils/imageUtils';
 
 // 定義頁面參數類型
 type PageProps = {
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       authors: ['Interior Design Guide'],
       images: [
         {
-          url: article.coverImageUrl,
+          url: getImageUrl(article.coverImage, 'hero'),
           width: 1200,
           height: 630,
           alt: article.title,
@@ -57,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title: article.title,
       description: article.excerpt,
-      images: [article.coverImageUrl],
+      images: [getImageUrl(article.coverImage, 'hero')],
     },
   };
 }

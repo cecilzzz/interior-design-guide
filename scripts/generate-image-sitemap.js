@@ -35,9 +35,8 @@ async function generateImageSitemap() {
       console.log(`處理文章: ${article.title}`);
       
       // 添加封面圖片
-      if (article.coverImageUrl) {
-        // 使用 imageUtils 處理封面圖片 URL，直接使用檔名
-        const imageUrl = getImageUrl(article.coverImageUrl, 'hero');
+      if (article.coverImage) {
+        const imageUrl = getImageUrl(article.coverImage, 'hero');
         
         images.push({
           url: imageUrl,

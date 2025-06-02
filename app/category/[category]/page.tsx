@@ -2,7 +2,7 @@ import { allArticles } from 'contentlayer/generated';
 import PostGrid from '@/app/components/PostGrid';
 import Sidebar from '@/app/components/Sidebar';
 import type { Metadata } from 'next';
-import { SchemaOrg } from '@/app/components/SchemaOrg';
+import SchemaOrg from '@/app/components/SchemaOrg';
 
 // 從 Navigation 中提取分類列表
 const navCategories = [

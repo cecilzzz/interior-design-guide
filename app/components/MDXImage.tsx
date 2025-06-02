@@ -36,7 +36,7 @@ export function MDXImage({
     "name": seo.altText,
     "description": pin.description,
     "contentUrl": imageUrl,
-    "acquireLicensePage": `${siteUrl}/${localPath.articleSlug}`,
+    "acquireLicensePage": `${siteUrl}/${localPath.articleSlug}/`,
     "creditText": "Akio Hasegawa Design",
     "creator": {
       "@type": "Person",

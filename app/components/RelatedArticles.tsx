@@ -23,8 +23,8 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
           >
             <div className="relative w-full mb-4 overflow-hidden">
               <Image
-                src={getImageUrl(article.coverImageUrl, 'sidebar')}
-                alt={article.title}
+                src={getImageUrl(article.coverImage, 'sidebar')}
+                alt={article.coverImageAlt || article.title}
                 width={0}
                 height={0}
                 className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-90"

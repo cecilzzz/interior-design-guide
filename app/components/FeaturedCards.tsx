@@ -1,62 +1,50 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type FeaturedCard = {
+interface Card {
   title: string;
-  coverImageUrl: string;
-  link: string;
-};
+  category: string;
+  coverImage: string;
+}
 
-const featuredCards = [
+const featuredCards: Card[] = [
   {
-    title: "Modern Living Room Ideas",
-    coverImageUrl: "https://images.unsplash.com/photo-1486304873000-235643847519?auto=format&fit=crop&q=80&w=800",
-    link: "/blog/modern-living-room",
+    title: "Modern Minimalist Living",
+    category: "Living Room",
+    coverImage: "https://images.unsplash.com/photo-1486304873000-235643847519?auto=format&fit=crop&q=80&w=800",
   },
   {
-    title: "Small Space Solutions",
-    coverImageUrl: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800",
-    link: "/blog/small-space",
+    title: "Scandinavian Bedroom Design",
+    category: "Bedroom",
+    coverImage: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800",
   },
   {
-    title: "Color Theory in Design",
-    coverImageUrl: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800",
-    link: "/blog/color-theory",
+    title: "Industrial Kitchen Style",
+    category: "Kitchen",
+    coverImage: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800",
   },
 ];
 
 export default function FeaturedCards() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-      {featuredCards.map((card) => (
-        <Link 
-          key={card.title} 
-          href={card.link}
-          className="group relative aspect-[4/3] overflow-hidden bg-gray-100 rounded-lg hover:shadow-xl transition-all duration-500"
-        >
-          <Image
-            src={card.coverImageUrl}
-            alt={card.title}
-            fill
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105 brightness-[0.85]"
-            quality={85}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/10 transition-opacity duration-500 group-hover:opacity-80" />
-          <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6">
-            <div className="text-center transform transition-transform duration-500 group-hover:translate-y-[-4px]">
-              <h2 className="text-center text-white font-playfair text-lg sm:text-xl md:text-2xl font-medium tracking-wide">
-                {card.title}
-              </h2>
-              <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <span className="inline-block text-coral-400 text-sm tracking-wider font-montserrat">
-                  EXPLORE NOW
-                </span>
+    <section className="py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-bold text-center mb-12">Featured Designs</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {featuredCards.map((card, index) => (
+            <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <div className="relative h-64">
+                <Image
+                  src={card.coverImage}
+                  alt={card.title}
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
-          </div>
-        </Link>
-      ))}
-    </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 } 

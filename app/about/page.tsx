@@ -1,4 +1,4 @@
-import { SchemaOrg } from '../components/SchemaOrg';
+import SchemaOrg from '../components/SchemaOrg';
 import Image from 'next/image';
 
 export default function AboutPage() {

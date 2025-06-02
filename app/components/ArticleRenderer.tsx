@@ -5,6 +5,8 @@ import { Article } from 'contentlayer/generated';
 import { format } from 'date-fns';
 import { getMDXComponent } from 'next-contentlayer/hooks';
 import { useMDXComponents } from '@/mdx-components';
+import { getImageUrl } from '@/app/utils/imageUtils';
+import Image from 'next/image';
 
 /**
  * ArticleRenderer 組件
@@ -69,6 +71,21 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
           {article.categories[0]} / <span className="text-gray-500">DESIGN</span>
         </div>
       </div>
+      
+      {/* 封面圖片區域 */}
+      {article.coverImage && (
+        <div className="relative w-full mb-12 overflow-hidden">
+          <Image
+            src={getImageUrl(article.coverImage, 'content')}
+            alt={article.coverImageAlt || article.title}
+            width={0}
+            height={0}
+            className="w-full h-auto object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+            priority
+          />
+        </div>
+      )}
       
       {/* MDX 內容區域 */}
       <MDXContent components={useMDXComponents({})} />
