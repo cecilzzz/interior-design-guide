@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           url: getImageUrl(article.coverImage, 'hero'),
           width: 1200,
           height: 630,
-          alt: article.title,
+          alt: article.title, //待修改
           type: 'image/jpeg',
         },
       ],

@@ -27,6 +27,89 @@
   - TypeScript
   - ts-node
 
+## MDX 技術選擇歷史與決策過程
+
+### 背景：Next.js 13 早期的 MDX 相容性問題
+在 Next.js 13 剛發布時（特別是 App Router 還在 beta 階段），MDX 整合存在重大相容性問題。
+
+### 技術選擇演進過程
+
+#### 1. 第一次嘗試：`@next/mdx`（官方包）
+**選擇原因**：官方推薦的 MDX 解決方案
+**遇到的問題**：
+- 對 Next.js 13 App Router 支援極差，bug 眾多
+- 靜態匯出（`output: 'export'`）功能不穩定
+- Server Components 整合有嚴重問題
+- 需要 `mdx-components.tsx` 但官方文檔不清楚
+- 編譯時經常出現莫名錯誤
+
+**結論**：❌ 放棄，因為 bug 太多無法用於生產環境
+
+#### 2. 第二次嘗試：`next-mdx-remote`（社群包）
+**選擇原因**：社群包對 Next.js 13 相容性更好
+**優點**：
+- ✅ 解決了 Next.js 13 App Router 相容性問題
+- ✅ 更靈活的內容載入方式
+- ✅ 可以從任何來源（API、CMS、檔案系統）載入 MDX
+
+**致命缺點**：
+- ❌ **不支援靜態網站生成**（`output: 'export'`）
+- ❌ 是**執行時編譯**，需要伺服器環境
+- ❌ 無法在純靜態網站中使用
+
+**技術原理**：
+```typescript
+// next-mdx-remote 的工作方式
+const mdxSource = await serialize(content) // 需要 Node.js 執行時環境
+<MDXRemote {...mdxSource} />              // 客戶端或伺服器端動態編譯
+```
+
+**結論**：❌ 放棄，因為專案需求是靜態網站
+
+#### 3. 最終選擇：`Contentlayer`
+**選擇原因**：專為靜態網站和 Next.js 13 設計的解決方案
+**完美解決所有問題**：
+- ✅ 完全支援 Next.js 13 App Router
+- ✅ 完美支援靜態網站生成（`output: 'export'`）
+- ✅ **編譯時處理**（不是執行時），適合靜態網站
+- ✅ 自動生成 TypeScript 型別定義
+- ✅ 優秀的 frontmatter 和內容結構化支援
+- ✅ 內建圖片處理和最佳化
+- ✅ 效能優異，編譯時預處理所有內容
+
+**技術原理**：
+```typescript
+// Contentlayer 的工作方式
+const post = allPosts.find(p => p.slug === slug)           // 編譯時生成的資料
+const MDXContent = getMDXComponent(post.body.code)         // 預編譯的 React 元件程式碼
+return <MDXContent components={useMDXComponents({})} />    // 直接渲染，無需執行時編譯
+```
+
+### 為什麼 package.json 中還有 next-mdx-remote？
+- `next-mdx-remote` 在 `package.json` 中但沒有實際使用
+- 這是技術選擇演進過程的遺留，發現它不支援靜態匯出後就改用 Contentlayer
+- 保留是為了記錄技術決策過程
+
+### 關鍵技術差異總結
+
+| 特性 | @next/mdx | next-mdx-remote | Contentlayer |
+|------|-----------|-----------------|--------------|
+| Next.js 13 支援 | ❌ Bug 眾多 | ✅ 良好 | ✅ 完美 |
+| 靜態匯出支援 | ❌ 不穩定 | ❌ 不支援 | ✅ 完美支援 |
+| 處理時機 | 編譯時 | 執行時 | 編譯時 |
+| TypeScript 支援 | 基本 | 基本 | ✅ 自動生成型別 |
+| 內容管理 | 基本 | 靈活 | ✅ 結構化管理 |
+| 效能 | 好 | 較差 | ✅ 最佳 |
+
+### 最終架構
+- **內容來源**：`content/` 目錄下的 MDX 檔案
+- **編譯工具**：Contentlayer 在建置時處理所有 MDX
+- **型別安全**：自動生成的 TypeScript 型別（`contentlayer/generated`）
+- **渲染方式**：`getMDXComponent()` + `useMDXComponents()`
+- **自訂元件**：透過 `mdx-components.tsx` 提供自訂 MDX 元件映射
+
+這個技術選擇過程完美體現了「選擇適合專案需求的技術」的重要性。
+
 ## Typography
 - Font Implementation:
   - Using next/font/local for optimal performance
