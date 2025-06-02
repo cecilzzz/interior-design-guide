@@ -107,12 +107,7 @@ export default function Navigation() {
 
   return (
     <header 
-      className={`
-        fixed top-0 left-0 right-0 z-50 
-        bg-[#424144]
-        transition-transform duration-300 ease-in-out
-        ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-      `}
+      className={`fixed top-0 left-0 right-0 z-50 bg-[#424144] transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
     >
       <div className="max-w-[1440px] mx-auto px-8 md:px-12">
         <div className="flex items-center justify-between h-[80px]">
@@ -195,11 +190,7 @@ export default function Navigation() {
 
         {/* Mobile menu panel */}
         <div 
-          className={`
-            font-montserrat lg:hidden fixed inset-0 top-[80px] bg-[#424144] 
-            transition-transform duration-300 ease-in-out
-            ${isOpen ? 'translate-x-0' : 'translate-x-full'}
-          `}
+          className={`font-montserrat lg:hidden fixed inset-0 top-[80px] bg-[#424144] transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <nav className="h-full overflow-y-auto">
             <div className="px-4 py-6 space-y-4">

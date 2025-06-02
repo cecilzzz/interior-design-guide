@@ -1,6 +1,8 @@
 # Git 操作指南
 
 ## 目錄
+- [路徑參數說明]（#路徑參數說明）
+- [Git 工作區狀態詳解]（#Git 工作區狀態詳解）
 - [日常工作流程](#日常工作流程)
 - [暫存區操作](#暫存區操作)
 - [提交操作](#提交操作)
@@ -41,6 +43,92 @@ git restore src/*.ts      # 只丟棄 src 目錄下的 ts 文件的更改
 1. 使用 `.` 時要注意它會影響所有子目錄
 2. 如果只想操作特定文件，請明確指定文件名或使用通配符
 3. 在執行命令前，可以用 `git status` 確認哪些文件會受影響
+
+## Git 工作區狀態詳解
+
+### 三個工作區域
+Git 有三個主要的工作區域：
+1. **Working Directory（工作目錄）**：你實際編輯文件的地方
+2. **Staging Area（暫存區）**：準備提交的文件快照
+3. **Repository（倉庫）**：已提交的歷史記錄
+
+### `git status` 的不同狀態顯示
+
+#### 1. "working tree clean"
+```bash
+# 顯示：
+On branch main
+nothing to commit, working tree clean
+```
+**含義**：
+- 工作目錄與最後一次 commit 完全一致
+- 暫存區也是空的（沒有用 git add 添加任何文件）
+- 沒有任何未追蹤的新文件
+
+#### 2. 暫存區有內容，工作區乾淨
+```bash
+# 顯示：
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   file.txt
+```
+**含義**：
+- 有文件在暫存區等待提交
+- 工作目錄的文件與暫存區的文件一致
+- **不會顯示** "working tree clean"
+
+#### 3. 工作區有修改，暫存區為空
+```bash
+# 顯示：
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   file.txt
+```
+
+#### 4. 暫存區和工作區都有內容
+```bash
+# 顯示：
+On branch main
+Changes to be committed:
+        modified:   file.txt
+
+Changes not staged for commit:
+        modified:   file.txt
+```
+**含義**：同一個文件在暫存區有一個版本，工作區又有新的修改
+
+#### 5. 有未追蹤的文件
+```bash
+# 顯示：
+On branch main
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        newfile.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+### 關鍵理解點
+
+1. **"working tree clean" 的條件**：
+   - 工作目錄 = 最後一次 commit
+   - 暫存區為空
+   - 沒有未追蹤文件
+
+2. **暫存區有內容時**：
+   - 即使工作目錄沒有新修改
+   - 也**不會**顯示 "working tree clean"
+   - 會顯示 "Changes to be committed"
+
+3. **狀態檢查命令**：
+```bash
+git status              # 查看詳細狀態
+git status --short      # 簡潔格式
+git status --porcelain  # 機器可讀格式
+```
 
 ## 日常工作流程
 
@@ -144,7 +232,7 @@ git commit -am "提交信息"    # 添加所有更改並提交（跳過暫存區
 
 ### 修改提交
 ```bash
-git commit --amend          # 修改最後一次提交的信息
+git commit --amend -m "新的 commit 訊息"         # 修改最後一次提交的信息
 git commit --amend --no-edit # 向最後一次提交添加新的更改，不修改信息
 ```
 

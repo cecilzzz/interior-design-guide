@@ -155,10 +155,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // 字體變量注入和全局樣式設定
+  // - playfair.variable: 注入 --font-playfair CSS 變量
+  // - montserrat.variable: 注入 --font-montserrat CSS 變量  
+  // - lora.variable: 注入 --font-lora CSS 變量
+  // 全局樣式：文字顏色、背景顏色、默認字體、導航欄padding、平滑效果
+  const bodyClasses = `${playfair.variable} ${montserrat.variable} ${lora.variable} text-[rgb(0,0,0)] bg-[rgb(250,249,246)] font-lora pt-[80px] antialiased scroll-smooth`;
+
   return (
-    <html 
-      lang="en" 
-    >
+    <html lang="en">
       <head>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-PGBK5E7000"
@@ -180,31 +185,9 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       
-      <body 
-        // 使用 .variable 注入 CSS 变量
-        // 这是推荐的字体应用方式
-        className={`
-          ${playfair.variable}    // 注入 --font-playfair 变量
-          ${montserrat.variable}  // 注入 --font-montserrat 变量
-          ${lora.variable}  // 注入 --font-lora 变量
-          
-          # 全局样式设置
-          text-[rgb(0,0,0)]        // 文字颜色
-          bg-[rgb(250,249,246)]    // 背景颜色
-          font-lora          // 默认使用 Lora 字体
-          
-          # 导航栏高度的 padding
-          pt-[80px]
-          
-          # 其他全局样式
-          antialiased               // 平滑字体渲染
-          scroll-smooth             // 平滑滚动
-        `}
-      >
+      <body className={bodyClasses}>
         <Navigation />
-        
         <main>{children}</main>
-        
         <Footer />
         <ScrollToTop />
         <Analytics />

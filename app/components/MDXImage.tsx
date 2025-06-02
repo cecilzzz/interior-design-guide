@@ -49,15 +49,7 @@ export function MDXImage({
   };
   
   return (
-    <figure className={`
-      relative
-      w-[calc(100%_+_4rem)]
-      -mx-8
-      md:w-full
-      md:mx-0
-      overflow-hidden
-      ${className}
-    `}>
+    <figure className={`relative w-[calc(100%_+_4rem)] -mx-8 md:w-full md:mx-0 overflow-hidden ${className}`}>
       {/* 結構化數據 */}
       <script 
         type="application/ld+json"
