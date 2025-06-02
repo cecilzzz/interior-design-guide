@@ -40,7 +40,7 @@ async function generateImageSitemap() {
         
         images.push({
           url: imageUrl,
-          location: `${siteUrl}/${article.slug}`
+          location: `${siteUrl}/${article.slug}/`
         });
       }
       
@@ -54,7 +54,7 @@ async function generateImageSitemap() {
           
           images.push({
             url: imageUrl,
-            location: `${siteUrl}/${article.slug}`
+            location: `${siteUrl}/${article.slug}/`
           });
         }
         

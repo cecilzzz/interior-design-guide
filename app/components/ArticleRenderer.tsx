@@ -74,7 +74,7 @@ export default function ArticleRenderer({ article }: ArticleRendererProps) {
       
       {/* 封面圖片區域 */}
       {article.coverImage && (
-        <div className="relative w-full mb-12 overflow-hidden">
+        <div className="relative w-full mb-8 overflow-hidden">
           <Image
             src={getImageUrl(article.coverImage, 'content')}
             alt={article.coverImageAlt || article.title}

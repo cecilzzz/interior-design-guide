@@ -17,7 +17,7 @@ function getImageUrl(imagePath, variant = 'content') {
   
   const transform = transformations[variant] || transformations.content;
   
-  // 直接使用清理後的路徑，不再添加 /posts/content/
+  // 不添加副檔名，讓 Cloudinary 的 f_auto 參數自動選擇最佳格式（WebP、AVIF 等）
   return `${baseUrl}/${transform}/${cleanPath}`;
 }
 
@@ -74,7 +74,7 @@ async function generateImageSitemap() {
         const imageUrl = getImageUrl(article.coverImage, 'hero');
         images.push({
           url: imageUrl,
-          location: `${siteUrl}/${article.slug}`
+          location: `${siteUrl}/${article.slug}/`
         });
       }
       
