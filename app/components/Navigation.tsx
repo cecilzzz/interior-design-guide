@@ -71,6 +71,12 @@ export default function Navigation() {
     const controlNavbar = () => {
       const currentScrollY = window.scrollY;
       
+      // 如果手機版菜單開啟，強制顯示導航欄
+      if (isOpen) {
+        setIsVisible(true);
+        return;
+      }
+      
       // 只在滾動超過一定距離時才觸發隱藏
       if (currentScrollY < 100) {
         setIsVisible(true);
@@ -103,96 +109,115 @@ export default function Navigation() {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, isOpen]);
+
+  // 當手機版菜單開啟時，禁止背景滾動
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // 清理函數
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 bg-[#424144] transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
-    >
-      <div className="max-w-[1440px] mx-auto px-8 md:px-12">
-        <div className="flex items-center justify-between h-[80px]">
-          {/* Logo container */}
-          <Link 
-            href="/"
-            className="flex-shrink-0 h-full hover:opacity-80 transition-opacity flex items-center"
-          >
-            <div className="relative w-[320px] md:w-[360px] lg:w-[400px] h-[76.8px] md:h-[86.4px] lg:h-[96px]">
-              <Image
-                src="/akio-hasegawa-dark.png"
-                alt="Akio Hasegawa"
-                fill
-                priority
-                className="object-contain"
-                sizes="(min-width: 1024px) 400px, (min-width: 768px) 360px, 320px"
-              />
-            </div>
-          </Link>
+    <>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 bg-[#424144] transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
+      >
+        <div className="max-w-[1440px] mx-auto px-8 md:px-12">
+          <div className="flex items-center justify-between h-[80px]">
+            {/* Logo container */}
+            <Link 
+              href="/"
+              className="flex-shrink-0 h-full hover:opacity-80 transition-opacity flex items-center"
+            >
+              <div className="relative w-[320px] md:w-[360px] lg:w-[400px] h-[76.8px] md:h-[86.4px] lg:h-[96px]">
+                <Image
+                  src="/akio-hasegawa-dark.png"
+                  alt="Akio Hasegawa"
+                  fill
+                  priority
+                  className="object-contain"
+                  sizes="(min-width: 1024px) 400px, (min-width: 768px) 360px, 320px"
+                />
+              </div>
+            </Link>
 
-          {/* Primary menu container */}
-          <nav className="hidden lg:flex items-center h-full">
-            <ul className="flex space-x-6 lg:space-x-10 font-montserrat text-sm lg:text-base tracking-widest ml-8 lg:ml-12">
-              {navItems.map((item) => (
-                <li 
-                  key={item.title}
-                  className="relative group"
-                >
-                  {/* 如果有子菜單，顯示下拉菜單 */}
-                  {item.subItems ? (
-                    <>
-                      <a
-                        href="#"
+            {/* Primary menu container */}
+            <nav className="hidden lg:flex items-center h-full">
+              <ul className="flex space-x-6 lg:space-x-10 font-montserrat text-sm lg:text-base tracking-widest ml-8 lg:ml-12">
+                {navItems.map((item) => (
+                  <li 
+                    key={item.title}
+                    className="relative group"
+                  >
+                    {/* 如果有子菜單，顯示下拉菜單 */}
+                    {item.subItems ? (
+                      <>
+                        <a
+                          href="#"
+                          className="block py-1 text-white hover:text-gray-300 whitespace-nowrap"
+                        >
+                          {item.title}
+                        </a>
+                        
+                        <div className="absolute left-0 top-full invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
+                          <div className="bg-[#3C3C3C] shadow-lg rounded-sm py-2 w-[250px] lg:w-[300px]">
+                            {item.subItems.map((subItem) => (
+                              <Link
+                                key={subItem.title}
+                                href={subItem.link}
+                                className="block px-5 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-montserrat"
+                              >
+                                {subItem.title}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      // 如果是直接鏈接，使用 Link 組件
+                      <Link
+                        href={item.link || '#'}
                         className="block py-1 text-white hover:text-gray-300 whitespace-nowrap"
                       >
                         {item.title}
-                      </a>
-                      
-                      <div className="absolute left-0 top-full invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="bg-[#3C3C3C] shadow-lg rounded-sm py-2 w-[250px] lg:w-[300px]">
-                          {item.subItems.map((subItem) => (
-                            <Link
-                              key={subItem.title}
-                              href={subItem.link}
-                              className="block px-5 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white font-montserrat"
-                            >
-                              {subItem.title}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    // 如果是直接鏈接，使用 Link 組件
-                    <Link
-                      href={item.link || '#'}
-                      className="block py-1 text-white hover:text-gray-300 whitespace-nowrap"
-                    >
-                      {item.title}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          {/* Mobile menu button */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 text-white hover:text-gray-300 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <XMarkIcon className="w-6 h-6" />
-            ) : (
-              <Bars3Icon className="w-6 h-6" />
-            )}
-          </button>
+            {/* Mobile menu button */}
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className="lg:hidden p-2 text-white hover:text-gray-300 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <XMarkIcon className="w-6 h-6" />
+              ) : (
+                <Bars3Icon className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
+      </header>
 
-        {/* Mobile menu panel */}
+      {/* Mobile menu panel - 移到 header 外部 */}
+      {isOpen && (
         <div 
-          className={`font-montserrat lg:hidden fixed inset-0 top-[80px] bg-[#424144] transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className="font-montserrat lg:hidden fixed inset-0 top-[80px] bg-[#424144] z-[9999]"
+          onClick={() => setIsOpen(false)}
         >
-          <nav className="h-full overflow-y-auto">
+          <nav className="h-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <div key={item.title}>
@@ -231,7 +256,7 @@ export default function Navigation() {
             </div>
           </nav>
         </div>
-      </div>
-    </header>
+      )}
+    </>
   );
 } 

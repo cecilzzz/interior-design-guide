@@ -67,12 +67,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
  * 生成靜態頁面參數
  */
 export async function generateStaticParams() {
-  return allArticles.map((article) => ({
-    slug: article.slug,
-  })).filter(({ slug }) => {
-    // 過濾掉非文章路徑，如 favicon.ico, robots.txt 等
-    return !slug.includes('.') && !slug.startsWith('_') && slug.length > 0;
-  });
+  return allArticles
+    .map((article) => ({
+      slug: article.slug,
+    }))
+    .filter(({ slug }) => {
+      // 更嚴格的過濾條件
+      return (
+        slug && // 確保 slug 存在
+        typeof slug === 'string' && // 確保是字符串
+        slug.length > 0 && // 確保不是空字符串
+        !slug.includes('.') && // 排除檔案擴展名 (如 .ico, .txt)
+        !slug.startsWith('_') && // 排除系統檔案
+        !slug.startsWith('api') && // 排除 API 路由
+        !slug.includes('favicon') && // 明確排除 favicon
+        !slug.includes('robots') && // 明確排除 robots.txt
+        !slug.includes('sitemap') && // 明確排除 sitemap
+        !/^[0-9]+$/.test(slug) && // 排除純數字 slug
+        slug !== 'undefined' && // 排除 undefined 字符串
+        slug !== 'null' // 排除 null 字符串
+      );
+    });
 }
 
 
