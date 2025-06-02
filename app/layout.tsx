@@ -100,7 +100,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Interior Design Journal",
-    title: "Interior Design Journal | Akio Hasegawa",
+    title: "Akio Hasegawa",
     description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
     images: [
       {
@@ -176,9 +176,8 @@ export default function RootLayout({
           `}
         </Script>
         <meta name="p:domain_verify" content="b23e59bbecfac7fc71535e2c969afc73" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/akio-hasegawa-light.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/akio-hasegawa-light.png" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       
       <body 
