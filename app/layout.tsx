@@ -81,8 +81,8 @@ const montserrat = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://akio-hasegawa.design'),
   title: {
-    default: "Interior Design Journal | Akio Hasegawa's Design Perspectives",
-    template: "%s | Interior Design Journal"
+    default: "Akio Hasegawa",
+    template: "%s | Akio Hasegawa"
   },
   description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
   keywords: "interior design, spatial theory, architectural research, cultural aesthetics, design perspectives, Akio Hasegawa",
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Interior Design Journal",
+    siteName: "Akio Hasegawa",
     title: "Akio Hasegawa",
     description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
     images: [
@@ -107,7 +107,7 @@ export const metadata: Metadata = {
         url: "akio-hasegawa-light.png",
         width: 500,
         height: 120,
-        alt: "Interior Design Journal by Akio Hasegawa",
+        alt: "Akio Hasegawa",
         type: 'image/png',
       }
     ],
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
   // Twitter
   twitter: {
     card: "summary_large_image",
-    title: "Interior Design Journal | Akio Hasegawa",
+    title: "Akio Hasegawa",
     description: "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
     images: ["akio-hasegawa-light.png"],
     site: "@akiohasegawa",
@@ -143,7 +143,7 @@ export const metadata: Metadata = {
   
   // 添加額外的 meta tags
   other: {
-    'og:site_name': 'Interior Design Journal',
+    'og:site_name': 'Akio Hasegawa',
     'og:type': 'website',
     'article:author': 'Akio Hasegawa',
     'article:publisher': 'https://www.pinterest.com/akiohasegawa/',

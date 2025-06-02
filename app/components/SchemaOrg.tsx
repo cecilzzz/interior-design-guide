@@ -41,6 +41,62 @@ export default function SchemaOrg({ article, category, isAboutPage }: SchemaOrgP
     ...articleImageUrls.slice(0, 9) // 限制最多 10 張圖片（包含封面圖）
   ] : [];
 
+  // 網站 Schema - 定義網站基本資訊
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": siteName,
+    "alternateName": "Akio Hasegawa Design",
+    "url": siteUrl,
+    "description": "A curated exploration of spatial design, revealing the poetry of environments through cultural aesthetics, architectural research, and contemporary design practices.",
+    "publisher": {
+      "@type": "Person",
+      "name": siteAuthor
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${siteUrl}/search?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  // 組織 Schema - 定義網站背後的組織/個人
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": siteAuthor,
+    "jobTitle": "Interior Design Strategist",
+    "honorificPrefix": "M.Arch",
+    "url": siteUrl,
+    "sameAs": [
+      "https://www.pinterest.com/akiohasegawa/"
+    ],
+    "affiliation": {
+      "@type": "Organization",
+      "name": "Harvard Graduate School of Design"
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity", 
+      "name": "Harvard Graduate School of Design"
+    },
+    "memberOf": [
+      {
+        "@type": "Organization",
+        "name": "International Interior Design Association"
+      }
+    ],
+    "knowsAbout": [
+      "Interior Design",
+      "Architectural Research",
+      "Spatial Theory", 
+      "Cultural Aesthetics",
+      "Contemporary Design Practices"
+    ]
+  };
+
   // 文章 schema
   const articleSchema = article ? {
     "@context": "https://schema.org",
@@ -184,6 +240,18 @@ export default function SchemaOrg({ article, category, isAboutPage }: SchemaOrgP
         type="application/ld+json"
         dangerouslySetInnerHTML={{ 
           __html: JSON.stringify(breadcrumbSchema) 
+        }} 
+      />
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ 
+          __html: JSON.stringify(websiteSchema) 
+        }} 
+      />
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ 
+          __html: JSON.stringify(organizationSchema) 
         }} 
       />
     </>
