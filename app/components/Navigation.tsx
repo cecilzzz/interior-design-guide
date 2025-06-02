@@ -131,7 +131,7 @@ export default function Navigation() {
         className={`fixed top-0 left-0 right-0 z-50 bg-[#424144] transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
       >
         <div className="max-w-[1440px] mx-auto px-8 md:px-12">
-          <div className="flex items-center justify-between h-[80px]">
+          <div className="flex items-center justify-between h-[60px] md:h-[80px]">
             {/* Logo container */}
             <Link 
               href="/"
@@ -150,8 +150,8 @@ export default function Navigation() {
             </Link>
 
             {/* Primary menu container */}
-            <nav className="hidden lg:flex items-center h-full">
-              <ul className="flex space-x-6 lg:space-x-10 font-montserrat text-sm lg:text-base tracking-widest ml-8 lg:ml-12">
+            <nav className="hidden md:flex items-center h-full">
+              <ul className="flex space-x-6 md:space-x-10 font-montserrat text-sm md:text-base tracking-widest ml-8 md:ml-12">
                 {navItems.map((item) => (
                   <li 
                     key={item.title}
@@ -198,7 +198,7 @@ export default function Navigation() {
             {/* Mobile menu button */}
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-white hover:text-gray-300 transition-colors"
+              className="md:hidden p-2 text-white hover:text-gray-300 transition-colors"
               aria-label="Toggle menu"
             >
               {isOpen ? (
@@ -214,17 +214,17 @@ export default function Navigation() {
       {/* Mobile menu panel - 移到 header 外部 */}
       {isOpen && (
         <div 
-          className="font-montserrat lg:hidden fixed inset-0 top-[80px] bg-[#424144] z-[9999]"
+          className="font-montserrat md:hidden fixed inset-0 top-[60px] md:top-[80px] bg-[#424144] z-[9999]"
           onClick={() => setIsOpen(false)}
         >
           <nav className="h-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="px-4 py-6 space-y-4">
+            <div className="px-8 py-6 space-y-4">
               {navItems.map((item) => (
                 <div key={item.title}>
                   {/* Mobile primary menu item */}
                   {item.subItems ? (
                     <>
-                      <div className="text-white py-2 border-b border-gray-600">
+                      <div className="text-white py-2 border-b border-gray-600 tracking-widest">
                         {item.title}
                       </div>
                       
@@ -234,7 +234,7 @@ export default function Navigation() {
                           <Link
                             key={subItem.title}
                             href={subItem.link}
-                            className="block py-2 text-sm text-gray-300 hover:text-white"
+                            className="block py-2 text-sm text-gray-300 hover:text-white font-montserrat tracking-wide"
                             onClick={() => setIsOpen(false)}
                           >
                             {subItem.title}
@@ -245,7 +245,7 @@ export default function Navigation() {
                   ) : (
                     <Link
                       href={item.link || '#'}
-                      className="block py-2 text-white border-b border-gray-600 hover:text-gray-300"
+                      className="block py-2 text-white border-b border-gray-600 hover:text-gray-300 tracking-widest"
                       onClick={() => setIsOpen(false)}
                     >
                       {item.title}
