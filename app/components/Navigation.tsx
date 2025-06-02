@@ -198,65 +198,69 @@ export default function Navigation() {
             {/* Mobile menu button */}
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-white hover:text-gray-300 transition-colors border-0 bg-transparent outline-none focus:outline-none"
+              className="md:hidden text-white hover:text-gray-300 transition-all duration-300 border-0 bg-transparent outline-none focus:outline-none"
               aria-label="Toggle menu"
             >
-              {isOpen ? (
-                <XMarkIcon className="w-6 h-6" />
-              ) : (
-                <Bars3Icon className="w-6 h-6" />
-              )}
+              <div className={`transition-all duration-300 ${isOpen ? 'rotate-90 scale-110' : 'rotate-0 scale-100'}`}>
+                {isOpen ? (
+                  <XMarkIcon className="w-6 h-6" />
+                ) : (
+                  <Bars3Icon className="w-6 h-6" />
+                )}
+              </div>
             </button>
           </div>
         </div>
       </header>
 
       {/* Mobile menu panel - 移到 header 外部 */}
-      {isOpen && (
-        <div 
-          className="font-montserrat md:hidden fixed inset-0 top-[60px] md:top-[80px] bg-[#424144] z-[9999]"
-          onClick={() => setIsOpen(false)}
-        >
-          <nav className="h-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="px-8 py-6 space-y-4">
-              {navItems.map((item) => (
-                <div key={item.title}>
-                  {/* Mobile primary menu item */}
-                  {item.subItems ? (
-                    <>
-                      <div className="text-white py-2 border-b border-gray-600 tracking-widest">
-                        {item.title}
-                      </div>
-                      
-                      {/* Mobile submenu items */}
-                      <div className="ml-4 mt-2 space-y-2">
-                        {item.subItems.map((subItem) => (
-                          <Link
-                            key={subItem.title}
-                            href={subItem.link}
-                            className="block py-2 text-sm text-gray-300 hover:text-white font-montserrat tracking-wide"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            {subItem.title}
-                          </Link>
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.link || '#'}
-                      className="block py-2 text-white border-b border-gray-600 hover:text-gray-300 tracking-widest"
-                      onClick={() => setIsOpen(false)}
-                    >
+      <div 
+        className={`font-montserrat md:hidden fixed inset-0 top-[60px] md:top-[80px] bg-[#424144] z-[9999] transition-all duration-300 ${
+          isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
+        onClick={() => setIsOpen(false)}
+      >
+        <nav className="h-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className={`px-8 py-6 space-y-4 transition-all duration-300 delay-100 ${
+            isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+          }`}>
+            {navItems.map((item) => (
+              <div key={item.title}>
+                {/* Mobile primary menu item */}
+                {item.subItems ? (
+                  <>
+                    <div className="text-white py-2 border-b border-gray-600 tracking-widest">
                       {item.title}
-                    </Link>
-                  )}
-                </div>
-              ))}
-            </div>
-          </nav>
-        </div>
-      )}
+                    </div>
+                    
+                    {/* Mobile submenu items */}
+                    <div className="ml-4 mt-2 space-y-2">
+                      {item.subItems.map((subItem) => (
+                        <Link
+                          key={subItem.title}
+                          href={subItem.link}
+                          className="block py-2 text-sm text-gray-300 hover:text-white font-montserrat tracking-wide"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {subItem.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <Link
+                    href={item.link || '#'}
+                    className="block py-2 text-white border-b border-gray-600 hover:text-gray-300 tracking-widest"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.title}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </nav>
+      </div>
     </>
   );
 } 
