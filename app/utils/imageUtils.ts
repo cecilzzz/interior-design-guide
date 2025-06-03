@@ -39,17 +39,17 @@ const CLOUDINARY_BASE = 'https://res.cloudinary.com/dwobltbzw/image/upload';
  * default: 基本優化參數
  */
 const TRANSFORM_PARAMS = {
-  // 博客主圖：大圖，高質量，固定比例
-  hero: 'w_1920,h_1080,c_fill,q_auto:good,f_auto',
+  // 博客主圖：大圖，高質量，固定比例，漸進載入，高密度螢幕支援
+  hero: 'w_1920,h_1080,c_fill,q_auto:good,f_auto,fl_progressive,dpr_auto',
   
-  // 文章內容圖：適中寬度，保持原比例
-  content: 'w_800,c_fit,q_auto,f_auto',
+  // 文章內容圖：適中寬度，保持原比例，漸進載入，高密度螢幕支援
+  content: 'w_800,c_fit,q_auto,f_auto,fl_progressive,dpr_auto',
   
-  // 縮略圖：較小尺寸，用於文章卡片、側邊欄、相關文章等
-  thumbnail: 'w_400,c_fit,q_auto,f_auto',
+  // 縮略圖：較小尺寸，用於文章卡片、側邊欄、相關文章等，漸進載入，高密度螢幕支援
+  thumbnail: 'w_400,c_fit,q_auto,f_auto,fl_progressive,dpr_auto',
   
-  // 預設參數：基本優化
-  default: 'f_auto,q_auto'
+  // 預設參數：基本優化，漸進載入，高密度螢幕支援
+  default: 'f_auto,q_auto,fl_progressive,dpr_auto'
 };
 
 /** 圖片類型定義 */
@@ -119,15 +119,15 @@ export function getImageUrl(path: string, type: ImageType = 'default'): string {
  * 
  * 博客主圖:
  * getImageUrl('/posts/japanese-living-room/main.jpg', 'hero')
- * → https://res.cloudinary.com/dwobltbzw/image/upload/w_1920,h_1080,c_fill,q_auto:good,f_auto/posts/japanese-living-room/main.jpg
+ * → https://res.cloudinary.com/dwobltbzw/image/upload/w_1920,h_1080,c_fill,q_auto:good,f_auto,fl_progressive,dpr_auto/posts/japanese-living-room/main.jpg
  * 
  * 文章內容圖:
  * getImageUrl('/posts/japanese-living-room/detail-1.jpg', 'content')
- * → https://res.cloudinary.com/dwobltbzw/image/upload/w_800,c_fit,q_auto,f_auto/posts/japanese-living-room/detail-1.jpg
+ * → https://res.cloudinary.com/dwobltbzw/image/upload/w_800,c_fit,q_auto,f_auto,fl_progressive,dpr_auto/posts/japanese-living-room/detail-1.jpg
  * 
  * 縮略圖:
  * getImageUrl('/posts/japanese-living-room/thumb.jpg', 'thumbnail')
- * → https://res.cloudinary.com/dwobltbzw/image/upload/w_400,c_fit,q_auto,f_auto/posts/japanese-living-room/thumb.jpg
+ * → https://res.cloudinary.com/dwobltbzw/image/upload/w_400,c_fit,q_auto,f_auto,fl_progressive,dpr_auto/posts/japanese-living-room/thumb.jpg
  * 
  * Unsplash 圖片:
  * getImageUrl('https://images.unsplash.com/photo-123456789')
