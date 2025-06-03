@@ -1,5 +1,5 @@
 import type { MDXComponents } from 'mdx/types';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, createContext, useContext, useRef } from 'react';
 import { MDXImage } from './app/components/MDXImage';
 import type { ImageData } from './app/types/image';
 
@@ -17,6 +17,9 @@ import type { ImageData } from './app/types/image';
  * - 確保樣式的一致性和可維護性
  */
 
+// 圖片計數器 Context
+const ImageCounterContext = createContext<{ getNextIndex: () => number } | null>(null);
+
 // 基礎文章樣式
 const articleBaseStyles = "prose prose-lg max-w-none prose-headings:font-playfair prose-p:text-gray-600 prose-a:text-coral-500";
 
@@ -33,12 +36,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // 繼承傳入的組件設定
     ...components,
 
-    // 容器元素 - 應用基礎樣式
-    wrapper: ({ children, ...props }) => (
-      <div className={articleBaseStyles} {...props}>
-        {children}
-      </div>
-    ),
+    // 容器元素 - 應用基礎樣式並提供圖片計數器 Context
+    wrapper: ({ children, ...props }) => {
+      const counterRef = useRef(0);
+      const getNextIndex = () => ++counterRef.current;
+      
+      return (
+        <ImageCounterContext.Provider value={{ getNextIndex }}>
+          <div className={articleBaseStyles} {...props}>
+            {children}
+          </div>
+        </ImageCounterContext.Provider>
+      );
+    },
 
     // 標題系列
     h1: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
@@ -62,10 +72,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
 
     // 自定義組件
-    MDXImage: (props: ImageData) => (
-      <div className="my-8">
-        <MDXImage {...props} />
-      </div>
-    ),
+    MDXImage: (props: ImageData) => {
+      const context = useContext(ImageCounterContext);
+      const imageIndex = context ? context.getNextIndex() : undefined;
+      
+      return (
+        <div className="my-8">
+          <MDXImage {...props} imageIndex={imageIndex} />
+        </div>
+      );
+    },
   };
 }

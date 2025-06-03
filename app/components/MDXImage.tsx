@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import PinterestButton from './PinterestButton';
 import { getImageUrl } from '@/app/utils/imageUtils';
 import type { ImageData } from '../../app/types/image';
@@ -19,14 +18,30 @@ import type { ImageData } from '../../app/types/image';
  * - 使用 not-prose 來避免受到 prose 樣式的影響
  * - 圖片寬度跟隨容器，高度保持原比例
  */
+
+// 全局計數器（用於 fallback）
+let globalImageCounter = 0;
+
+interface ExtendedImageData extends ImageData {
+  /** 圖片在文章中的索引位置（從 1 開始），用於決定是否高優先級 */
+  imageIndex?: number;
+}
+
 export function MDXImage({ 
   localPath,
   seo, 
   pin, 
-  className = '' 
-}: ImageData) {
+  className = '',
+  imageIndex
+}: ExtendedImageData) {
+  // 如果沒有提供 imageIndex，使用全局計數器作為 fallback
+  const currentIndex = imageIndex || ++globalImageCounter;
+  
   const imageUrl = getImageUrl(seo.seoFileName, 'content');
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://akio-hasegawa.design';
+  
+  // 前3張圖片使用高優先級
+  const isHighPriority = currentIndex <= 3;
   
   // 結構化數據 for Google Images
   const imageStructuredData = {
@@ -60,12 +75,12 @@ export function MDXImage({
         }} 
       />
       
-      <Image
+      <img
         src={imageUrl}
         alt={seo.altText}
-        width={0}
-        height={0}
         className="w-full h-auto object-cover"
+        loading="eager"
+        {...(isHighPriority ? { fetchpriority: 'high' } : { fetchpriority: 'auto' })}
       />
       <PinterestButton 
         description={pin.description}
