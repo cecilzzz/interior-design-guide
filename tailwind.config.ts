@@ -30,10 +30,25 @@ const config: Config = {
           500: '#ff5c3a',
           600: '#ed3c16',
           700: '#c52f0f',
-          800: '#9f2912',
+          800: '#9f2812',
           900: '#822614',
         },
       },
+      keyframes: {
+        fadeInUp: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(30px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          }
+        }
+      },
+      animation: {
+        'fade-in-up': 'fadeInUp 0.7s ease-out forwards'
+      }
     },
   },
   plugins: [

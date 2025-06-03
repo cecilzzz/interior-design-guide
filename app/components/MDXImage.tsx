@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useState } from 'react';
 import PinterestButton from './PinterestButton';
 import { getImageUrl } from '@/app/utils/imageUtils';
 import type { ImageData } from '../../app/types/image';
@@ -13,6 +16,7 @@ import type { ImageData } from '../../app/types/image';
  * - Pinterest 分享功能
  * - 圖片優化和加載
  * - 結構化數據支持
+ * - 高級漸變動畫效果（模糊到清晰）
  * 
  * 注意事項：
  * - 使用 figure 標籤來符合語義化
@@ -25,6 +29,8 @@ export function MDXImage({
   pin, 
   className = '' 
 }: ImageData) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
   const imageUrl = getImageUrl(seo.seoFileName, 'content');
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://akio-hasegawa.design';
   
@@ -51,7 +57,7 @@ export function MDXImage({
   };
   
   return (
-    <figure className={`relative w-[calc(100%_+_4rem)] -mx-8 md:w-full md:mx-0 overflow-hidden ${className}`}>
+    <figure className={`relative overflow-hidden ${className}`}>
       {/* 結構化數據 */}
       <script 
         type="application/ld+json"
@@ -60,18 +66,41 @@ export function MDXImage({
         }} 
       />
       
-      <Image
-        src={imageUrl}
-        alt={seo.altText}
-        width={0}
-        height={0}
-        className="w-full h-auto object-cover"
-      />
-      <PinterestButton 
-        description={pin.description}
-        media={imageUrl}
-        url={`${siteUrl}/${localPath.articleSlug}/`}
-      />
+      {/* 圖片容器 - 使用原始的寬度設定 */}
+      <div className="relative w-[calc(100%_+_4rem)] -mx-8 md:w-full md:mx-0">
+        {/* 主圖片 - 作為基準，撐開容器 */}
+        <Image
+          src={imageUrl}
+          alt={seo.altText}
+          width={0}
+          height={0}
+          className={`
+            w-full h-auto object-cover
+            transition-all duration-700 ease-out
+            ${isLoaded 
+              ? 'opacity-100 scale-100 filter-none' 
+              : 'opacity-0 scale-105 filter blur-sm'
+            }
+          `}
+          onLoad={() => setIsLoaded(true)}
+        />
+        
+        {/* CSS 佔位圖 - 絕對定位覆蓋 */}
+        <div 
+          className={`
+            absolute inset-0 bg-gray-000 
+            transition-opacity duration-500 ease-out
+            ${isLoaded ? 'opacity-0' : 'opacity-100'}
+          `}
+        />
+        
+        {/* Pinterest 按鈕 - 相對於圖片容器定位 */}
+        <PinterestButton 
+          description={pin.description}
+          media={imageUrl}
+          url={`${siteUrl}/${localPath.articleSlug}/`}
+        />
+      </div>
     </figure>
   );
 }
