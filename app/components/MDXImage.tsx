@@ -37,7 +37,9 @@ export function MDXImage({
     "description": pin.description,
     "contentUrl": imageUrl,
     "acquireLicensePage": `${siteUrl}/${localPath.articleSlug}/`,
+    "license": `${siteUrl}/${localPath.articleSlug}/`,
     "creditText": "Akio Hasegawa Design",
+    "copyrightNotice": `© ${new Date().getFullYear()} Akio Hasegawa. All rights reserved.`,
     "creator": {
       "@type": "Person",
       "name": "Akio Hasegawa"
