@@ -243,6 +243,17 @@ git log --oneline          # 簡潔模式查看提交歷史
 git show <commit-hash>      # 查看特定提交的詳細信息
 ```
 
+### 空提交（Empty Commit）
+
+```bash
+git commit --allow-empty -m "提交信息"
+```
+
+**用途**：
+- 觸發 CI/CD 流程
+- 標記重要里程碑
+- 測試部署流程
+
 ## 分支操作
 
 ### 分支創建與歷史繼承
@@ -316,12 +327,29 @@ git log --graph --oneline --all
 
 ### 基本分支操作
 ```bash
-git branch                  # 查看所有本地分支
-git branch <分支名>         # 創建新分支
-git checkout <分支名>       # 切換分支
-git checkout -b <分支名>    # 創建並切換到新分支
-git branch -d <分支名>      # 刪除分支（安全模式）
-git branch -D <分支名>      # 強制刪除分支
+git branch                   # 查看所有分支
+git branch <分支名>           # 創建新分支
+git checkout <分支名>         # 切換分支
+git checkout -b <分支名>      # 創建並切換到新分支
+git checkout -b <分支名> <提交hash>  # 基於特定提交創建分支
+git branch -d <分支名>        # 刪除分支
+git branch -D <分支名>        # 強制刪除分支
+```
+
+#### 分支創建的進階語法
+
+1. **`git checkout -b <分支名> <提交hash>` 詳解**：
+```bash
+git checkout -b archive/feature abc1234
+```
+- 基於指定的提交（而不是當前分支）創建新分支
+- 新分支會指向該特定提交
+- 常用於保存特定版本的代碼或從歷史提交創建分支
+
+2. **其他創建方式**：
+```bash
+git checkout -b <新分支名> <源分支名>        # 基於其他分支
+git checkout -b <新分支名> origin/<分支名>   # 基於遠程分支
 ```
 
 ### 分支重命名

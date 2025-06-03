@@ -66,10 +66,6 @@ export function MDXImage({
         width={0}
         height={0}
         className="w-full h-auto object-cover"
-        sizes="(min-width: 1280px) 1200px, 92vw"
-        quality={85}
-        priority={false}
-        loading="lazy"
       />
       <PinterestButton 
         description={pin.description}
