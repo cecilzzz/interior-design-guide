@@ -160,7 +160,7 @@ export default function RootLayout({
   // - montserrat.variable: 注入 --font-montserrat CSS 變量  
   // - lora.variable: 注入 --font-lora CSS 變量
   // 全局樣式：文字顏色、背景顏色、默認字體、導航欄padding、平滑效果
-  const bodyClasses = `${playfair.variable} ${montserrat.variable} ${lora.variable} text-[rgb(0,0,0)] bg-[rgb(250,249,246)] font-lora pt-[80px] antialiased scroll-smooth`;
+  const bodyClasses = `${playfair.variable} ${montserrat.variable} ${lora.variable} text-[rgb(0,0,0)] bg-[rgb(250,249,246)] font-lora pt-[60px] md:pt-[80px] antialiased scroll-smooth`;
 
   return (
     <html lang="en">
