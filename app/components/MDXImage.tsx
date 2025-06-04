@@ -88,17 +88,24 @@ export function MDXImage({
         {/* CSS 佔位圖 - 絕對定位覆蓋 */}
         <div 
           className={`
-            absolute inset-0 bg-gray-000 
+            absolute inset-0 bg-white 
             transition-opacity duration-500 ease-out
             ${isLoaded ? 'opacity-0' : 'opacity-100'}
           `}
         />
         
-        {/* Pinterest 按鈕 - 相對於圖片容器定位 */}
+        {/* Pinterest 按鈕 - 圖片載入後才顯示 */}
         <PinterestButton 
           description={pin.description}
           media={imageUrl}
           url={`${siteUrl}/${localPath.articleSlug}/`}
+          className={`
+            transition-all duration-700 ease-out
+            ${isLoaded 
+              ? 'opacity-100 scale-100' 
+              : 'opacity-0 scale-90 pointer-events-none'
+            }
+          `}
         />
       </div>
     </figure>
