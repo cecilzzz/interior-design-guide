@@ -23,7 +23,7 @@ export default function ArticleLayout({
           <ArticleRenderer article={article} />
 
           {/* 作者介紹 */}
-          <div className="mt-16 pt-8 border-t border-gray-100">
+          <div className="hidden sm:block mt-16 pt-8 border-t border-gray-100">
             <div className="bg-white p-16 border border-gray-200 shadow-sm">
               <div className="text-coral-400 text-2xl font-playfair font-semibold mb-8">Akio Hasegawa</div>
               <div className="prose lg:prose-lg text-gray-700">
