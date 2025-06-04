@@ -11,6 +11,13 @@ export default function Home() {
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
     [0];
 
+  // 獲取最近發表的四篇文章（首屏顯示的文章）
+  const recentArticles = allArticles
+    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
+    .slice(0, 4);
+  
+  const recentSlugs = recentArticles.map(article => article.slug);
+
   // 獲取相關文章（同類別的其他文章）
   const relatedArticles = allArticles
     .filter(article => 
@@ -21,9 +28,9 @@ export default function Home() {
     )
     .slice(0, 3);
 
-  // 獲取推薦文章（隨機選擇）
+  // 獲取推薦文章（排除最近四篇，隨機選擇）
   const recommendedArticles = allArticles
-    .filter(article => article.slug !== featuredArticle.slug)
+    .filter(article => !recentSlugs.includes(article.slug))
     .sort(() => Math.random() - 0.5)
     .slice(0, 3);
 
