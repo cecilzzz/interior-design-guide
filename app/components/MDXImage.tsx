@@ -88,7 +88,7 @@ export function MDXImage({
         {/* CSS 佔位圖 - 絕對定位覆蓋 */}
         <div 
           className={`
-            absolute inset-0 bg-white 
+            absolute inset-0 bg-rgb(250,249,246)
             transition-opacity duration-500 ease-out
             ${isLoaded ? 'opacity-0' : 'opacity-100'}
           `}
