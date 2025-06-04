@@ -64,7 +64,7 @@ export default function PinterestButton({
   return (
     <button
       onClick={handlePinterestShare}
-      className={`absolute left-4 top-4 bg-red-600 text-white rounded-full p-1.5 transition-all duration-300 hover:scale-110 hover:bg-red-700 shadow-sm ${className}`}
+      className={`absolute left-8 top-4 md:left-4 md:top-4 bg-red-600 text-white rounded-full p-1.5 transition-all duration-300 hover:scale-110 hover:bg-red-700 shadow-sm ${className}`}
       aria-label="Save to Pinterest"
       title="Save to Pinterest"
     >

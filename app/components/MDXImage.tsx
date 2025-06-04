@@ -57,7 +57,7 @@ export function MDXImage({
   };
   
   return (
-    <figure className={`relative overflow-hidden ${className}`}>
+    <figure className={`relative overflow-visible ${className}`}>
       {/* 結構化數據 */}
       <script 
         type="application/ld+json"
@@ -66,8 +66,8 @@ export function MDXImage({
         }} 
       />
       
-      {/* 圖片容器 - 使用原始的寬度設定 */}
-      <div className="relative w-[calc(100%_+_4rem)] -mx-8 md:w-full md:mx-0">
+      {/* 圖片容器 - 真正的全螢幕寬度 */}
+      <div className="relative w-screen -ml-[50vw] left-1/2 md:w-full md:ml-0 md:left-0">
         {/* 主圖片 - 作為基準，撐開容器 */}
         <Image
           src={imageUrl}
@@ -78,8 +78,8 @@ export function MDXImage({
             w-full h-auto object-cover
             transition-all duration-700 ease-out
             ${isLoaded 
-              ? 'opacity-100 scale-100 filter-none' 
-              : 'opacity-0 scale-105 filter blur-sm'
+              ? 'opacity-100 filter-none' 
+              : 'opacity-0 filter blur-sm'
             }
           `}
           onLoad={() => setIsLoaded(true)}
