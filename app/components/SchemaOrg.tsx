@@ -108,7 +108,8 @@ export default function SchemaOrg({ article, category, isAboutPage }: SchemaOrgP
     "dateModified": new Date(article.date).toISOString(),
     "author": {
       "@type": "Person",
-      "name": siteAuthor
+      "name": siteAuthor,
+      "url": siteUrl
     },
     "publisher": {
       "@type": "Organization",
