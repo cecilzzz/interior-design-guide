@@ -174,10 +174,14 @@ export default function RootLayout({
           strategy="afterInteractive"
         >
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-PGBK5E7000');
+            const isOwner = document.cookie.includes('site_owner=true');
+            
+            if (!isOwner) {
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-PGBK5E7000');
+            }
           `}
         </Script>
         <meta name="p:domain_verify" content="b23e59bbecfac7fc71535e2c969afc73" />
