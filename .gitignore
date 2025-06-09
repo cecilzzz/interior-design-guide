@@ -3,6 +3,10 @@
 # 忽略 content/images 目錄下的所有圖片文件
 /content/images
 
+# 文檔
+README.md
+GIT_GUIDE.md
+
 # dependencies
 /node_modules
 /.pnp

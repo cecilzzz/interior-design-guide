@@ -27,88 +27,73 @@
   - TypeScript
   - ts-node
 
-## MDX 技術選擇歷史與決策過程
+## Environment Configuration
+- Main environment file: `.env.local` (NOT `.env`)
+- Required environment variables:
+  - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`: Cloudinary cloud name (dwobltbzw)
+  - `CLOUDINARY_API_KEY`: Cloudinary API key
+  - `CLOUDINARY_API_SECRET`: Cloudinary API secret
+  - `CLOUDINARY_BASE_PATH`: interior-inspiration-website/posts
+  - `NEXT_PUBLIC_SITE_URL`: https://interior-design-guide.vercel.app
+  - `NEXT_PUBLIC_SITE_NAME`: Interior Design Guide
+- Note: scripts/generate-rss.js loads from `.env.local`, not `.env`
 
-### 背景：Next.js 13 早期的 MDX 相容性問題
-在 Next.js 13 剛發布時（特別是 App Router 還在 beta 階段），MDX 整合存在重大相容性問題。
+## Cloudinary Integration
+### URL Structure
+- Base URL: `https://res.cloudinary.com/{CLOUD_NAME}/image/upload/`
+- Transformations: `w_800,h_600,c_fill,f_auto,q_auto`
+- Path: `{seoFileName}` (This is the Cloudinary PublicID)
+- Complete URL: `https://res.cloudinary.com/dwobltbzw/image/upload/w_800,h_600,c_fill,f_auto,q_auto/{seoFileName}`
 
-### 技術選擇演進過程
-
-#### 1. 第一次嘗試：`@next/mdx`（官方包）
-**選擇原因**：官方推薦的 MDX 解決方案
-**遇到的問題**：
-- 對 Next.js 13 App Router 支援極差，bug 眾多
-- 靜態匯出（`output: 'export'`）功能不穩定
-- Server Components 整合有嚴重問題
-- 需要 `mdx-components.tsx` 但官方文檔不清楚
-- 編譯時經常出現莫名錯誤
-
-**結論**：❌ 放棄，因為 bug 太多無法用於生產環境
-
-#### 2. 第二次嘗試：`next-mdx-remote`（社群包）
-**選擇原因**：社群包對 Next.js 13 相容性更好
-**優點**：
-- ✅ 解決了 Next.js 13 App Router 相容性問題
-- ✅ 更靈活的內容載入方式
-- ✅ 可以從任何來源（API、CMS、檔案系統）載入 MDX
-
-**致命缺點**：
-- ❌ **不支援靜態網站生成**（`output: 'export'`）
-- ❌ 是**執行時編譯**，需要伺服器環境
-- ❌ 無法在純靜態網站中使用
-
-**技術原理**：
-```typescript
-// next-mdx-remote 的工作方式
-const mdxSource = await serialize(content) // 需要 Node.js 執行時環境
-<MDXRemote {...mdxSource} />              // 客戶端或伺服器端動態編譯
+### MDXImage Component Structure
+```jsx
+<MDXImage 
+  localPath={{
+    originalFileName: "original-filename.png",
+    articleSlug: "article-slug"
+  }}
+  seo={{
+    seoFileName: "seo-friendly-filename-without-extension",
+    altText: "Alt text description"
+  }}
+  pin={{
+    title: "Pinterest title",
+    description: "Pinterest description"
+  }}
+/>
 ```
 
-**結論**：❌ 放棄，因為專案需求是靜態網站
-
-#### 3. 最終選擇：`Contentlayer`
-**選擇原因**：專為靜態網站和 Next.js 13 設計的解決方案
-**完美解決所有問題**：
-- ✅ 完全支援 Next.js 13 App Router
-- ✅ 完美支援靜態網站生成（`output: 'export'`）
-- ✅ **編譯時處理**（不是執行時），適合靜態網站
-- ✅ 自動生成 TypeScript 型別定義
-- ✅ 優秀的 frontmatter 和內容結構化支援
-- ✅ 內建圖片處理和最佳化
-- ✅ 效能優異，編譯時預處理所有內容
-
-**技術原理**：
-```typescript
-// Contentlayer 的工作方式
-const post = allPosts.find(p => p.slug === slug)           // 編譯時生成的資料
-const MDXContent = getMDXComponent(post.body.code)         // 預編譯的 React 元件程式碼
-return <MDXContent components={useMDXComponents({})} />    // 直接渲染，無需執行時編譯
+## Contentlayer Data Structure
+### Article JSON Schema
+```json
+{
+  "title": "Article Title",
+  "date": "2024-11-28T00:00:00.000Z",
+  "categories": ["Category1", "Category2"],
+  "coverImage": "seo-filename-without-extension",
+  "coverImageAlt": "Cover image alt text",
+  "excerpt": "Article excerpt",
+  "slug": "article-slug",
+  "body": { "raw": "MDX content..." }
+}
 ```
 
-### 為什麼 package.json 中還有 next-mdx-remote？
-- `next-mdx-remote` 在 `package.json` 中但沒有實際使用
-- 這是技術選擇演進過程的遺留，發現它不支援靜態匯出後就改用 Contentlayer
-- 保留是為了記錄技術決策過程
+### Important Contentlayer Issues
+- Generated files location: `.contentlayer/generated/Article/`
+- File naming pattern: `{category}__{slug}.mdx.json`
+- Index files: `_index.json` and `_index.mjs` should be filtered out when processing
+- Asset validation: Some articles may lack required fields (title, slug, excerpt, date)
+- Categories field: May not exist or may not be an array - always validate before use
 
-### 關鍵技術差異總結
-
-| 特性 | @next/mdx | next-mdx-remote | Contentlayer |
-|------|-----------|-----------------|--------------|
-| Next.js 13 支援 | ❌ Bug 眾多 | ✅ 良好 | ✅ 完美 |
-| 靜態匯出支援 | ❌ 不穩定 | ❌ 不支援 | ✅ 完美支援 |
-| 處理時機 | 編譯時 | 執行時 | 編譯時 |
-| TypeScript 支援 | 基本 | 基本 | ✅ 自動生成型別 |
-| 內容管理 | 基本 | 靈活 | ✅ 結構化管理 |
-| 效能 | 好 | 較差 | ✅ 最佳 |
-
-### 最終架構
-- **內容來源**：`content/` 目錄下的 MDX 檔案
-- **編譯工具**：Contentlayer 在建置時處理所有 MDX
-- **型別安全**：自動生成的 TypeScript 型別（`contentlayer/generated`）
-- **渲染方式**：`getMDXComponent()` + `useMDXComponents()`
-- **自訂元件**：透過 `mdx-components.tsx` 提供自訂 MDX 元件映射
-
-這個技術選擇過程完美體現了「選擇適合專案需求的技術」的重要性。
+## RSS Feed Generation
+### Key Implementation Details
+- Script location: `scripts/generate-rss.js`
+- Output: `public/rss.xml`
+- Command: `npm run generate-rss`
+- Image URL generation: Uses `generateCloudinaryUrl()` function to convert SEO filenames to full URLs
+- Pinterest optimization: Includes category hashtags and Chinese tags (#室內設計 #居家裝潢)
+- Validation: Filters out invalid articles and `_index.json` files
+- Supported formats: RSS 2.0 with media:content extensions for Pinterest
 
 ## Typography
 - Font Implementation:
@@ -143,376 +128,22 @@ return <MDXContent components={useMDXComponents({})} />    // 直接渲染，無
   - Image Upload: `npm run upload-images`
   - Image Upload Test: `npm run upload-images:test`
   - Generate Image Sitemap: `npm run generate-image-sitemap`
+  - Generate RSS Feed: `npm run generate-rss`
+
+## Common Issues and Solutions
+1. **RSS Generation Errors**: 
+   - Check `.env.local` exists and contains required Cloudinary variables
+   - Verify Contentlayer has generated article data in `.contentlayer/generated/Article/`
+   - Ensure articles have required fields (title, slug, excerpt, date)
+
+2. **Image URL Issues**:
+   - Article `coverImage` field contains only SEO filename, which is the Cloudinary PublicID
+   - Use `generateCloudinaryUrl()` function to convert SEO filename to complete URL
+   - URL format: `https://res.cloudinary.com/{CLOUD_NAME}/image/upload/{transformations}/{seoFilename}`
+   - Default transformations: w_800,h_600,c_fill,f_auto,q_auto
+
+3. **Contentlayer Processing**:
+   - Always filter out files starting with underscore (`_index.json`, `_index.mjs`)
+   - Validate article objects before processing
+   - Handle missing or invalid categories array gracefully
 
-## Node.js 腳本運行環境詳解
-
-### 背景：原始圖片處理系統
-你原本建立這個 Node.js 環境是為了運行圖片批量上傳到 Cloudinary 的腳本：
-- `npm run upload-images` - 批量上傳所有圖片
-- `npm run upload-images:test` - 測試單一文章的圖片上傳
-
-### 1. 為什麼需要特殊的 Node.js 設定？
-
-**問題**：你的圖片處理腳本是用 TypeScript 寫的（`.mts` 檔案），但 Node.js 原生不支援直接執行 TypeScript。
-
-**解決方案**：建立一個特殊的執行環境，讓 Node.js 可以直接運行 TypeScript 檔案。
-
-### 2. 設定檔案解析
-
-#### `scripts/package.json`
-```json
-{
-  "type": "module",
-  "private": true
-}
-```
-- **作用**：告訴 Node.js 這個目錄下的所有 `.js` 檔案都是 ES Module 格式
-- **為什麼需要**：現代 JavaScript 語法，支援 `import/export`
-
-#### `scripts/register.mjs`
-```javascript
-import { register } from 'node:module';
-import { pathToFileURL } from 'node:url';
-
-register('ts-node/esm', pathToFileURL('./'));
-```
-- **作用**：這是一個「載入器註冊器」
-- **功能**：告訴 Node.js 如何處理 TypeScript 檔案
-- **結果**：Node.js 現在可以直接執行 `.ts` 和 `.mts` 檔案
-
-### 3. 執行命令解析
-
-#### 原始圖片上傳命令
-```bash
-node --import ./scripts/register.mjs scripts/image-processor/index.mts
-```
-
-#### 新的 sitemap 生成命令
-```bash
-node --import ./scripts/register.mjs scripts/generate-image-sitemap.js
-```
-
-**執行流程**：
-1. `node` 啟動
-2. `--import ./scripts/register.mjs` 載入 TypeScript 支援
-3. 執行主腳本（可以是 `.mts` 或 `.js`）
-
-### 4. 圖片處理腳本架構
-
-你的原始 `scripts/image-processor/` 包含：
-- `index.mts` - 主要執行檔案
-- `cloudinaryUploader.mts` - Cloudinary 上傳邏輯
-- `imageCollector.mts` - MDX 圖片解析器
-- `pinterestPublisher.mts` - Pinterest 發布功能
-
-### 5. 新腳本如何重用現有基礎設施
-
-新的 `generate-image-sitemap.js` 腳本：
-- **重用相同的執行環境**：使用同樣的 `register.mjs` 載入器
-- **重用現有模組**：動態導入 `imageCollector.mts` 來解析 MDX 圖片
-- **重用圖片工具**：導入 `app/utils/imageUtils.ts` 來生成 URL
-
-### 6. 動態導入的必要性
-
-```javascript
-// 為什麼不能直接 import？
-// import { getCollectedImages } from './image-processor/imageCollector.mts'; // ❌ 會有路徑問題
-
-// 為什麼要用動態導入？
-async function importImageCollector() {
-  const { getCollectedImages } = await import('./image-processor/imageCollector.mts'); // ✅ 運行時解析
-  return { getCollectedImages };
-}
-```
-
-### 7. 實際運作流程
-
-當你執行 `npm run generate-image-sitemap` 時：
-
-1. **Node.js 啟動** + 載入 TypeScript 支援
-2. **執行 sitemap 腳本**
-3. **動態導入圖片解析器**（重用你的原始工具）
-4. **動態導入圖片 URL 工具**（重用 app 目錄的工具）
-5. **讀取 Contentlayer 資料**（避免語法衝突）
-6. **生成 sitemap XML**
-
-### 8. 為什麼這樣設計？
-
-- **重用現有投資**：不需要重寫圖片處理邏輯
-- **保持一致性**：使用相同的 Cloudinary 設定和 URL 格式
-- **避免重複**：一套 TypeScript 執行環境服務多個腳本
-- **模組化設計**：每個腳本專注自己的功能，但可以共享工具
-
-### 9. 簡單總結
-
-你原本為了上傳圖片到 Cloudinary 建立了一個「Node.js 可以執行 TypeScript」的環境。現在新的 sitemap 生成腳本就像是一個新房客，搬進了同一個已經裝修好的房子，重用了相同的基礎設施和工具。 
-
-## Webpack 與 HTML 處理機制深度解析
-
-### 🎯 核心概念：Webpack 本身不負責 HTML
-
-**關鍵認知**：Webpack 原生根本不處理 HTML 檔案，它是一個**模組打包工具**。
-
-#### Webpack 的本職工作範圍
-```javascript
-// ✅ Webpack 原生處理這些：
-import React from 'react'           // JavaScript 模組
-import './styles.css'               // CSS 檔案
-import logo from './logo.png'       // 圖片資源
-import data from './data.json'      // JSON 檔案
-```
-
-```html
-<!-- ❌ Webpack 原生不處理這些： -->
-<html>                              <!-- HTML 結構 -->
-  <head>...</head>                  <!-- HTML 標籤 -->
-  <body>...</body>                  <!-- HTML 內容 -->
-</html>
-```
-
-### 🔌 插件機制：讓 Webpack 獲得 HTML 處理能力
-
-#### 沒有插件的 Webpack 輸出
-```bash
-# 純 Webpack 打包結果：
-dist/
-├── main.js          # 打包後的 JavaScript
-├── style.css        # 提取的 CSS
-├── logo.abc123.png  # 處理後的圖片
-└── (沒有 HTML 檔案)  # ❌ 無法直接在瀏覽器中運行
-```
-
-#### HtmlWebpackPlugin 的作用機制
-```javascript
-// webpack.config.js
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-
-module.exports = {
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',  // 📄 讀取 HTML 模板
-      minify: {                      // 🗜️ 壓縮 HTML 選項
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true
-      }
-    })
-  ]
-}
-```
-
-**插件工作流程**：
-```
-1. 讀取 HTML 模板檔案
-2. 分析 Webpack 打包結果（JS/CSS 檔案名稱）
-3. 自動注入 <script> 和 <link> 標籤
-4. 應用 HTML 壓縮設定
-5. 輸出最終的 HTML 檔案
-```
-
-**有插件的輸出**：
-```bash
-dist/
-├── main.js
-├── style.css  
-├── logo.abc123.png
-└── index.html       # ✅ 自動生成，包含所有資源連結
-```
-
-### 🏗️ Next.js 靜態匯出的特殊情況
-
-#### 傳統 SPA vs Next.js SSG 的 HTML 生成對比
-
-| 階段 | 傳統 Webpack SPA | Next.js 靜態匯出 |
-|------|------------------|------------------|
-| **建置工具** | Webpack 主導 | Next.js 主導 |
-| **HTML 生成** | HtmlWebpackPlugin | Next.js 渲染引擎 |
-| **時機** | Webpack 編譯時 | React 組件渲染時 |
-| **內容** | 模板 + 資源注入 | 完整渲染的 HTML |
-
-#### Next.js 靜態匯出工作流程詳解
-
-```typescript
-// 1. 定義頁面組件
-export default function ArticlePage({ params }) {
-  const article = allArticles.find(a => a.slug === params.slug);
-  return (
-    <div>
-      <h1>{article.title}</h1>
-      <MDXContent />
-    </div>
-  );
-}
-
-// 2. 告訴 Next.js 要生成哪些頁面
-export async function generateStaticParams() {
-  return allArticles.map(article => ({
-    slug: article.slug  // 生成每個文章的靜態頁面
-  }));
-}
-```
-
-**Next.js 建置過程**：
-```bash
-# next build 的內部流程：
-
-1. Webpack 階段
-   ├── 處理 JavaScript 模組打包
-   ├── 處理 CSS 提取和優化
-   ├── 處理圖片等靜態資源
-   └── 輸出 .next/static/ 檔案
-
-2. Next.js 渲染階段（Webpack 不參與）
-   ├── 執行 generateStaticParams()
-   ├── 為每個頁面執行 React 渲染
-   ├── 生成完整的 HTML 字符串
-   └── 寫入 out/[slug]/index.html
-
-3. 後處理階段（可選）
-   └── 外部工具處理 HTML（如 html-minifier-terser）
-```
-
-### ❌ 為什麼 Webpack HTML 插件在 Next.js 靜態匯出中無效？
-
-#### 技術原因分析
-
-```javascript
-// ❌ 在 next.config.js 中這樣做無效：
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-
-module.exports = {
-  output: 'export',  // 靜態匯出模式
-  webpack: (config) => {
-    config.plugins.push(
-      new HtmlWebpackPlugin({
-        minify: true  // ❌ 這個配置不會生效
-      })
-    );
-    return config;
-  }
-}
-```
-
-**無效的根本原因**：
-1. **時機衝突**：Webpack 在編譯時運行，Next.js 在渲染時生成 HTML
-2. **職責分離**：Webpack 負責資源打包，Next.js 負責 HTML 生成  
-3. **流程隔離**：HTML 生成發生在 Webpack 處理完成之後
-
-#### 執行順序詳解
-
-```bash
-# 錯誤理解的流程：
-Webpack 開始 → HTML 插件生成 HTML → 結束
-                ↑ 期望在這裡壓縮 HTML
-
-# 實際的 Next.js 流程：
-Webpack 開始 → 處理 JS/CSS → Webpack 結束
-                                ↓
-Next.js 開始 → 渲染組件 → 生成 HTML → Next.js 結束
-                           ↑ Webpack 插件無法觸及這個階段
-```
-
-### ✅ 正確的解決方案：後處理架構
-
-#### 當前專案的解決方案
-
-```json
-// package.json 中的 build 腳本
-{
-  "scripts": {
-    "build": "next build && next-sitemap && npm run generate-image-sitemap:vercel && cp -r public/sitemap*.xml public/robots.txt public/image-sitemap.xml out/ && html-minifier-terser --input-dir ./out --output-dir ./out --file-ext html --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true"
-  }
-}
-```
-
-**完整流程分解**：
-```bash
-1. next build
-   └── 生成未壓縮的 HTML 到 out/ 目錄
-
-2. next-sitemap  
-   └── 生成網站地圖
-
-3. npm run generate-image-sitemap:vercel
-   └── 生成圖片網站地圖
-
-4. cp -r public/sitemap*.xml ... out/
-   └── 複製公共檔案到輸出目錄
-
-5. html-minifier-terser --input-dir ./out --output-dir ./out ...
-   └── 後處理壓縮所有 HTML 檔案
-```
-
-### 🔧 技術工具對比與選擇
-
-#### JavaScript/CSS 壓縮：terser-webpack-plugin
-
-```javascript
-// next.config.js - 正確使用 Webpack 插件
-const TerserPlugin = require('terser-webpack-plugin')
-
-module.exports = {
-  webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      config.optimization.minimizer = [
-        new TerserPlugin({
-          terserOptions: {
-            compress: {
-              drop_console: true,     // ✅ 移除 console.log
-              drop_debugger: true,    // ✅ 移除 debugger
-            },
-            mangle: {
-              safari10: true,         // ✅ 混淆變數名稱
-            }
-          }
-        })
-      ];
-    }
-    return config;
-  }
-}
-```
-
-**為什麼這個有效**：
-- JavaScript/CSS 處理在 Webpack 階段完成
-- TerserPlugin 在正確的時機運行
-- 不依賴於 Next.js 的 HTML 渲染過程
-
-#### HTML 壓縮：html-minifier-terser（後處理）
-
-```bash
-# 後處理命令詳解
-html-minifier-terser \
-  --input-dir ./out \              # 輸入目錄
-  --output-dir ./out \             # 輸出目錄（覆蓋原檔案）
-  --file-ext html \                # 處理 .html 檔案
-  --collapse-whitespace \          # 移除多餘空白
-  --remove-comments \              # 移除 HTML 註解
-  --remove-optional-tags \         # 移除可選標籤
-  --minify-css true \              # 壓縮內嵌 CSS
-  --minify-js true                 # 壓縮內嵌 JavaScript
-```
-
-### 📚 深度學習要點
-
-#### 1. 工具職責邊界理解
-- **Webpack**：模組打包，資源處理，編譯時優化
-- **Next.js**：頁面渲染，路由生成，HTML 輸出
-- **後處理工具**：檔案級別的最終優化
-
-#### 2. 時機與順序的重要性
-- 編譯時 vs 渲染時 vs 後處理時機
-- 每個工具在正確的時機發揮作用
-- 錯誤的時機配置會導致功能失效
-
-#### 3. 靜態網站的特殊考量
-- 靜態匯出限制了某些 Webpack 插件的使用
-- 需要後處理方案來彌補功能缺口
-- 理解 SSG 與 SPA 的本質差異
-
-#### 4. 實踐中的權衡取捨
-- 選擇合適的工具組合
-- 理解每個工具的限制和適用場景
-- 建立穩定可靠的建置流程
-
-這個知識架構幫助理解現代前端建置工具的複雜性和相互關係，避免常見的配置錯誤和概念混淆。 
