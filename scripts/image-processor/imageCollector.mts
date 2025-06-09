@@ -5,65 +5,65 @@ import type { Root } from 'mdast';
 import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx';
 
 /**
- * 從 JSX 表達式中提取對象值
+ * Extract object value from JSX expression
  */
 const extractObjectFromExpression = (expression: string): Record<string, any> => {
   try {
-    // 移除開頭的大括號和結尾的大括號，並執行 eval
+    // Remove opening and closing braces, then execute eval
     const cleanedExpression = expression.trim().replace(/^{|}$/g, '');
-    // 使用 Function 構造函數代替 eval，更安全
+    // Use Function constructor instead of eval for better security
     return new Function(`return ${cleanedExpression}`)();
   } catch (error) {
-    console.error('解析 JSX 表達式失敗:', error);
+    console.error('Failed to parse JSX expression:', error);
     return {};
   }
 };
 
 /**
- * 處理 MDX 文件中的圖片組件
- * 提取所有圖片資訊，包含 SEO 數據和相關內容
+ * Process image components in MDX file
+ * Extract all image information including SEO data and related content
  * 
- * @param content - MDX 文件內容
- * @returns 圖片資訊陣列，每個元素包含圖片的完整資訊
+ * @param content - MDX file content
+ * @returns Array of image information, each element contains complete image info
  */
 export const getCollectedImages = async (content: string): Promise<ImageData[]> => {
   const collectedImages: ImageData[] = [];
   
   try {
-    console.log('開始編譯 MDX...');
+    console.log('Starting MDX compilation...');
     const result = await compile(content, {
-      // 開啟開發模式以獲取更多錯誤信息
+      // Enable development mode for more error information
       development: true,
-      // 使用 remark 插件來收集 MDXImage 組件
+      // Use remark plugin to collect MDXImage components
       remarkPlugins: [
         () => (tree: Root) => {
-          console.log('處理 MDX 語法樹...');
+          console.log('Processing MDX syntax tree...');
           unistVisit(tree, 'mdxJsxFlowElement', (node: MdxJsxFlowElement) => {
             if (node.name === 'MDXImage') {
-              console.log('找到 MDXImage 組件');
+              console.log('Found MDXImage component');
               const props: Record<string, any> = {};
               
-              // 處理每個屬性
+              // Process each attribute
               for (const attr of node.attributes) {
-                console.log('處理屬性:', attr);
+                console.log('Processing attribute:', attr);
                 if (attr.type === 'mdxJsxAttribute' && attr.name) {
                   if (typeof attr.value === 'string') {
                     props[attr.name] = attr.value;
                   } else if (attr.value?.type === 'mdxJsxAttributeValueExpression') {
                     try {
-                      // 安全地解析 JSX 表達式
+                      // Safely parse JSX expression
                       const value = new Function(`return ${attr.value.value}`)();
                       props[attr.name] = value;
                     } catch (error) {
-                      console.error('解析屬性失敗:', error);
+                      console.error('Failed to parse attribute:', error);
                     }
                   }
                 }
               }
               
-              console.log('收集到的屬性:', props);
+              console.log('Collected attributes:', props);
               
-              // 驗證並收集圖片數據
+              // Validate and collect image data
               if (
                 props.localPath?.originalFileName &&
                 props.localPath?.articleSlug &&
@@ -73,26 +73,26 @@ export const getCollectedImages = async (content: string): Promise<ImageData[]> 
                 props.pin?.description
               ) {
                 collectedImages.push(props as ImageData);
-                console.log('已添加圖片數據到集合中');
+                console.log('Added image data to collection');
               } else {
-                console.warn('跳過無效的圖片數據:', props);
+                console.warn('Skipping invalid image data:', props);
               }
             }
           });
-          console.log('完成處理 MDX 語法樹');
+          console.log('Completed processing MDX syntax tree');
         }
       ]
     });
     
-    console.log('編譯結果:', result);
+    console.log('Compilation result:', result);
     
   } catch (error) {
-    console.error('解析 MDX 時發生錯誤:', error);
-    // 確保錯誤被正確處理
+    console.error('Error occurred while parsing MDX:', error);
+    // Ensure error is properly handled
     if (error instanceof Error) {
       throw error;
     } else {
-      throw new Error('MDX 解析過程中發生未知錯誤');
+      throw new Error('Unknown error occurred during MDX parsing');
     }
   }
 

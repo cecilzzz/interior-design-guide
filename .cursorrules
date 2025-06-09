@@ -34,16 +34,16 @@
   - `CLOUDINARY_API_KEY`: Cloudinary API key
   - `CLOUDINARY_API_SECRET`: Cloudinary API secret
   - `CLOUDINARY_BASE_PATH`: interior-inspiration-website/posts
-  - `NEXT_PUBLIC_SITE_URL`: https://interior-design-guide.vercel.app
+  - `NEXT_PUBLIC_SITE_URL`: https://akio-hasegawa.design
   - `NEXT_PUBLIC_SITE_NAME`: Interior Design Guide
 - Note: scripts/generate-rss.js loads from `.env.local`, not `.env`
 
 ## Cloudinary Integration
 ### URL Structure
 - Base URL: `https://res.cloudinary.com/{CLOUD_NAME}/image/upload/`
-- Transformations: `w_800,h_600,c_fill,f_auto,q_auto`
+- Transformations: `f_auto,q_auto,c_auto,g_auto,w_auto,dpr_auto`
 - Path: `{seoFileName}` (This is the Cloudinary PublicID)
-- Complete URL: `https://res.cloudinary.com/dwobltbzw/image/upload/w_800,h_600,c_fill,f_auto,q_auto/{seoFileName}`
+- Complete URL: `https://res.cloudinary.com/dwobltbzw/image/upload/f_auto,q_auto,c_auto,g_auto,w_auto,dpr_auto/{seoFileName}`
 
 ### MDXImage Component Structure
 ```jsx
@@ -140,7 +140,7 @@
    - Article `coverImage` field contains only SEO filename, which is the Cloudinary PublicID
    - Use `generateCloudinaryUrl()` function to convert SEO filename to complete URL
    - URL format: `https://res.cloudinary.com/{CLOUD_NAME}/image/upload/{transformations}/{seoFilename}`
-   - Default transformations: w_800,h_600,c_fill,f_auto,q_auto
+   - Default transformations: f_auto,q_auto,c_auto,g_auto,w_auto,dpr_auto
 
 3. **Contentlayer Processing**:
    - Always filter out files starting with underscore (`_index.json`, `_index.mjs`)

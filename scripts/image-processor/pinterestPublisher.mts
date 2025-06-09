@@ -1,12 +1,21 @@
-import type { ImageData } from '../../app/types/image.js';
+import type { ImageData } from '../../app/types/image.ts';
 
 /**
- * Pinterest API 所需的數據結構
+ * Get Pinterest API base URL
+ */
+function getApiBaseUrl(): string {
+  const useSandbox = process.env.PINTEREST_USE_SANDBOX === 'true';
+  return useSandbox ? 'https://api-sandbox.pinterest.com/v5' : 'https://api.pinterest.com/v5';
+}
+
+/**
+ * Pinterest API required data structure
  */
 interface PinData {
   title: string;
   description: string;
   media_source: {
+    source_type: string;
     url: string;
   };
   link: string;
@@ -14,42 +23,56 @@ interface PinData {
 }
 
 /**
- * 從 ImageData 創建 PinData
- * @internal 僅在 pinterestPublisher.ts 內部使用
+ * Create PinData from ImageData
+ * @internal Only used internally within pinterestPublisher.ts
  */
 const createPinData = (
   imageData: ImageData,
   imageUrl: string,
-  articleUrl: string
+  articleUrl: string,
+  boardId: string
 ): PinData => {
-  if (!process.env.PINTEREST_BOARD_ID) {
-    throw new Error('缺少 Pinterest Board ID');
-  }
-
   return {
     title: imageData.pin.title,
     description: imageData.pin.description,
-    media_source: { url: imageUrl },
-    link: `${articleUrl}#${imageData.sectionId}?utm_source=pinterest`,
-    board_id: process.env.PINTEREST_BOARD_ID
+    media_source: { 
+      source_type: 'image_url',
+      url: imageUrl 
+    },
+    link: `${articleUrl}?utm_source=pinterest`,
+    board_id: boardId
   };
 };
 
 /**
- * 創建 Pinterest Pin
+ * Create Pinterest Pin
  */
 export async function createPin(
   imageData: ImageData,
   imageUrl: string,
-  articleUrl: string
+  articleUrl: string,
+  boardId: string
 ): Promise<{ id: string }> {
   if (!process.env.PINTEREST_ACCESS_TOKEN) {
-    throw new Error('缺少 Pinterest API Token');
+    throw new Error('Missing Pinterest API Token (PINTEREST_ACCESS_TOKEN)');
   }
 
-  const pinData = createPinData(imageData, imageUrl, articleUrl);
+  const apiUrl = getApiBaseUrl();
+  const pinData = createPinData(imageData, imageUrl, articleUrl, boardId);
 
-  const response = await fetch('https://api.pinterest.com/v5/pins', {
+  console.log(`🌐 Using API: ${apiUrl}`);
+  console.log(`📦 Sandbox mode: ${process.env.PINTEREST_USE_SANDBOX === 'true' ? '✅ Enabled' : '❌ Disabled'}`);
+  console.log('Creating Pinterest Pin:', {
+    title: pinData.title,
+    board_id: pinData.board_id,
+    imageUrl: imageUrl
+  });
+
+  if (process.env.PINTEREST_USE_SANDBOX === 'true') {
+    console.log('📦 Note: Currently using Sandbox environment, created pins will not be publicly visible');
+  }
+
+  const response = await fetch(`${apiUrl}/pins`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${process.env.PINTEREST_ACCESS_TOKEN}`,
@@ -60,8 +83,10 @@ export async function createPin(
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(`Pinterest API 錯誤: ${error.message || response.statusText}`);
+    throw new Error(`Pinterest API error: ${error.message || response.statusText}`);
   }
 
-  return response.json();
+  const result = await response.json();
+  console.log('Pinterest Pin created successfully:', result.id);
+  return result;
 } 

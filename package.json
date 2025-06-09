@@ -9,9 +9,15 @@
     "preview": "serve out",
     "lint": "next lint",
     "upload-images": "node --import ./scripts/register.mjs scripts/image-processor/index.mts",
-    "upload-images:test": "node --import ./scripts/register.mjs scripts/image-processor/index.mts content/posts/japandi/40-japandi-living-room-ideas.mdx",
-    "generate-image-sitemap": "node --import ./scripts/register.mjs scripts/generate-image-sitemap.js",
-    "generate-image-sitemap:vercel": "node scripts/generate-image-sitemap-vercel.js"
+    "upload-images:test": "node --import ./scripts/register.mjs scripts/upload-images.mts --test",
+    "pinterest-publish": "node --import ./scripts/register.mjs scripts/pinterest-publisher.mts",
+    "get-boards": "node --import ./scripts/register.mjs scripts/get-pinterest-boards.mts",
+    "get-token": "node --import ./scripts/register.mjs scripts/get-pinterest-token.mts",
+    "generate-token": "node --import ./scripts/register.mjs scripts/generate-pinterest-token.mts",
+    "generate-image-sitemap": "node --import ./scripts/register.mjs scripts/generate-image-sitemap.mts",
+    "generate-image-sitemap:vercel": "node scripts/generate-image-sitemap-vercel.js",
+    "generate-rss": "node --import ./scripts/register.mjs scripts/generate-rss.js",
+    "create-test-board": "node --import ./scripts/register.mjs scripts/create-test-board.mts"
   },
   "dependencies": {
     "@headlessui/react": "1.7.17",
@@ -34,7 +40,8 @@
     "react-dom": "18.2.0",
     "react-icons": "4.12.0",
     "remark": "^15.0.1",
-    "remark-mdx": "^2.3.0"
+    "remark-mdx": "^2.3.0",
+    "undici": "^7.10.0"
   },
   "devDependencies": {
     "@mdx-js/mdx": "^3.1.0",
