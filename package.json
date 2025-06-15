@@ -11,6 +11,7 @@
     "upload-images": "node --import ./scripts/register.mjs scripts/image-processor/index.mts",
     "upload-images:test": "node --import ./scripts/register.mjs scripts/upload-images.mts --test",
     "pinterest-publish": "node --import ./scripts/register.mjs scripts/pinterest-publisher.mts",
+    "pinterest-oauth": "node --import ./scripts/register.mjs scripts/pinterest-oauth.mts",
     "get-boards": "node --import ./scripts/register.mjs scripts/get-pinterest-boards.mts",
     "get-token": "node --import ./scripts/register.mjs scripts/get-pinterest-token.mts",
     "generate-token": "node --import ./scripts/register.mjs scripts/generate-pinterest-token.mts",
