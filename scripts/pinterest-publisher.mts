@@ -46,7 +46,7 @@ function generateArticleUrl(articleSlug: string): string {
     throw new Error('Missing NEXT_PUBLIC_SITE_URL environment variable');
   }
 
-  return `${siteUrl}/posts/${articleSlug}`;
+  return `${siteUrl}/${articleSlug}`;
 }
 
 /**
