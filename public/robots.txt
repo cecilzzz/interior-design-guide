@@ -1,9 +1,9 @@
 # *
 User-agent: *
 Allow: /
-Disallow: /_next/
-Disallow: /api/
-Disallow: /static/
+Allow: /_next/static/css/
+Disallow: /_next/static/chunks/
+Disallow: /_next/static/media/
 
 # Host
 Host: https://akio-hasegawa.design

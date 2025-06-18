@@ -7,11 +7,13 @@ module.exports = {
     policies: [
       {
         userAgent: '*',
-        allow: ['/'],
+        allow: [
+          '/',
+          '/_next/static/css/', // 允許 CSS 檔案以確保正確渲染
+        ],
         disallow: [
-          '/_next/',
-          '/api/',
-          '/static/'
+          '/_next/static/chunks/', // 封鎖 JavaScript chunks
+          '/_next/static/media/', // 封鎖媒體檔案（如果不需要的話）
         ],
       }
     ],
@@ -20,7 +22,7 @@ module.exports = {
       'https://akio-hasegawa.design/image-sitemap.xml'
     ],
   },
-  exclude: ['/api/*', '/static/*', '/_next/*'],
+  exclude: ['/_next/*'],
   generateIndexSitemap: false,
   changefreq: 'weekly',
   priority: 0.7,
